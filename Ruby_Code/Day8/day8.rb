@@ -28,3 +28,12 @@ end
 # INHERITANCE
 #require './cookie'
 #load './orea.rb'
+
+# method - a function inside a class
+# @-> instance variable
+# $-> class variable
+
+# require leads everytime, more safe
+# load will check to if it is loaded, smarter
+
+## Class methods and class variables like @@var1 belongs to  
