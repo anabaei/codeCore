@@ -143,7 +143,6 @@ class Question4
  	  puts " "
  	 }
 
- 	
  end
 
 end
