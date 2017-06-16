@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/*ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}*/
+
+li {
+    float: left;
+}
+ body {
+        margin: 0px;
+      }
+      h1 {
+        margin-top: 0px;
+      }
+      /* desktop */
+      @media (max-width: 1280px) {
+        body {
+          background-color: lightgreen;
+        }
+
+        nav {
+          position: fixed;
+          width: 100%;
+          background-color: lavender;
+          text-align: center;
+        }
+
+       /* li {
+          display: inline;
+          margin-right: 50px;
+        }*/
+
+        a {
+          font-size: 20px;
+          font-family: sans-serif;
+          text-decoration: none;
+          color: grey;
+        }
+
+        a:hover {
+          font-weight: bold;
+        }
+
+      }
+      /* tablet */
+      @media (max-width: 1024px) {
+        body {
+          background-color: lightblue;
+        }
+      }
+      /* mobile */
+      @media (max-width: 800px) {
+        body {
+          background-color: pink;
+        }
+        /*li {*/
+        /*  display: block;
+        }*/
+      }
+/*li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}*/
+
+/*li a:hover {
+    background-color: #111;
+}*/
+ i{
+  color: green;
+ }
+
+ .vg {
+  border: thin red solid;
+ }
+ 
+ article{
+  width: 524px;
+  height: 330px;
+  background-image: url(http://www.lmb-supplies.co.uk/blog/wp-content/uploads/2016/03/microfiber-cloths.jpg);
+ }
+
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+</ul>
+<i class="fa fa-bars" aria-hidden="true"></i>
+<i class="fa fa-search" aria-hidden="true"></i>
+<i class="fa" id="logo">Search</i>
+<main>
+    <section class="posts">
+      <article>
+      <cite>sourface</cite>
+      <h1></h1>
+     </article>
+    </section>
+
+
+</main>
+
+
+
+</body>
+</html>

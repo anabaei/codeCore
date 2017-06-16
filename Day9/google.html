@@ -1,0 +1,94 @@
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!DOCTYPE html>
+<html>
+  <head>
+<style>
+nav {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+}
+
+a{
+color: black !important;
+font-size: 18px;
+
+}
+#signin{
+  margin: 5px;
+  padding: 8px;
+  background-color: blue;
+  color: white !important;
+  text-decoration: none;
+}
+
+#top1{
+  width: 75%;
+    background-color: white;
+}
+#top2{
+  width: 25%;
+    background-color: red;
+}
+
+
+
+#google{
+
+  /*height: 50px;*/
+}
+#search{
+  background-color: black;
+  display: flex;
+  position: fixed;
+  bottom: 320px;
+  right: 650px;
+  width: 500px;
+  /*height: 30px;*/
+
+}
+#find{
+  display: flex;
+  background-color: black;
+}
+
+#sub1 {
+  width: 50%%;
+}
+
+#inp {
+  width:100%;
+}
+
+
+</style>
+    <meta charset="utf-8">
+    <title></title>
+
+  </head>
+  <body>
+    <nav>
+            <span id=top1></span>
+            <span id=top2>
+
+                  <a href="/">Gmail</a> |
+                  <a href="/">Images</a> |
+                  <a href="/">***</a> |
+                  <a href="/" id = "signin">Sing in</a>
+           </span>
+     </nav>
+     <img id="google" src="google.png">
+     <div id="search">
+          <input id = "inp" type="text" name="find"><br>
+     </div>
+     <div id="find">
+       <input id = "sub1" type="submit"><input id = "sub2" type="submit">
+
+     </div>
+  </body>
+
+</html>
