@@ -46,10 +46,10 @@ end
 #to access method inside class1 which uses include we need to create instance of class first 
 c = Class1.new
 res = c.titleize("hello from  the word")
-###puts "#{res}"
+puts "#{res}"
 
 # use directly class method without making instance class from class 
-###puts " #{Class2.titleize("this is the test from class method!")}" 
+puts " #{Class2.titleize("this is the test from class method!")}" 
 
 
 #########################################################################################
@@ -90,7 +90,7 @@ b.add_chapter("chap1")
 b.add_chapter("chap2")
 b.add_chapter("chap3")
 b.add_chapter("chap4")
-###b.chapters
+b.chapters
 
 #########################################################################################
 ##################################  Qusetion 3  ##########################################
@@ -100,19 +100,13 @@ class Question3
 
 	  def is_prime?(number)
 		   # fname = gets.chomp
-		   result = false
+		   result = true
 		   n = number/2
-		   puts n
-			    while(n > 1)
-			   	if(number%n == 0)
-			   	  n -=1
-			   	  puts "came here!"
-			   	else
-			   		result= true
-			   		
-			   		puts "this is #{result}"
-			   	    break
-			   	end
+			  while(n > 1)
+				   	if(number%n == 0)
+				   	  result= false
+				   	end
+               n -=1			  
 			  end
 		return result
 	  end 
@@ -122,13 +116,42 @@ end
 
 
 obj = Question3.new
-res = obj.is_prime?(8)
+res = obj.is_prime?(23)
 puts "#{res}"
 
 
+#########################################################################################
+##################################  Qusetion 4  ##########################################
+#########################################################################################
+# var major_cities = {BC: ["Vancouver", "Victoria", "Prince George"], AB: ["Edmonton", "Calgary"]}
+
+class Question4
+ 
+ def que4(input)
+ 	input.each { |province, cities|
+ 	  #  print province
+ 	  # print cities
+ 	  leng = cities.length
+ 	  print "#{province} has #{cities.length} number of cities"
+ 	  cities.each_with_index { |n,i|
+        if(i == (leng -1))
+        print  "and #{n}"
+        else 
+        print " #{n} "
+        end
+ 	  }
+ 	  puts " "
+ 	 }
+
+ 	
+ end
+
+end
 
 
-
+major_cities = {BC: ["Vancouver", "Victoria", "Prince George"], AB: ["Edmonton", "Calgary"]}
+obj = Question4.new
+obj.que4(major_cities)
 
 
 
