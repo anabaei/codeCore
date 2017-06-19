@@ -1,28 +1,39 @@
-// create a class
-function Vector() {
-  this.x = 0;
-  this.y = 0;
-  // this.sum = function() {
-  //   return this.x + this.y;
-  // }
+class Vector{
+  constructor(x,y,z){
+  	 this.x = x;
+  	 this.y = y;
+  	 this.z = z;
+  }
+  plus(vec)
+  {
+    let resx = vec.x + this.x; 
+    let resy = vec.y + this.y;
+     let resz = vec.z + this.z;
+console.log(resx + ' ' + resy + ' ' + resz);
+  }
+    minus(vec)
+  {
+    let resx =  this.x - vec.x; 
+    let resy =  this.y - vec.y;
+     let resz= this.z - vec.z;
+console.log(resx + ' ' + resy + ' ' + resz);
+  }
+  length()
+  {
+  	let powers = (Math.pow(this.x,2)+Math.pow(this.y,2)+Math.pow(this.z,2));
+  	let length = Math.sqrt(powers);
+  	console.log(length);
+  }
+
+
 }
 
-// New way dynamically add new mehtods 
-// this is a way optimize our classes in the old school method, where the method will not be recreated for every instance, rather it will refer to single prototype method to draw from.
-Vector.prototype.sum = function() {
-  return this.x + this.y;
-};
+let v1 = new Vector(4,4,0);
+let v2 = new Vector(1,2,2);
 
-// function prototype.
-
-// let numbers = new Array();
-// let human = new Object();
-
-let vector = new Vector();
-// getter
-vector.x;
-vector.y;
-// setter
-vector.x = 10;
-vector.y = 20;
-console.log( vector.sum());
+v1.plus(v2); // returns Vector {x: 5, y: 6, z: 2}
+//v2.plus(v1) // returns Vector {x: 5, y: 6, z: 2}
+v1.minus(v2) // returns Vector {x: 3, y: 2, z: -2}
+v2.minus(v1) // returns Vector {x: -3, y: -2, z: 2}
+v1.length()
+v2.length() // returns 3
