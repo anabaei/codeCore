@@ -1,0 +1,24 @@
+//scss
+$primary-color: ;
+$secondary-color: ;
+$header-font: ;
+$body-font: ;
+
+$property1: font-style;
+$property2: color;
+$selector: body;
+
+#{$selector}{
+
+  #{$property1}: $body-font;
+  background-color: $primary-color;
+  #{$property2}: $secondary-color;
+}
+
+ul{
+  list-style: none;
+  font-size: 20px;
+  li {
+    display: inline;
+  }
+}
