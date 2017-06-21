@@ -2,7 +2,8 @@ class Hash{
 constructor(Hash)
 	{   
 		this.myhash = Hash;
-       // console.log(this.myhash);		
+       // console.log(this.myhash);
+        this.result = {};		
 	}
 
 empty()
@@ -15,14 +16,16 @@ empty()
     }
 
     hashprops(){
-     
+      
     	for(let key in this.myhash){
-    	console.log("_"+ key + " "+ this.myhash[key]);
-        myhash[key] = key;      
+    	 ("_"+ key + " "+ this.myhash[key]);
+        //myhash[key] = key; 
+        this.result[key] = this.myhash[key];    
 
     }
-
+    console.log(this.result);
 }
+
 
   // Write a program to return current key of current object
   // write another to return current values of current object
@@ -31,7 +34,7 @@ empty()
 
 
     merge(args2){
-
+        
       	// for(let key in this.args){
     	// 	console.log("CC" + this.args[key]);
         //  args2[key] = this.args[key];
@@ -43,7 +46,10 @@ empty()
     //	}
       args2.hashprops();
       this.hashprops();
-    //return args2;
+      for(let l in args2.result){
+        this.result[l] = args2.result[l];
+      }
+    return this.result;
     }
 }
 
@@ -54,7 +60,7 @@ let hash = new Hash({a: 1, b: 2, c: 3});
 // hash.hashprops();
 
 let merged = hash.merge(new Hash({bob: 'yo', jane: 'ya'}));
-//console.log(merged);
+console.log(merged);
 
 
 
