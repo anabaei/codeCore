@@ -2,46 +2,56 @@ class Hash{
 constructor(Hash)
 	{   
 		this.myhash = Hash;
-        console.log(this.myhash);		
+       // console.log(this.myhash);		
 	}
 
-empty(){
-   //  Object.keys(args).length;
-	let empty = true;
-	// if (this.args)
-	// 	console.log("thisi is " + size);
-		//console.log(this.args === {});
-	    for (let key in this.args) {
-	     empty = false;
-        // if (key.hasOwnProperty(key)) size++;
-        // console.log(this.args[key]);
-         
-  //human[property]; // the value associated with a property
+empty()
+   {
+	    for (let key in this.myhash) 
+	    {
+	     return false;
+        }
+    return true
+    }
+
+    hashprops(){
+     
+    	for(let key in this.myhash){
+    	console.log("_"+ key + " "+ this.myhash[key]);
+        myhash[key] = key;      
 
     }
-    
-    console.log(empty);
-    return empty
-    }
+
+}
+
+  // Write a program to return current key of current object
+  // write another to return current values of current object
+  // write  merge first create a new hash and then inside that hash has key 
+  // and values from above programs 
+
+
     merge(args2){
 
       	// for(let key in this.args){
     	// 	console.log("CC" + this.args[key]);
         //  args2[key] = this.args[key];
-    	for(let key in args2){
-    	console.log("thi is key  "+ key);	
-    		  for( let key22 in key){
-
-    		console.log("" + key[key22] + " " + key22);
-    	        }
-    	}
-    return args2;
+    //	for(let key in args2){
+    //	console.log("thi is key  "+ key);	
+    		//   for( let key22 in key){
+    		// console.log("" + key[key22] + " " + key22);
+    	 //        }
+    //	}
+      args2.hashprops();
+      this.hashprops();
+    //return args2;
     }
 }
 
 let shash = new Hash({});
 let hash = new Hash({a: 1, b: 2, c: 3});
-shash.empty();
+// console.log(shash.empty());
+ //console.log(hash);
+// hash.hashprops();
 
 let merged = hash.merge(new Hash({bob: 'yo', jane: 'ya'}));
 //console.log(merged);
