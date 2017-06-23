@@ -114,7 +114,7 @@ console.log(merged);
  hash.keys();
  hash.values();
 
-
+// return obj.nn({}, this. , this.)
  ////////////////////////////////////////////////////////////////////////////////
  ///////////////////// Question 2 //////////////////////////////////////////////
 
@@ -125,38 +125,46 @@ console.log(merged);
 // 	}
 
 
-  function  node(data){
+
+  function  Node(data){
      this.data = data;
-     this.next = null;
+     this.before = null;
+
     }
 
-// class queue
-  function  queuenew(){
-     this.lenght = 0;
+
+  function  myqueue(){
+     // this.lenght = 0;
      this.head = null;
-    }
+     this.add = function(data) {
+    var nodeToAdd = new Node(data),
+        nodeToCheck.data = "DD";
 
-  function  add(value){
-    	var node = new node(value);
-        currentnode = this.head;
+    }
+}
+
+   // function  add(value){
+   //  	node(value);
+   //      currentnode = this.head;
         
-        if(!currentnode){
-        	this.head = node;
-            this.lenght++;
-        }
-        while(currentnode.next)
-        {
-        	currentnode = currentnode.next;
-        }
+   //      if(!currentnode){
+   //     // 	console.log("F");
+   //      	this.head = node;
+   //          this.lenght++;
+   //      }
+   //      // while(currentnode.next)
+   //      // {
+   //      // 	currentnode = currentnode.next;
+   //      // }
 
-     currentNode.next = node;
-     this._length++; 
-     return node;
-    }
+   //  // currentnode.next = node;
+   //   this._length++; 
+   //   return node;
+   //  }
 
 // 	add(newstack){
 //    this.next = newstack;
-
+ 
 //     console.log(newstack.value);
 // 	}
    
@@ -176,7 +184,31 @@ console.log(merged);
 
 //v.add(v1);
 //v1.add(v1);
-node("amir");
+
+
+Node("amir");
+myqueue();
+add("eli");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

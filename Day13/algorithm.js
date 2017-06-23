@@ -18,7 +18,7 @@ function revers([first, ...second]){
 console.log(revers("ABCDEF"));
 
 
- function mul([first, ...second]){
+ function mult([first, ...second]){
       if (second.length === 0) return [first *first];
       return [first*first, ...mul(second)]; 
 }
