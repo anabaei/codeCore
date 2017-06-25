@@ -1,4 +1,4 @@
-<html
+
 
 https://www.postgresql.org/docs/9.1/static/sql-altertable.html
 
