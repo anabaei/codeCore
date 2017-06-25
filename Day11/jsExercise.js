@@ -15,7 +15,7 @@ constructor(Hash)
         this.key = [];
         this.value = [];		
 	}
-
+ 
 isEmpty()
    {
 	    for (let key in this.myhash) 
