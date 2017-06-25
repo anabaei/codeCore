@@ -31,7 +31,7 @@ class DoggoFighter extends Doggo {
       winner = doggoFighter.name;
         this.hitPoints -=10;
     }
-
+   
     return `----\n${ this.name } has ${ this.hitPoints } health \nand is battling ${ doggoFighter.name }. \nAnd his special attack is ${ this.specialAttack }.\n--- And the winner is ${ winner }`;
   //  return cnt.length;
   }

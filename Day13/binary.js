@@ -17,6 +17,5 @@ function binsearch(arr, node){
   {
   	binsearch(0 ...arr[arr.length/2], node);
   }
-
  
 }

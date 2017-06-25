@@ -1,26 +1,6 @@
 // First solution
 // Methods in an object
-const StringExtras = {
-  repeat (str, n) {
-    let out = '';
-    for (let i = 0; i < n; i++) {
-      out += str;
-    }
-    return out;
-  },
-  leftPad (str, n) {
-    return this.repeat(' ', n) + str;
-  },
-  rightPad (str, n) {
-    return str + this.repeat(' ', n);
-  },
-  pad (str, n) {
-    return this.leftPad(this.rightPad(str, n), n);
-  },
-  capitalize (str) {
-    return str.slice(0,1).toUpperCase() + str.slice(1);
-  }
-}
+
 
 // Stretch solution
 // String will be this
