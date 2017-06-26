@@ -123,6 +123,103 @@ repeat( val => console.log(val*9), [1,2]);
 // it read each element from array 
 // each((v,i)=> v*i;)
 
+// setTimeout(
+// 	function(a,b){
+// 		console.log(a);
+//        // console.log(new Date(hours,minutes);
+// 	}, 1000  
+// );
+
+// function logtime() 
+//    {
+//    	let d = new Date();
+//    	console.log(d);
+//    },1000
+// 	);
+
+// setTimeout('hello');
+//logtime;
+// var d = new Date(milliseconds);
+
+// Exercise: Say Hello Every Two Seconds
+
+/*
+setInterval(
+  () => { console.log("Hello")},
+  2000
+);
+
+setInterval(
+  () => { console.log(new Date())},
+  1000
+);
+*/
+
+
+
+// Demo: Stop Saying Hello after 8s
+// how to cancel or reset something happening after
+// a certain time of repeatation
+
+const intervalId = setInterval(
+  () => { console.log("Hello")},
+  5000
+);
+
+setTimeout(() => clearInterval(intervalId), 8000);
+
+// Closure :
+// functions keeps refrence of the value where they declared
+// console.dir(object) 
+// gives the objects in Chrome
+
+// everytime we create a refrence then we need 
+// to call it 
+
+// here only we need to pass one time consol.log as params 
+// then for next times we just pass params to be added and 
+// no need for function becyse it has its own refrence inside
+
+function loudWith (logFn, fn) {
+  return (...args) => {
+    logFn(`Calling ${fn.name}`);
+    const returnValue = fn(...args);
+    logFn(`Called ${fn.name} & returned ${returnValue}`);
+    return returnValue;
+  }
+}
+
+
+function timer (startTime, onDone) {
+  // you can check whether onDone is a function
+
+  let count = startTime;
+  const decrementer = () => {
+    count -= 1;
+    console.log(count);
+
+    if (count <=  0) {
+      clearInterval(intervalId);
+      onDone();
+     
+    }
+  };
+  const intervalId = setInterval(
+    () => {
+      console.dir(decrementer);
+      decrementer();
+    },
+    1000);
+
+   
+}
+
+//timer(1, console.log);
+timer(1,()=> console.log('Done'));
+
+
+
+
 
 
 
