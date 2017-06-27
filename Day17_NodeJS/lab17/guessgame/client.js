@@ -10,7 +10,7 @@ rl.question('What is your name?', function(name){
 });
 
 socket.on("data", function(data){
- 	console.log('your number is '+ data);
+ 	console.log(' '+ data);
 });
 
 socket.connect(5000,"127.0.0.1", function(){
