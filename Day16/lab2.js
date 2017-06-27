@@ -14,6 +14,20 @@ function  after(rep, fn) {
 }
 
 
+function  after3(rep, fn) {
+// let cnt = 1;
+ return (a,b) => {
+  	if(rep > 0){
+      
+    }
+    else {
+    	cnt+=1;
+      console.log('undefined');
+    }
+  }
+}
+
+
 const add = function (a, b) { return a + b};
 add(1,1) // returns 2
 add(1,3) // returns 4
