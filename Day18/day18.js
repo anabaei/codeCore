@@ -53,6 +53,15 @@
 
 // express 
 
+// How to Start Express js 
+//  yarn init
+//  yarn add express faker morgan nodeman
+//  add script "scripts": 
+//   {
+//     "start": "node app.js"
+//   },
+
+
 
 
 
