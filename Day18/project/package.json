@@ -1,0 +1,12 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Demo for node lessons",
+  "main": "app.js",
+  "author": "Amir",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.3",
+    "faker": "^4.1.0"
+  }
+}

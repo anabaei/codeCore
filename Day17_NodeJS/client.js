@@ -21,7 +21,7 @@
 
 const net = require("net");
 
-const client = new net.Socket();
+const client =  net.Socket();
 
 client.on("data", function(data){
   console.log("Data Received from server: " + data);
