@@ -1,0 +1,20 @@
+
+
+
+
+
+
+<h2> your model  <%= details.name %>  is <%=   details.model %>  </h2>
+
+<h2> <%  model = parseInt(details.model) %>  </h2>
+ <% result = "old" %> 
+<h1> <%=  model %> </h1>
+
+<% switch(model) { case 2017:  result = "new"; break;case 2016:  result = "new"; break;case 2015:  result = "new"; break; case 2014:  result = "okay"; break;case 2013:  result = "okay"; break; } %>
+
+<h1> your car is <%= result %> </h1>
+
+
+
+
+	

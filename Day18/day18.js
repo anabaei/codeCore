@@ -22,3 +22,47 @@
  // faker.hacker.phrase() ---> gives you a fake phrase
 
 
+// touch .gitignore we can add whatever project we want to ignore
+// inside that git file we have:
+
+// params is a property to read the url 
+
+// node_module/
+// .DS_Store
+// 
+// git add -A
+// master it means current branch 
+// git log 
+
+// node monitoring 
+// yarn add -D nodemon  
+// any command that runs scripts then run all 
+//the packages we already isntalled
+// yarn start to run it 
+
+// Midleware  
+// corns from different domains tells 
+// csrf checking for security issues if includes a key
+// auth checking the authentication
+// main task is serving the last job
+
+// ejs is middle ware 
+
+//after defining post verbs then we need to parse it 
+// so we define body parser
+
+// express 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
