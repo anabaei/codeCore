@@ -1,0 +1,9 @@
+.cover-image{
+  width: 75vw;
+  border-radius: 5px;
+}
+
+* {
+	background-color: white;
+	color: white;
+}

@@ -1,4 +1,13 @@
 
 
-<h1> here </h1>
+<% details.info  %>
 
+
+<% let arr= details.info.split(',') %>
+
+<%  size = arr.length %>
+
+
+<% ran = Math.floor((Math.random() * size) + 1) %>
+
+<h1> your rendom name is <%= arr[ran] %> </h1>

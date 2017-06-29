@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 // combined is predifned format of morgan 
 app.use(logger('dev'));
 
-// app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:false}));
 
 
 /// it works on every verbs (get, post,. ..) 
@@ -56,9 +56,10 @@ app.get('/', function(request, respond){
 // });
 
 // we need to install middle ware to parse data
-app.post('/re', function(request, respond){
+app.post('/result', function(request, respond){
  // contact first one is rendering to page, 
- respond.render('index',{result: request.body});
+ //respond.send(request.body);
+ respond.render('result',{details: request.body});
  // respond.send(request.body);
  // respond.send('contact form received');
 });

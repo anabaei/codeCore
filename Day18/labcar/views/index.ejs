@@ -2,6 +2,32 @@
 <%- include('./partials/header') %>
 
 
+
+<% if (username) { %> 
+  <div class="alert alert-success">
+  <strong>Success!</strong> Indicates a successful or positive action.
+</div>
+<% } else {%>
+<div class="alert alert-info">
+  <strong>Info!</strong> Indicates a neutral informative change or action.
+</div>
+<% } %>
+
+
+<h1>hello </h1>
+
+<form method="POST" action="/username">
+  <div>
+    <label for="name">Username</label>
+    <input id="name" name="username" value=" " />
+  </div>
+   <input type="submit" name="" value="Submit">
+
+  </form>
+
+
+
+
 <h1>Form</h1>
 
 <form method="POST" action="/details">
@@ -15,7 +41,8 @@
    <option value="<%= i %>"> <%= i %> </option>
    <% } %>
 </select>
-
+ 
+  <img class="cover-image" src="/images/bridge.jpg">
   <div>
     <input type="submit" name="" value="Submit">
   </div>
