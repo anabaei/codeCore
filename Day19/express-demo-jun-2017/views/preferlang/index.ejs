@@ -1,0 +1,22 @@
+
+<h1> Prefer lang</h1>
+
+
+<form action="/myform"  method="post">
+ <input name="name"></input>
+ <select name="lan">
+   <option value="en">en</option>
+   <option value="fr">fr</option>
+   <option value="sp">sp</option>
+ </select>
+ <input type="submit"> </submit>
+</form>
+
+
+<% if ((lan)=== 'en') {%>
+ <h1> Hello  <%= result.name %> </h1>
+   <% } else if ((lan)=== 'fr') {%>
+ <h1>  Bonjor <%= result.name %> </h1>
+  <% } else  {%>
+<h1> Hola <%= result.name %>  </h1>
+ <% } %>

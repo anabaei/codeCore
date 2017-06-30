@@ -1,0 +1,29 @@
+{
+  "name": "express-demo",
+  "version": "0.0.1",
+  "description": "Demo for Node lessons",
+  "main": "app.js",
+  "author": "Steve Godin",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon app.js",
+    "db:create": "createdb --echo exp_dev",
+    "db:drop": "dropdb --if-exists --echo exp_dev",
+    "db:migrate": "node db/migrate.js",
+    "db:seed": "node db/seeds.js",
+    "db:setup": "yarn db:drop && yarn db:create && yarn db:migrate && yarn db:seed"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "faker": "^4.1.0",
+    "morgan": "^1.8.2",
+    "nodeman": "^1.1.2",
+    "pg-promise": "^6.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

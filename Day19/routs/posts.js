@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 });
 
 
-// To check 
+// To chlsck 
  // .thn(posts => {
  // 	res.send(post);
  // })

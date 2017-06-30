@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Express Demo</title>
+    <!-- when loading css or an image, make sure that value
+    for href (or src) refers to the url (even if relative) of
+    the file and not the file path -->
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a> |
+      <a href="/contact">Contact</a> |
+      <a href="/posts">Posts</a> |
+      <a href="/posts/new">New</a> |
+      <% if (username) { %>
+        <span>Hello, <%= username %>!</span>
+      <% } else { %>
+        Who are you?
+        <form method="POST" action="/username">
+          <input type="text" name="username" />
+          <input type="submit" value="Submit" />
+        </form>
+      <% } %>
+    </nav>
