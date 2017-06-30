@@ -1,4 +1,4 @@
-
+/// when app use is triger
 const express = require('express');
 const path = require('path');
 
@@ -22,26 +22,26 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-/// this one create cookie
+//this one sets cookie to a local variable
+// everytime app was used
+app.use(function (req, res, next) {
+  const mycookie = req.body.mytask
+//  console.log(req);
+  // const username = req.cookies.username;
+  // All properties of res.local are available as variables
+  // inside your views
+  res.locals.cookie = mycookie;
+  next();
+});
+
+
+/// this one create cookie inside the cookie respond
 app.post('/', (req, res) => {
   const mycookie = req.body.mytask
   res.cookie('cookie', mycookie);
 //  console.log('cookie exists = ', res);
   res.render('results',{result: req.body});
 });
-
-// this one sets cookie to local variable
-// app.use(function (req, res, next) {
-//   const mycookie = req.body.mytask
-//   // const username = req.cookies.username;
-//    console.log('cookie exists = ', req);
-//   // All properties of res.local are available as variables
-//   // inside your views
-//   res.locals.mycookie = mycookie;
-//   next();
-// });
-
-
 
 
 const PORT = 3000;
