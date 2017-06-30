@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<title>Cohort 19 Dev Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+  <!--  Sidebar/menu -->
+  <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <div class="w3-container">
+      <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+        <i class="fa fa-remove"></i>
+      </a>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/19_logo_new.svg" style="width:45%;" class="w3-round"><br><br>
+      <h4><b>WHO ARE WE?</b></h4>
+      <p class="w3-text-grey"></p>
+    </div>
+    <div class="w3-bar-block">
+      <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal"><i class="fa fa-th-large fa-fw w3-margin-right"></i>THE TEAM</a>
+      <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>ABOUT</a>
+      <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>CONTACT</a>
+    </div>
+    <div class="w3-panel w3-large">
+      <i class="fa fa-facebook-official w3-hover-opacity"></i>
+      <i class="fa fa-instagram w3-hover-opacity"></i>
+      <i class="fa fa-snapchat w3-hover-opacity"></i>
+      <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+      <i class="fa fa-twitter w3-hover-opacity"></i>
+      <i class="fa fa-linkedin w3-hover-opacity"></i>
+    </div>
+  </nav>
+
+  <!-- Overlay effect when opening sidebar on small screens -->
+  <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main" style="margin-left:300px">
+
+    <!-- Header -->
+    <header id="portfolio">
+      <a href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/19_logo_new.svg" style="width:65px;" class="w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+      <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+      <div class="w3-container">
+        <h1><b>Cohort 19 Dev Shop</b></h1>
+        <div class="w3-section w3-bottombar w3-padding-16">
+          <span class="w3-margin-right">Filter:</span>
+          <button class="w3-button w3-black">ALL</button>
+          <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Ruby</button>
+          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>JavaScript</button>
+          <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>GIT</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding">
+      <h3>The Team</h3>
+      <div class="w3-third w3-container w3-margin-bottom">
+        <img src="images/jacob.jpg" alt="Jacob Tran" style="width:100%" class="w3-hover-opacity">
+        <div class="w3-container w3-white">
+          <p><b>Jacob Tran</b></p>
+          <p>Professional Software Developer, Consultant and Instructor at CodeCore.</p>
+        </div>
+      </div>
+      <!-- TODO: everyone, please add your photo and blurb about yourself, make more rows if necessary -->
+      <div class="w3-third w3-container w3-margin-bottom">
+        <img src="https://www.w3schools.com/w3images/lights.jpg" alt="Jane Doe" style="width:100%" class="w3-hover-opacity">
+        <div class="w3-container w3-white">
+          <p><b>Lorem Ipsum</b></p>
+          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        </div>
+      </div>
+
+      <div class="w3-third w3-container">
+        <img src="https://www.w3schools.com/w3images/nature.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
+        <div class="w3-container w3-white">
+          <p><b>Lorem Ipsum</b></p>
+          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        </div>
+      </div>
+
+      <div class="w3-row-padding">
+        <div class="w3-third w3-container">
+          <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAKTAAAAJDRmNTA3MDk1LTNkNDEtNDgyOS1hYjA1LTA2Yjc1YTE2OGE5Yg.jpg" alt="Jane Doe" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>Tam Kbieli</b></p>
+            <p>Co-founder of CodeCore and the source of all things relating to programming.</p>
+          </div>
+        </div>
+        <div class="w3-third w3-container">
+          <img src="http://www.lh-st.com/assets/root/images/artist/lhst/0214_JacobCollierSITE.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>Roy Jang</b></p>
+            <p>Regular guy who likes music.</p>
+          </div>
+        </div>
+
+        <div class="w3-third w3-container w3-margin-bottom">
+          <img src="images/photo.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>Ozge</b></p>
+            <p>Hi everyone!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="w3-center w3-padding-32">
+        <div class="w3-bar">
+          <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
+          <a href="#" class="w3-bar-item w3-black w3-button">1</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
+          <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
+        </div>
+      </div>
+
+      <!-- TODO: add more candid images of our team / cohort / school -->
+      <div class="w3-row-padding w3-padding-16" id="about">
+        <div class="w3-col m8">
+          <img src="https://scontent.cdninstagram.com/t51.2885-15/s750x750/sh0.08/e35/19227471_142411936325773_6677812927027740672_n.jpg" alt="Me" style="width:100%">
+        </div>
+        <div class="w3-col m4">
+          <img src="https://scontent.cdninstagram.com/t51.2885-15/s750x750/sh0.08/e35/18948335_103883950185645_2378757500766781440_n.jpg" alt="Me" style="width:100%">
+        </div>
+      </div>
+
+      <div class="w3-container w3-padding-large" style="margin-bottom:32px">
+        <h4><b>About Us</b></h4>
+        <p>Just us brave souls, exploring the universe of unknownment. We have a heart of love and an interest of lorem ipsum and mauris neque quam blog. I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo
+          condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+        <hr>
+
+        <!-- TODO: add more skills from your own background -->
+        <h4>Technical Skills</h4>
+        <!-- Progress bars / Skills -->
+        <p>JavaScript</p>
+        <div class="w3-grey">
+          <div class="w3-container w3-dark-grey w3-padding w3-center" style="width:95%">95%</div>
+        </div>
+        <p>Ruby</p>
+        <div class="w3-grey">
+          <div class="w3-container w3-dark-grey w3-padding w3-center" style="width:85%">85%</div>
+        </div>
+        <p>Git</p>
+        <div class="w3-grey">
+          <div class="w3-container w3-dark-grey w3-padding w3-center" style="width:80%">80%</div>
+        </div>
+
+        <p>HTML</p>
+        <div class="w3-grey">
+          <div class="w3-container w3-dark-grey w3-padding w3-center" style="width:60%">60%</div>
+        </div>
+        <p>
+          <button class="w3-button w3-dark-grey w3-padding-large w3-margin-top w3-margin-bottom">
+  <i class="fa fa-download w3-margin-right"></i>Download Resumes.zip
+  </button>
+        </p>
+        <hr>
+
+        <h4>How much do we charge</h4>
+        <!-- Pricing Tables -->
+        <div class="w3-row-padding" style="margin:0 -16px">
+          <div class="w3-third w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-white w3-center w3-opacity w3-hover-opacity-off">
+              <li class="w3-black w3-xlarge w3-padding-32">WordPress Site</li>
+              <li class="w3-padding-16">Design</li>
+              <li class="w3-padding-16">Development</li>
+              <li class="w3-padding-16">Deployment</li>
+              <li class="w3-padding-16">Mail Support</li>
+              <li class="w3-padding-16">
+                <h2>$ 2,980</h2>
+                <span class="w3-opacity">up to 5 pages</span>
+              </li>
+              <li class="w3-light-grey w3-padding-24">
+                <button class="w3-button w3-teal w3-padding-large w3-hover-black">FREE ESTIMATE</button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="w3-third w3-margin-bottom">
+            <ul class="w3-ul w3-border w3-white w3-center w3-opacity w3-hover-opacity-off">
+              <li class="w3-teal w3-xlarge w3-padding-32">Web App</li>
+              <li class="w3-padding-16">Design</li>
+              <li class="w3-padding-16">Development</li>
+              <li class="w3-padding-16">Deployment</li <li class="w3-padding-16">Endless Support</li>
+              <li class="w3-padding-16">
+                <h2>$ 14,980</h2>
+                <span class="w3-opacity">starting at</span>
+              </li>
+              <li class="w3-light-grey w3-padding-24">
+                <button class="w3-button w3-teal w3-padding-large w3-hover-black">FREE ESTIMATE</button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="w3-third">
+            <ul class="w3-ul w3-border w3-white w3-center w3-opacity w3-hover-opacity-off">
+              <li class="w3-black w3-xlarge w3-padding-32">Mobile App</li>
+              <li class="w3-padding-16">Design</li>
+              <li class="w3-padding-16">Development</li>
+              <li class="w3-padding-16">Deployment</li>
+              <li class="w3-padding-16">Endless Support</li>
+              <li class="w3-padding-16">
+                <h2>$ 29,980</h2>
+                <span class="w3-opacity">starting at</span>
+              </li>
+              <li class="w3-light-grey w3-padding-24">
+                <button class="w3-button w3-teal w3-padding-large w3-hover-black">FREE ESTIMATE</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="w3-container w3-padding-large w3-grey">
+        <h4 id="contact"><b>Contact Us</b></h4
+  <div class="w3-row-padding w3-center w3-padding-24" style="margin:0 -16px">
+  <div class="w3-third w3-dark-grey">
+  <p><i class="fa fa-envelope w3-xxlarge w3-text-light-grey"></i></p>
+  <p>info@cohort19.com</p>
+  </div>
+  <div class="w3-third w3-teal">
+  <p><i class="fa fa-map-marker w3-xxlarge w3-text-light-grey"></i></p>
+  <p>Vancouver, BC</p>
+  </div>
+  <div class="w3-third w3-dark-grey">
+  <p><i class="fa fa-phone w3-xxlarge w3-text-light-grey"></i></p>
+  <p>(604) GIT-LOVE</p>
+  </div>
+  </div>
+  <hr class="w3-opacity">
+  <form action="" method="POST">
+  <div class="w3-section">
+  <label>Name</label>
+  <input class="w3-input w3-border" type="text" name="Name" required>
+  </div>
+  <div class="w3-section">
+  <label>Email</label>
+  <input class="w3-input w3-border" type="text" name="Email" required>
+  </div>
+  <div class="w3-section">
+  <label>Message</label>
+  <input class="w3-input w3-border" type="text" name="Message" required>
+  </div>
+  <button type="submit" class="w3-button w3-black w3-margin-bottom"><i class="fa fa-paper-plane w3-margin-right"></i>Send Message</button>
+  </form>
+  </div>
+
+  <!-- TODO: complete the footer, replacing the placeholder text with something meaningful -->
+  <footer class="w3-container w3-padding-32 w3-dark-grey">
+  <div class="w3-row-padding">
+  <div class="w3-third">
+  <h3>FOOTER</h3>
+  <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+  <p></p>
+  </div>
+
+  <!-- TODO: create a separate blog page that has 3 postings. update these 2 posting summaries to reflect the first 2 posts -->
+  <div class="w3-third">
+  <h3>BLOG POSTS</h3>
+  <ul class="w3-ul w3-hoverable">
+  <li class="w3-padding-16">
+  <img src="https://www.w3schools.com/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+  <span class="w3-large">Lorem</span><br>
+  <span>Sed mattis nunc</span>
+  </li>
+  <li class="w3-padding-16">
+  <img src="https://www.w3schools.com/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
+  <span class="w3-large">Ipsum</span><br>
+  <span>Praes tinci sed</span>
+  </li>
+  </ul>
+  </div>
+
+  <!-- TODO: add more popular tags -->
+  <div class="w3-third">
+  <h3>POPULAR TAGS</h3>
+  <p>
+  <span class="w3-tag w3-black w3-margin-bottom">Bitcoin</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Ruby</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Expo</span>
+  <span class="w3-tag w3-grey w3-small w3-margin-bottom">Amazon</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Rails</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">GraphCool</span>
+  <span class="w3-tag w3-grey w3-small w3-margin-bottom">Blue Apron</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">JavaScript</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Django</span>
+  <span class="w3-tag w3-grey w3-small w3-margin-bottom">Tesla</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">Node</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">GoLang</span>
+  <span class="w3-tag w3-grey w3-small w3-margin-bottom">Linus Torvalds</span> <span class="w3-tag w3-grey w3-small w3-margin-bottom">React</span>
+  </p>
+  </div>
+
+  </div>
+  </footer>
+
+  <div class="w3-black w3-center w3-padding-24">Powered by Cohort 19</div>
+
+  <!-- End page content -->
+  </div>
+
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+  }
+  </script>
+
+  </body>
+  </html>
