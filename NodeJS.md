@@ -90,3 +90,8 @@
             process.exit();
           })
         module.exports = db;
+##### check database which you already created with, name of database here is exp_dev
+      psql \exp_dev
+      \d or \dt  
+      \q to quit 
+       
