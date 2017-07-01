@@ -42,7 +42,7 @@
     });
 
 #### to set Cookies
-* in view index.ejs we have an input with name of mytask
+* in view index.ejs we have an input with name of mytask inside a submit form 
 * in routs after post the form, set cookie to my cookie var and set it to result var and render result.ejs view
 
       app.post('/', (req, res) => {
