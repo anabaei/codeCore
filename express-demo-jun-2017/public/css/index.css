@@ -1,0 +1,14 @@
+html {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 100;
+}
+
+* {
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+.cover-image {
+  width: 50vw;
+  border-radius: 5px;
+}

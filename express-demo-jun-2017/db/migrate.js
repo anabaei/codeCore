@@ -1,11 +1,7 @@
-const pgp = require('pg-promise')();
-const db = pgp({
-  host: 'localhost',
-  database: 'exp_dev'
-});
+const db = require('./index');
 
 db.query(`
-  CREATE TABLE posts14 (
+  CREATE TABLE posts (
     id SERIAL,
     title VARCHAR(255),
     content TEXT,
@@ -23,4 +19,3 @@ db.query(`
     console.error(err);
     process.exit();
   })
-module.exports = db;
