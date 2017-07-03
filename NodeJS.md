@@ -136,24 +136,26 @@ on first line define db as
       res.render('results',{result: req.body});
     });
     
-#### To display information on a post/index page from table   
+#### To display information on a post/index page from table inside app.js
 
     const express = require('express');
-    const router = express.Router();
-    const db = require('../db');
+    const app = express;
+   
 
     // posts#index URL: /posts HTTP VERB: GET
-    router.get('/', (req, res) => {
+    app.get('/', (req, res) => {
       db.query(
         `SELECT * FROM posts ORDER BY id DESC`
       )
         .then(posts => {
           res.render('index', {posts: posts});
         })
+
     });
 
     // posts#show URL: /posts/:id HTTP VERB: GET
-    router.get('/:id', (req, res) => {
+    app.get('/:id', (req, res) => {
+      console.log("came here");
       const {id} = req.params;
       // const id = req.params.id;
       db.one(
