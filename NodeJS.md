@@ -109,5 +109,30 @@
         process.exit();
       })
 
+#### To add data into database from usr inputs, we only need to pass db insertion after post routing
+on first line define db as 
+    
+     const db = require('./db/index');
+      .
+      .
+      .
+    app.post('/', (req, res) => {
+      const mycookie = req.body.mytask
+      res.cookie('cookie', mycookie);
 
+    db.query(`
+      INSERT INTO posts (title, content, author)
+      VALUES ($<title>, $<content>, $<author>)
+    `, {
+      title: "faker.hacker",
+      content: "faker.hacker",
+      author: "faker.hacker"
+    })
+      .then(() => {
+        console.log('🔨 Created a post!');
+        process.exit();
+      });
+
+      res.render('results',{result: req.body});
+    });
 
