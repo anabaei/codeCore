@@ -61,37 +61,53 @@
       });
       
 #### inside db/index.js 
-* to create a table named 14 with some attributes and pass db as a database refrence to other files 
 
+    const pgp = require('pg-promise')();
+    const db = pgp({
+      host: 'localhost',
+      database: 'exp_dev'
+    });
+     module.exports = db;
+#### Create db/migrate.js for our table        
 
-        const pgp = require('pg-promise')();
-        const db = pgp({
-          host: 'localhost',
-          database: 'exp_dev'
-        });
+    const db = require('./index');
+    const faker = require('faker');
 
-        db.query(`
-          CREATE TABLE posts14 (
-            id SERIAL,
-            title VARCHAR(255),
-            content TEXT,
-            author VARCHAR(255)
-          )
-        `)
-          .then(() => {
-            console.log('🛠 Created table posts!');
-            // process is a global object provided by node (only)
-            // that gives access to the running program. We can use it
-            // to exit the program amongst other things.
-            process.exit();
-          })
-          .catch(err => {
-            console.error(err);
-            process.exit();
-          })
-        module.exports = db;
+    db.query(`
+      INSERT INTO posts (title, content, author)
+      VALUES ($<title>, $<content>, $<author>)
+    `, {
+      title: faker.hacker.noun(),
+      content: faker.hacker.phrase(),
+      author: faker.name.findName()
+    })
+      .then(() => {
+        console.log('🔨 Created a post!');
+        process.exit();
+      })
+       
 ##### check database which you already created with, name of database here is exp_dev
       psql \exp_dev
       \d or \dt  
       \q to quit 
-       
+
+####  Create a file in database to seeds table first with fake data from faker like this 
+
+    const db = require('./index');
+    const faker = require('faker');
+
+    db.query(`
+      INSERT INTO posts (title, content, author)
+      VALUES ($<title>, $<content>, $<author>)
+    `, {
+      title: faker.hacker.noun(),
+      content: faker.hacker.phrase(),
+      author: faker.name.findName()
+    })
+      .then(() => {
+        console.log('🔨 Created a post!');
+        process.exit();
+      })
+
+
+
