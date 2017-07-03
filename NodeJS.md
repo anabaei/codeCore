@@ -177,5 +177,5 @@ on first line define db as
         <h3><%= post.title %></h3>
       </a>
     </div>
-  <% } %>
+    <% } %>
     
