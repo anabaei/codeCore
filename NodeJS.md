@@ -153,7 +153,7 @@ on first line define db as
 
     });
 
-    // posts#show URL: /posts/:id HTTP VERB: GET
+    // posts#show URL: /:id HTTP VERB: GET
     app.get('/:id', (req, res) => {
       console.log("came here");
       const {id} = req.params;
@@ -167,3 +167,15 @@ on first line define db as
         })
         .catch(err => res.send(err));
     });
+    
+    
+ #### which we have in index.ejs
+    
+      <% for (let post of posts) { %>
+    <div>
+      <a href="/<%= post.id %>">
+        <h3><%= post.title %></h3>
+      </a>
+    </div>
+  <% } %>
+    
