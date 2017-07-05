@@ -1,0 +1,148 @@
+
+
+<%- include('./partials/header') %>
+
+
+<style>
+
+
+@media screen and (min-width: 480px) {
+    .dk {
+      display: none !important;
+      }
+      #collaps {
+      display: block !important;
+      }
+}
+@media screen and (min-width: 1020px) {
+    .dk {
+      display: block !important;
+      }
+      #collaps {
+      display: none !important;
+      }
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.box{
+    position: relative;
+	border: solid grey 1px;
+	color: black;
+	padding: 1%;
+}
+
+.input{
+	border: solid black 2px;
+}
+#details {
+	position: absolute;
+    top: 15%;
+    right: 4%;
+
+}
+
+
+</style>
+
+
+<script>
+function check(){
+    var textbox = document.getElementsByTagName('textarea')
+  //  if(textbox.value.length <= 10 && textbox.value.length >= 5){
+       alert("you submited new Twit!");
+
+  //  }
+
+}
+</script>
+
+ </script>
+
+<div class="col-md-4">
+
+ <img class ="img_circle"  src="https://lh6.googleusercontent.com/L49VMNFZ760XFyY4zwjhFrkgtIFhbriFrmY0mRsqyKjzdUl4U-wFyh4EszaC77s2hO2--xh5NXv4Mu7X1iOsqelZu6DyAO-a2_YsAPgzZx-whBez9FlPRbQ9tW9XIedL5A"  height="82"  width="162">
+
+ </div>
+<div class="col-md-4">  </div>
+<div class="col-md-4" id="link">
+   <a href="/create" class="dk"><h2>Home Dashboard</h2></a>
+</div>
+
+<div class="col-md-12"> </div>
+
+<div class="col-12 col-md-4">
+  <span class="dk ">
+  <div class="col-md-12 box">
+
+        <div class="col-md-6">
+		       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUsPGdFvI1-qOErk1rou7kZUJvZm52468vEHu-jL2JUqFTUaSmQQ" width=70% >
+       </div>
+        <div class="col-md-6">
+				          <h3>  Full Name </h3>
+				          <h4> @username </h4>
+			 </div>
+         <div class="col-md-12">
+          Messages 12
+         </div>
+
+  </div>
+  </span>
+      <div class="col-md-12 dk">
+      <h2> Trending Awe Tweets </h2>
+        <div class="col-md-12 box ">
+
+          <ul style="list-style-type:none">
+             <li>#Things</li>
+             <li>#Winterhelp</li>
+             <li>#TumpAllump</li>
+             <li>#BetterGetTgat</li>
+             <li>#NodeBEan</li>
+             <li>#ElleGraveEverybody</li>
+          </ul>
+
+      </div>
+    </div>
+
+
+
+	<span id="collaps">
+
+	   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUsPGdFvI1-qOErk1rou7kZUJvZm52468vEHu-jL2JUqFTUaSmQQ" width="130" height="135" >
+
+
+	   <img src="https://calbar.inreachce.com/content/images/mobile_menu_icon.png" width="130" height="135"  class="pull-right">
+
+	</span>
+</div>
+
+<div class="col-md-8">
+
+	<form action="/create" method="post" class="box">
+	 <input name="username" placeholder="username" >
+	 <br><br>
+	  <textarea name="message" placeholder="write message here .." rows = 7 class="form-control"  maxlength="255" ></textarea>
+	  <br>
+	 <input type=submit class="btn btn-default" onclick="check()">
+	</form>
+
+
+
+	<% for (let post of posts) { %>
+	<br> <br>
+
+	        <div class="col-md-2 box">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUsPGdFvI1-qOErk1rou7kZUJvZm52468vEHu-jL2JUqFTUaSmQQ" width="90" height="120" >
+          </div>
+          <div class="col-md-10 box">
+	        <h3><%= post.username %></h3>
+	         <h3><%= post.body %></h3>
+         </div>
+
+
+	  <% } %>
+  </div>
+
+</div>
