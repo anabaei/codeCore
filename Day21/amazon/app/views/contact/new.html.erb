@@ -1,0 +1,25 @@
+
+
+
+<%=  form_tag  contact_path do %>
+
+<% if @name.present? %>
+
+   <div>
+       Hi <%= @name %> thanks for contacing us we get back %>
+   </div>
+<% end %>
+
+  <div>
+     <%= label_tag :name %>
+    <%= text_field_tag :name, nil, palceholder: 'hello ', class: "form-control" %>
+    <%= label_tag :email %>
+    <%= text_field_tag :name, nil, palceholder: 'enter your email',  class: "form-control" %>
+  </div>
+    <div>
+     
+    <%= text_area_tag :name, nil, palceholder: 'messages. ...',  class: "form-control" %>
+  </div>
+<%= label_tag :Submit %>
+  <%= submit_tag 'contact us' %>
+<% end  %>

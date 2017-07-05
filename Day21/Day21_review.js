@@ -168,6 +168,9 @@ if other websites try to connect to database while you are loging, then authenti
 from other inputs.  
 
 
+form_for is when you associtat the form with the model, but form_tag is when you dont want to associate it 
+with any model. 
+
 
 
 
