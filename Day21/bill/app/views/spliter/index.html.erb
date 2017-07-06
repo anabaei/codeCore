@@ -1,0 +1,39 @@
+
+
+<div class="col-md-2"> </div>
+
+  <div class="col-md-8">
+<%=  form_tag  calculate_path do %>
+
+     <%= label_tag :Amount %>
+    <%= text_field_tag :amount, nil, palceholder: 'amount ', class: "form-control" %>
+    <%= label_tag :tax %>
+    <%= text_field_tag :tax, nil, palceholder: '',  class: "form-control" %>
+    <%= label_tag :tip %>
+    <%= text_field_tag :tip, nil, palceholder: '',  class: "form-control" %>
+    <%= label_tag :people %>
+    <%= text_field_tag :people, nil, palceholder: '',  class: "form-control" %>
+  
+  <%= submit_tag 'Calculate', class: "btn btn-default" %>
+  <br>
+<% end  %>
+  </div>
+  <div class="col-md-2"> </div>
+
+<div class="col-md-2"> </div>
+<div class="col-md-8">
+ 
+  <% @amount ||= 0 %>
+  <% @people ||= 0 %>
+  <% @tax ||= 1 %>
+  <% @tip ||= 0 %>
+  <% @result = ((@amount+ (@amount/@tax)) + @tip)/@people %>
+
+<% if (@result) %>
+  <%=   flash[:success] = "Every person must pay" %>
+    <%= submit_tag :Submit,  class: "btn btn-danger", value:  @result %>
+ 
+   
+<% end %>
+</div>
+<div class="col-md-2"> </div>
