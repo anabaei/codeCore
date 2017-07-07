@@ -29,4 +29,9 @@ class QuestionsController < ApplicationController
        render :new 
      end 
   end
+
+  def show
+     @question = 
+  end
+
 end

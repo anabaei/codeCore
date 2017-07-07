@@ -1,0 +1,8 @@
+<h1>Products</h1>
+
+
+ 
+ <% @products.each do |pp| %>
+   <%= link_to pp.title, product_path(pp) %>
+   <hr />
+ <% end %>
