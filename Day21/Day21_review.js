@@ -172,8 +172,215 @@ form_for is when you associtat the form with the model, but form_tag is when you
 with any model. 
 
 
+Day22.. continiure on codecoreapp...
+
+controller names should be plural
+model are singular, and the tables  are plural. 
+
+rails g model name 
+string: are 256 charactors, and text is big 
+
+migration file: To generate table
+migration is used to change structure of database
+
+the code that gets executed when run rails db:migrate and run oppoisite when
+run rails db:rollback
 
 
+Code inside migration writen with DSL domain specific language which is ruby 
+each table automatically have id that increment.
+also created_at and updated_at are created by timestamps which automatically 
+are in every table.
+
+to execute migration : rails db:migrate 
+rake db:migrate
+
+1- do roll back 
+2- fix migration 
+3- do migration
+
+rails g migration add_view_count_to_questions
+then you need to input code inside of migration to tell it what to do 
+
+Rails c 
+Q = question.new
+q.title = "my first question"
+q.body = "my doby" 
+
+
+
+// mass assignment to 
+q1 = Qusetion.new({title: 'another one', body: 'hello', view_count: 10})
+
+q1.persisted? it says is it save into database or not? 
+
+q1.save  --> save into dabatase
+
+// it creates it right aways without needing to save command 
+question.create( )
+
+// Question is model name, and this one returns only all feilds that you select 
+Question.select([:title, :body, :id]).all
+q3 = Question.find(2) # this find question with id 2 
+// to find questions by title 
+Question.first
+Question.last 
+
+// it finds it by title and returns only one 
+Quesiton.find_by_title('abc')
+
+// it finds it by title and returns only one 
+Quesiton.find_by({title:'abc', body: 'xyz'})
+
+// it returns all of the collections 
+Quesiton.where({title:'abc', body: 'xyz'})
+
+/// then exactly it put is inside the where of query 
+Quesiton.where("title:'abc' OR body: 'xyz'")
+
+
+Quesiton.where("title Ilike '%age%' ").count;
+
+
+search_term = 'are'
+
+Quesiton.where("title ilike '%#{search_term}' ")
+
+// this question protect you from sequal injection becoause after ? it care about 
+Quesiton.where(["title ilike ?", "%#{search_term}"])
+
+
+ bundle exec rake -T // helps to find right 
+// below is posted by Tam
+Question.where(["title ILIKE ? OR body ILIKE ?", "%#{search_term}%", "%#{search_term}%"]).count
+
+/// to add an index  
+inside the migration 
+by below code created indexes 
+add_index :question, :title
+
+
+Order:
+
+Question.limit(20)
+
+Question.order(:view_count).limit(20)
+
+
+// if the key is a symbole then we put ':' afte the key and also value of our hash :desc is also a symple they are Ruby rules
+Question.where(['body Ilike ?','%hacking%'].order({view_count: :desc}).limit(20)
+
+
+OFF SET 
+it skipp the first 10 results 
+offset are usefull for paginations 
+Question.order(:view_count).limit(20).offset(10)
+
+
+// fetch the record first then set neew value and save one which uses update query 
+q = Question.find 100
+q.view_count = 80
+q.save
+
+also you can do after fetching 
+
+q.update({title: 'new', body: 'newwer'})
+
+
+// it will delete the question 
+q = Question.find 3
+q.destroy 
+
+// notice delete skip some certain validations 
+// Aggregate functions like group by count can be used 
+Question.count 
+
+
+Validations
+// it works without checking
+Question.create 
+
+
+
+inside models:
+
+//every quesiton has to have titile and body, validations call before saving and creating 
+// prevent any saving
+// when we call save we get back true if it completes successfully otherwise save turns false
+validates(:title, {presence: true})
+
+// realod! it reloads the webserver 
+
+// returns the errors object
+q.errors 
+
+// it returns a hash with one key and values as array  
+q.errors.message 
+
+validates(:title, {presence: true, message: 'error message the title must be provide!'})
+
+
+validates(:body, {presence: true, length: { minimum: 5, maximum: 2000}})
+
+
+validates(:viewcount, numeraiclay: { greater_or_equal_to: 0})
+
+After above validations, even error messages are affected and change 
+
+q.save! // it would save unconditionally 
+
+
+
+
+// Four main states 
+1- initilize 
+2- valication
+3- saving
+4- commit
+
+
+after_initialize :set_defualtes
+
+before_validation :titelize_title
+
+// Create a validation for yourself 
+// we pass one function for it 
+// it is refering to a method name by symbol. 
+validate :no_monkey
+// then we have another key name title with this value inside errors.messages 
+
+
+/// lambda is anonymous function in javascript, same 
+scope :recent, lambda {|count| order(created_at)}
+/// class method, the ones are differnet than instance methods and you can access them directly 
+/// withoud having instact, they use by self key word
+def self.recent(count)
+   order({|count| order(created_at)})
+end
+
+
+private 
+  def no_monkey
+    if title.presence? && title.downcase.include?('moneky')
+    	errors.sdd(:title, 'No Monkey please')
+  end 
+
+def set_defualtes
+   self.set_defualtes ||= 0
+end 
+
+def titelize_title
+   self.tile =  title.titelize if title.present?
+end 
+
+------------
+
+/// methods inside rails 
+'hello world'.titelize 
+'category'.pluralize 
+
+ 
+Question.order({created_at: :desc})
 
 
 

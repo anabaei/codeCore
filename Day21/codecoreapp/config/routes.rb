@@ -8,6 +8,14 @@ Rails.application.routes.draw do
   root 'welcome#index'
   resources :articles
 
+    # get('/', to: {'welcome#index'})
+    # get('/admin/questions', to: {'admin/questions#index'})
+
+    # namespace :admin do 
+    #    get('/questions', to: {'questions#index'})
+    # end 
+
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
