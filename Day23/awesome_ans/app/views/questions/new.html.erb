@@ -1,0 +1,24 @@
+<h1>Questions</h1>
+
+
+<!-- it joint all messages which looks like an array with a  comma  -->
+<%= @question.errors.full_messages.join(', ') %>
+
+
+<%= form_for @question do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%# f.text_field will generate an `input` html tag with proper
+    `name` attribute which will be `question[title]` in this case. It will
+    also set the value to the input field to whatever Question.new object has
+    preset for that particular attribute (in this case title) %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

@@ -1,6 +1,9 @@
 Reactjs:
 npm install webpack --save
 
+RVM issues:
+rvm list 
+rvm use --default 2.4.1
 
 
 Node:
@@ -195,6 +198,7 @@ are in every table.
 to execute migration : rails db:migrate 
 rake db:migrate
 
+/// TODO: when creating migration then run migrate, why do we need to rollback? if so we lost data?
 1- do roll back 
 2- fix migration 
 3- do migration
@@ -331,6 +335,9 @@ q.save! // it would save unconditionally
 
 
 
+///New migration 
+rails generate migration add_email_to_users email:string
+
 
 // Four main states 
 1- initilize 
@@ -361,7 +368,7 @@ end
 
 private 
   def no_monkey
-    if title.presence? && title.downcase.include?('moneky')
+    if title.presence? && pinclude?('moneky')
     	errors.sdd(:title, 'No Monkey please')
   end 
 
@@ -381,6 +388,152 @@ end
 
  
 Question.order({created_at: :desc})
+
+
+//// Day 23
+// helper means the ruby commands that create html for us. 
+
+Helper method expects you to give it an activerecord object (instane of a model)
+as its first argument.  if the object is not persisted (question.new) then the form will
+use 
+
+form for check below if it is not persistance goes to modelename_path, therefore
+we have to define that path in routes first. 
+
+
+/// always form_for first checks if persiste or not, if it is then it knows have to 
+// retrieve same url requests that it has came from so, in that url there are 
+// id's 
+
+// Form_for checking persisted, if yes it uses the url is and make it edit able ,ready or not!
+// q.persisted? .. but we only need to add path action because Rails convention 
+// 
+ 
+
+Question.new.persiste?
+
+
+inside the routes file, 
+ questions_path
+ posts_path 
+
+give it to persisted? 
+
+
+
+
+//byebug // you can add it to anywhere inside controller 
+// whatever instance of a model we pass to form_for with the name of the model, then it just uses it 
+
+def creat
+
+  q = Question.new params.require(:question).permit(:title, :body)
+  q.save 
+  params.resquire(:question).permit(:title, :body)
+
+end 
+
+
+q = Question.new 
+
+q.class.to_s 
+q.class.to_s.downcase.pluralize
+
+// on every single input field inside the form 
+// name of form , .new and pass the params 
+name=question[title]
+
+
+// the params object is available in all controllers and it gives you access to all data 
+// comming 
+
+/// In case the data users input inisde the code and we 
+
+
+
+
+inside irb 
+app.questions_path
+app.new_question_path 
+q.class // rails can check what is the object is pass in, so if it is application
+// record then it finds it ID!
+// it becuase of colon id 
+app.question_path(2)
+
+// Create a Show action. 
+// routes is a wild card that mathes anything as :id and we gonna get it as a params 
+// // we wrote show pages after actions 
+
+when we say as in routing , then we define a new name to which we have it in name_path 
+
+/// to find it 
+question.find params[:id]
+/// Edit and Delete 
+
+/// we send to user so it is get, 
+get('questions/:id/edit', to: 'question#edit', as: edit_question)
+
+so to link to it we have 
+
+// because we need to pass a specific id then we use parameters to pass it
+// we have it in show page 
+<%= @question.title %>
+
+<%= link_to 'Edit', edit_question_path(@question) %>
+
+
+
+
+in conntroller
+
+def edit 
+  @question = question.find params[:id]
+end
+
+
+
+
+create view edit.html.erb
+// when you persisteed active record object, then form is used the url to the update 
+// action which is the same url for the show action except that it will be use patch verb
+// instead of get.  it will acheive this by adding an hidden input field with the name 
+//  _method with the value path 
+
+in edit form would be same as show only different 
+
+// when rails see a name of field with _method, then override the file using patch 
+
+def update 
+           @question = Question.find params[:id]
+           Question_params = params.require(:question).permit(:title, :body)
+
+           if @question.update Question_params
+           	else 
+           		render :edit
+           	end
+
+            
+  end
+
+
+/// javascript 
+// rails uses javascript to mimic a delete request to the server 
+// rails checks all anchor tags in the case of delete is created by javascript 
+// define the method for that 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
