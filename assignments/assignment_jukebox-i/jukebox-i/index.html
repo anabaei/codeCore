@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="player.js"></script>
+    <script src="jukebox.js"></script>
+    <title></title>
+  </head>
+<script>
+//// Play the song at 400 beats per minute.
+//playSong(notes, 400);
+
+//var notes = prompt("Give me input"); 
+// var notes = parseSong("Ab B");
+// console.log(notes);
+// playSong(notes, 400);
+
+	function myFunction() {
+	    var input = prompt("Enter you song!");
+	    var notes = parseSong(input);
+	    playSong(notes, 400);
+	}
+</script>
+
+
+		<button onclick="myFunction()">Click on Me!</button>
+
+		<p id="demo"></p>
+
+
+
+  <body>
+
+
+  </body>
+</html>
