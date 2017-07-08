@@ -1,22 +1,22 @@
 class User < ApplicationRecord
 
-    validates(:username, {presence: true, uniqueness: true, exclusion: { in: %w( Microsoft Apple Sony),
-    message: "%{value} is reserved." }})
+    # validates(:username, {presence: true, uniqueness: true, exclusion: { in: %w( Microsoft Apple Sony),
+    # message: "%{value} is reserved." }})
 
 
-    After_initialize :setprice
+    # After_initialize :setprice
 
 
-    def self.search(users)
-         User.where(["username ILIKE ? OR lastname ILIKE ? OR email ILIKE ?", "%#{users}%", "%#{users}%", "%#{users}%"])
-    end
+    # def self.search(users)
+    #      User.where(["username ILIKE ? OR lastname ILIKE ? OR email ILIKE ?", "%#{users}%", "%#{users}%", "%#{users}%"])
+    # end
 
 
-    private
+    # private
 
-    def setprice
-      self.sell_price ||= self.price
-    end
+    # def setprice
+    #   self.sell_price ||= self.price
+    # end
     
 
 end
