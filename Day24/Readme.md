@@ -36,7 +36,7 @@ create a model and validation of that model
     rspec -v -p      
     rspec rspec/models/user_spec.rb:6
 
-    
+####   
 
 
 usfulle like https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
