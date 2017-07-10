@@ -78,7 +78,7 @@ inside the model/user.rb
             expect(expected_value).to eq('Jon Snow');
     
      end 
-
+#### All above were inside  RSpec model do therefore they go directly to that model.
 
 
   
