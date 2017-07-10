@@ -66,6 +66,20 @@ inside the model/user.rb
 		"#{first_name} #{last_name}"
 	  end 
 
+#### Beside checking vlidation, we can check the functionality like this. We check functionality of full_name. 
+#### We add # in front of the name of method as convention to define a function. 
+
+     describe '#full_name'
+	    it 'combines first_name and last_name' do
+	     u = User.new email: 'test@test.ca', first_name: 'Jon', last_name: 'Snow'
+	     
+            # then (use the full_name)
+            expected_value = u.full_name;
+            expect(expected_value).to eq('Jon Snow');
+    
+     end 
+
+
 
   
 usfulle like https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
