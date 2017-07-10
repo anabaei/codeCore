@@ -523,6 +523,17 @@ def update
 
 
 
+TDD 
+
+Test validation of controller 
+Test the controller whether renders correct view_count
+
+if those automatic test were pass, then the modification didnt break anything,
+
+you have to write the test before you write program,  
+TDD 
+
+
 
 
 
