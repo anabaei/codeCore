@@ -531,8 +531,12 @@ Test the controller whether renders correct view_count
 if those automatic test were pass, then the modification didnt break anything,
 
 you have to write the test before you write program,  
+// it means you write the requirements at first, then address them. 
+
 TDD 
 
+we use minitest gem in rails,
+ 
 
 
 
