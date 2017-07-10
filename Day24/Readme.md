@@ -36,7 +36,7 @@ create a model and validation of that model
     rspec -v -p      
     rspec rspec/models/user_spec.rb:6
 
-####   
+#### To test we write test command in spec/models/user.rb. Whenever an instance of a class is created then Rails exactly goes into the model of that class therefor we need to put all validations inside that model and then we access to all methods of that model.   
 
 
 usfulle like https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
