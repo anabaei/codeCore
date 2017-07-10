@@ -38,5 +38,24 @@ create a model and validation of that model
 
 #### To test we write test command in spec/models/user.rb. Whenever an instance of a class is created then Rails exactly goes into the model of that class therefor we need to put all validations inside that model and then we access to all methods of that model.   
 
+For example inside : 
+inside /spec/models/user_spec.rb 
+
+    require 'rails_helper'
+    
+    # User is a name of model class, 
+    RSpec.describe User, type: :model do 
+      
+      #test last_mame validation
+      describe 'last_name Exist?' do
+	        it('last_name must be exist!') do
+		        u = User.new
+		        u.valid?
+		        expect(u.errors).to have_key(:last_name)
+	        end 
+       end
+    
+    end 
+
 
 usfulle like https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
