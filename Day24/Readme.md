@@ -81,5 +81,7 @@ inside the model/user.rb
 #### All above were inside  RSpec model do therefore they go directly to that model.
 
 
-  
-usfulle like https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
+
+usfulle links:
+https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_05/rspec_with_rails_models.md
+https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
