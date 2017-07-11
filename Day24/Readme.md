@@ -32,11 +32,56 @@ create a model and validation of that model
 #### To run on specific line we have
  to run our test on rails we can just run rspec, if we want to use it colorfull we deploy -p    
     
-    rspec 
-    rspec -v -p      
+    rspec      
     rspec rspec/models/user_spec.rb:6
 
+#### To test we write test command in spec/models/user.rb. Whenever an instance of a class is created then Rails exactly goes into the model of that class therefor we need to put all validations inside that model and then we access to all methods of that model.   It knows should go to which model. 
+##### Describe is a method to break down our tests into sections and 'it' is a method and everything between do end is a block to do test, the block  is like a call back. 
+
+For example inside : 
+inside /spec/models/user_spec.rb 
+
+    require 'rails_helper'
     
+    # User is a name of model class, 
+    RSpec.describe User, type: :model do 
+      
+      #test last_mame validation
+      describe 'last_name Exist?' do
+	        it('last_name must be exist!') do
+		        u = User.new
+		        u.valid?
+		        expect(u.errors).to have_key(:last_name)
+	        end 
+       end
+    
+    end 
+
+inside the model/user.rb 
+
+	  validates :email, presence: true, uniqueness: true
+	  validates :first_name, :last_name, presence: true
+
+	  def full_name
+		"#{first_name} #{last_name}"
+	  end 
+
+#### Beside checking vlidation, we can check the functionality like this. We check functionality of full_name. 
+#### We add # in front of the name of method as convention to define a function. 
+
+     describe '#full_name'
+	    it 'combines first_name and last_name' do
+	     u = User.new email: 'test@test.ca', first_name: 'Jon', last_name: 'Snow'
+	     
+            # then (use the full_name)
+            expected_value = u.full_name;
+            expect(expected_value).to eq('Jon Snow');
+    
+     end 
+#### All above were inside  RSpec model do therefore they go directly to that model.
 
 
-usfulle like https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
+
+usfulle links:
+https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_05/rspec_with_rails_models.md
+https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers
