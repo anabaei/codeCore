@@ -5,7 +5,7 @@
 // document.write("hello world");
 // alert("alert");
 
-// let name = prompt("what is password");
+let name = prompt("what is password");
 // if (name.length > 12 )
 // {
 //   document.write(`password is too long` );
@@ -26,17 +26,17 @@
 //   }
 //   num--;
 // }
-
-while(true)
-{
-  let i = prompt('give me a number');
-  if (i == 13){
-    break;
-  }
-  else{
-    alert('try again');
-  }
-}
+//
+// while(true)
+// {
+//   let i = prompt('give me a number');
+//   if (i == 13){
+//     break;
+//   }
+//   else{
+//     alert('try again');
+//   }
+// }
 
 
 
