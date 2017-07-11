@@ -32,11 +32,11 @@ create a model and validation of that model
 #### To run on specific line we have
  to run our test on rails we can just run rspec, if we want to use it colorfull we deploy -p    
     
-    rspec 
-    rspec -v -p      
+    rspec      
     rspec rspec/models/user_spec.rb:6
 
-#### To test we write test command in spec/models/user.rb. Whenever an instance of a class is created then Rails exactly goes into the model of that class therefor we need to put all validations inside that model and then we access to all methods of that model.   
+#### To test we write test command in spec/models/user.rb. Whenever an instance of a class is created then Rails exactly goes into the model of that class therefor we need to put all validations inside that model and then we access to all methods of that model.   It knows should go to which model. 
+##### Describe is a method to break down our tests into sections and 'it' is a method and everything between do end is a block to do test, the block  is like a call back. 
 
 For example inside : 
 inside /spec/models/user_spec.rb 
