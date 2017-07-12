@@ -297,7 +297,7 @@ console.log("Test Question 3 with n=12");
  
 digitProduct(3) // returns 4
 digitProduct(6) // returns 22
-digitProduct(9) // returns 62
+digitProduct(12) // returns 62
 
 
 

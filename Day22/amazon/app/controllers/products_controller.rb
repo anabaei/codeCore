@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
 
 
   def create 
-  	 product_params = params.require(:product).permit(:title, :description, :price)
+  	 product_params = params.require(:product).permit(:title, :description, :price, :category_id)
      @product = Product.new(product_params)
   
    if @product.save
@@ -24,6 +24,7 @@ class ProductsController < ApplicationController
 
   def new 
      @product = Product.new
+     @categories = Category.all
   end
 
   def destroy

@@ -116,7 +116,7 @@ end
 
 
 obj = Question3.new
-res = obj.is_prime?(23)
+res = obj.is_prime?(20)
 puts "#{res}"
 
 

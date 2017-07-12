@@ -1,0 +1,38 @@
+<h1>New Question</h1>
+
+<%# `form_for` helper method expects you to give it an
+ActiveRecord object (instance of a model) as its first argument.
+If the object is not persisted (Question.new), then the form will
+use the default URL to the create action associated to the controller.
+
+We must implement that url in our routes file as
+`post 'questions/', to: 'questions#create', as: :questions` for a
+model named Questions.
+
+In this case, the url for the `create` action to `questions` which is the
+`questions_path`
+%>
+
+<% unless @question.errors.empty? %>
+<div>
+  <%= @question.errors.full_messages.join(', ') %>
+</div>
+<% end %>
+
+<%= form_for @question do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%# f.text_field will generate an `input` html tag with proper
+    `name` attribute which will be `question[title]` in this case. It will
+    also set the value to the input field to whatever Question.new object has
+    preset for that particular attribute (in this case title) %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+
+  <%= f.submit %>
+<% end %>

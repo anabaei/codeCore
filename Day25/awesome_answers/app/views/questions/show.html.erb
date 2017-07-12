@@ -1,0 +1,18 @@
+<h1><%= @question.title %></h1>
+<p><%= @question.body %></p>
+
+<%= link_to 'Edit', edit_question_path(@question) %>
+<%# When you use `method: :delete`, Rails will use
+Javascript to mimick a delete request to the server %>
+<%= link_to 'Delete',
+  question_path(@question),
+  method: :delete %>
+
+
+
+  <h2>Answers </h2>
+
+  <% @answers.each do |answer| %>
+   <%= answer.body %>
+
+  <% end %>
