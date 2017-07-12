@@ -446,4 +446,26 @@ teamSalmonRoster.insertBefore(
 
 
 
+/// get the first link of a page 
+document.querySelector('a')
+
+// get all links 
+document.querySelectorAll('a')
+
+// change all links from craiglist of links to my name
+for (let node of document.querySelectorAll('a')) { node.innerHTML = "amir" }
+
+
+
+/// change image of header 
+var img = new Image();
+img.src = "https://image.flaticon.com/teams/slug/google.jpg"
+$0.appendChild('https://image.flaticon.com/teams/slug/google.jpg')
+
+//change the font of all docs
+document.body.style.fontFamily = 'papyrus'
+// or 
+
+
+
 

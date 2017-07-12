@@ -1,0 +1,208 @@
+
+
+
+
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Exo+2|Gloria+Hallelujah" rel="stylesheet">
+<html>
+<head>
+
+<style>
+#1{
+  color:blue;
+}
+#2{
+  color:green;
+}
+#3{
+  color:grey;
+}
+#4{
+  color:red;
+}
+#4{
+  color:orange;
+}
+#4{
+  color:brown;
+}
+</style>
+
+ <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<body>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.5.2/randomColor.js"></script>
+<h1 class="animated rotateIn" style="font-family: 'Gloria Hallelujah', sans-serif;">Create Groups!</h1>
+
+
+
+</body>
+</html>
+
+<div class='container'>
+  <div class="col-md-3"></div>
+  <div class="col-md-8 form-group">
+  <br>
+    <input class="form-control" id="members" placeholder="write names space or comma to separate" ><br>
+   <!--  <input  id="numbers" placeholder="number of each group"> -->
+  <div class="col-md-2">
+   <select id="numbers" class="form-control" style="margin-left: -3%;">
+      <option value=1>1</option>
+      <option value=2  selected="2">2</option>
+      <option value=3>3</option>
+      <option value=4>4</option>
+      <option value=5>5</option>
+      <option value=6>6</option>
+      <option value=7>7</option>
+    </select>
+   </div>
+   <div class="col-md-10"></div>
+
+  
+    <button class="btn btn-success"  type="submit" onclick="myfunction()" style="margin-top: 3%;">submit</button>
+    <br>
+      <br>
+        <br>
+    
+</div>
+   <div class="col-md-1"></div>
+   <div id="board" class="col-md-12 row" style="font-family: 'Raleway', sans-serif; font-size: 24px;" ></div>
+</div>
+
+
+
+ <script>
+
+function changeorder(arr)
+{
+
+  length = arr.length;
+  check = {}
+  while(0!== length)
+  {
+    skip = false
+    randomIndex = Math.floor(Math.random() * arr.length);
+   //console.log(randomIndex)
+
+      for( x in check)
+      {
+        if(parseInt(x) === randomIndex)
+        skip = true
+      }
+     if(!skip)
+     {
+        // arr[randomIndex] = arr[length-1]
+        check[randomIndex] = arr[length-1]
+        length = length - 1
+        // console.log(randomIndex)
+        // console.log(check)
+     }
+  }
+  return check;
+}
+
+function cr(mem1, cluster){
+  div = document.createElement('div');
+   v= ['animated bounce','animated  bounce','animated teda','animated wobble','animated rollIn','animated bounceInRight','animated zoomInLeft','animated slideInLeft','animated slideInRight' ]
+   if (cluster>9) v[cluster] = 'animated bounce'
+   div.className = ' '+v[cluster]
+   div.id = cluster;
+   
+ // document.getElementById('board').appendChild(div);
+ //  var div = document.createElement('div');
+        // mem1 + mem2
+ // document.getElementById('board').appendChild(div);
+ document.getElementById(cluster).innerHTML =  document.getElementById(cluster).innerHTML + ', ' +mem1
+
+}
+
+
+function creatediv(mem1, cluster){
+  div = document.createElement('div');
+   v= ['animated bounceInRight','animated  bounce','animated teda','animated wobble','animated rollIn','animated bounceInRight','animated zoomInLeft','animated slideInLeft','animated slideInRight' ]
+   if (cluster>9) v[cluster] = 'animated bounce'
+   div.className = 'col-md-2 '+v[cluster]
+   div.id = cluster;
+   div.style.color = randomColor({luminosity: 'dark'});
+  document.getElementById('board').appendChild(div);
+ //  var div = document.createElement('div');
+       // mem1 + mem2
+       console.log("mem1"+mem1);
+ // document.getElementById('board').appendChild(div);
+ document.getElementById(cluster).innerHTML = document.getElementById(cluster).innerHTML + mem1
+
+}
+
+
+function  myfunction(){
+    document.getElementById('board').innerHTML = "";
+    var members = document.getElementById('members').value;
+    var numbers = document.getElementById('numbers').value;
+    var str = "How are you doing today?";
+    //var res = members.split(" ");
+    if (members.includes(','))
+    {
+      var result = members.split(',');
+    }
+    else if (members.includes(' '))
+    {
+      var result = members.split(/\ +/);;
+    }
+    //var result = members.split(',');
+    //var result1 = result.split(' ');
+   // randomIndex = Math.floor(Math.random() * currentIndex);
+
+    rand = Math.floor((Math.random() * 10) + 1);
+    var total = [];
+    var length = result.length;
+    var i = 0;
+    var skip = false;
+
+
+    for(x in result)
+    {
+      if(!result[x])
+        result.pop();
+    }
+
+  //  numbers = 2
+   result = changeorder(result)
+   cnt = 0
+   cluster = 1;
+   var color = randomColor();
+
+    for (x in result)
+    {
+
+        if(cnt === 0)
+        {
+        creatediv(result[x],cluster)
+        cnt++
+        }
+
+       else if (cnt < numbers)
+        {
+        cr(result[x],cluster)
+        cnt++
+        }
+
+        else
+        {
+            cnt = 1;
+            cluster++;
+         
+            creatediv(result[x],cluster)
+
+        }
+   }
+
+
+      console.log(result);
+  }
+
+</script>
