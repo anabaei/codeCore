@@ -465,6 +465,25 @@ $0.appendChild('https://image.flaticon.com/teams/slug/google.jpg')
 //change the font of all docs
 document.body.style.fontFamily = 'papyrus'
 // or 
+document.querySelector('body').style.fontFamily = 'papyrus'
+
+
+////
+document.querySelector('a.image img').srcset = 'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAKTAAAAJDRmNTA3MDk1LTNkNDEtNDgyOS1hYjA1LTA2Yjc1YTE2OGE5Yg.jpg'
+
+document.getElementById('firstHeading').innerHTML = 'Tam Kbeili'
+
+for (let node of document.querySelectorAll('p')) {
+  node.innerHTML = node.innerHTML.split('Pug').join('SPUD')
+}
+
+// prepands
+function prepand(arg1,arg2){
+  var parent = document.getElementById(arg1)
+  var child = document.getElementById(arg2)
+  child.id = 'newid'
+  parent.appendChild(chile);
+}
 
 
 
