@@ -957,274 +957,249 @@ puts Cowsay.say('Created 100 questions', :cow)
 puts Cowsay.say("Created #{answers.count} answers", :ghostbusters)
 
 
-class SessionsController < ApplicationController
-  def new
-  end
 
-  def create
-    # We have the user's email & password from the params
-    # 1. Find the user by their email
-    # 2. If found, we authenticate the user with the given password
-    # 3. If authentication not successful, we alert the user with wrong credentials
-    user = User.find_by(email: params[:email])
+//// Notice:
+//  
+if we dont have instance variable so we use form_tag 
 
-    # user && user.authenticate(params[:password])
-    # &. can be used in place of the dot operator when calling methods on
-    # objects. It gives us a way to against NoMethod for nil:Class errors.
-    # It will immeditely return `nil` instead of calling the method after
-    # it unless the object before is not `nil`.
-    if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      # flash[:notice] = 'Thank you for signing in! â¤ï¸'
-      redirect_to home_path, notice: 'Thank you for signing in! â¤ï¸'
-    else
-      flash.now[:alert] = 'Wrong email or password!'
-      render :new
+
+  //////////// Day 28   
+  //// Tam
+
+
+
+/// we know the session[:user_id]; 
+// to hide availablity of reaching view pages we add 
+// 
+
+def edit 
+  if  @question.user != current_user
+      redirect_to root_path, alert: 'Access denied'
     end
-  end
+end 
 
-  def destroy
-    session[:user_id] = nil
-    redirect_to home_path, notice: 'Signed out!'
-  end
-end
+// also they can mimic the patch request and update the questions that 
+// want to 
+//// inside the routs:
+// make root 
+ root 'welcome#index'
 
-
-class UsersController < ApplicationController
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user =  User.new user_params
-
-    if @user.save
-      # If the user is successfuly created, immediately store their id in the
-      # session hash effectively signing them in.
-      session[:user_id] = @user.id
-      # The flash is temporary that will last until the next
-      # request ends. We typically use it to store information
-      # to display to the user about what just happened.
-
-      # flash[:notice] = 'Thank you for signing up!'
-      # When using `redirect_to`, we can include the flash as an argument
-      # instead of writing in a single as above ð
-      redirect_to home_path, notice: 'Thank you for signing up!'
-    else
-      # Sometimes we want the flash message to appear in the current request and
-      # not the next one. User `flash.now[...]` in that situation.
-      flash.now[:alert] = @user.errors.full_messages.join(', ')
-      render :new
-    end
-  end
-
-  private
-  def user_params
-    params.require(:user).permit(
-      :first_name,
-      :last_name,
-      :email,
-      :password,
-      :password_confirmation
-    )
-  end
-end
+/// in qustion controller should also happen for update and destroy as well
+// when we use a method several times, then we 
+// ! this is a convention for rules, Ruby allows you add ! at the end 
+// in Ruby methods if you add ? returns usually true or false,
+// ! it means dangerous or destruction, so many people use it at the end of mehtods that can be redirected elsewhere
+before_action :authorize_user!, only: [:edit, :destroy, :update]
 
 
-class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  # `before_action` can be used to run before any action in a controller.
-  # The second argument is a symbol named after the method we would to run.
-  # In this example, the before_action calls the find_question before say
-  # the index, or new, etc.
-  before_action :find_question, only: [:edit, :destroy, :show, :update]
-  # We can filter which methods the `before_action` will be called
-  # by proving an `only:` argument giving an array symbols named after the actions.
-  # There is also `except:`.
+  #head will send an empty HTTP response, it takes one argument as a symbol
+     # instead it can do it as below 
+     head :unauthorized 
 
-  def index
-    @questions = Question.order(created_at: :desc)
-  end
+     you can find the symbols from below 
+     http://billpatrianakos.me/blog/2013/10/13/list-of-rails-status-code-symbols/
 
-  # The New action is usually used to show a form of
-  # the resource we'll create on submission
-  # URL: /questions/new
-  # VERB: GET
-  def new
-    # Instance variables declared in controllers are accessible
-    # views rendered by that action.
-    # This means that we can use `@question` inside of `views/questions/new.html.erb`.
-    @question = Question.new
-  end
+     You can use postman in chrome 
 
-  def edit
-  end
+/// if  @question.user != current_user
+this one can be problem because many users can be addes as different rules for the password_confirmation
+// cancancan 
+// DSL domain specific language is a ruby code that written in a certain weay to see as define one like what we have in migration 
+#this files helps all authorization for our app, 
+# we dont need to initialize an instance of the 'Ability' class ourselves, 
+# we have a mthod in controller 'current_user' that returns current_user return 
+# it is important that we define current_user function because many gems use it as convention already define
+# # user -> current_user 
+# if user not sign in then it would be nil 
 
-  def update
-    if @question.update question_params
-      redirect_to question_path(@question)
-    else
-      render :edit
-    end
-  end
+// inside alibilyt.rb model we add 
+// in this rul we manage user can do any action on question object 
+// manage is like anything like update edit anything
+// it is just define rules, to use them we have to deploy in our controler
+// advantage is that all rules are in one page here, then to change them we need to 
+// come here 
+can :manage, Quesiton do |ques|
+  ques.user == user
+end 
 
-  def destroy
-    @question.destroy
-    redirect_to questions_path
-  end
 
-  def show
-    @answer = Answer.new
-    # Using association methods just builds queries, meaning that
-    # we can continue chaining more and more query methods such order, limit, offset, where
-    # , etc
-    @answers = @question.answers.order(created_at: :desc)
-  end
+// show.html.erb
+// can? is helper mehtod that comes from its gem 
+if user_signed_in?  && can?(:manage, @question)
 
-  # The Create action is used to handle form submissions from the New
-  # action to create a record (of a question in this case) in the database.
-  # URL: /questions
-  # VERB: POST
-  def create
-    # Byebug is a gem that is installed by default rails. You can use
-    # to pause execution of any ruby program. In this case, we use pause
-    # the server when the `create` action is called. This will pause server
-    # itself. Go to your terminal tab when `rails s` was run to access
-    # the debugger REPL. Type `exit` to leave byebug.
-    # byebug
 
-    @question = Question.new question_params
-    @question.user = current_user
+// question controller 
+#head :unauthorized unless can?(:manage, @question)
 
-    if @question.save
-      # redirect_to question_path(id: @question.id)
-      # redirect_to question_path(@question.id)
-      redirect_to question_path(@question)
-    else
-      # this will render the `views/questions/new.html.erb` to
-      # show the form again (with errors). The default behaviour is to
-      # render `create.html.erb`
-      render :new
-    end
-  end
 
-  private
-  def question_params
-    params.require(:question).permit(:title, :body)
-    # The params object is avaible in all controllers and it gives you
-    # access to all the data coming from a form or url params
+// go to ability // change the rules,
+// if you own the answer or if you own the question you can delete the answr 
+ can :destroy, Answer do |ans|
+   ans.user == user || ans.question.user == user 
+ end 
 
-    # Require is used to get a nested hashed with the given symbol
-    # inside of the params object (in this case :question)
+// inside the view page 
+/// if user_sigend_in ? && can?(:destroy, answer)
+ can?(:destroy, answer)
 
-    # Every input field of a form must be permitted individiually
-    # otherwise rails will throw an error. This is to prevent users
-    # from creating their fields
-  end
-
-  def find_question
-    @question = Question.find params[:id]
-  end
-end
-
-class AnswersController < ApplicationController
-  before_action :authenticate_user!
-  def create
-    @question = Question.find params[:question_id]
-    @answer = @question.answers.build(answer_params)
-    @answer.user = current_user
-    # ð shortcut for doing ð
-    # answer = Answer.new(answer_params)
-    # answer.question = question
-
-    if @answer.save
-      redirect_to question_path(@question)
-    else
-      # We can use render to display any template by providing their
-      # beginning from the `views/` folder.
-      @answers = @question.answers.order(created_at: :desc)
-      render 'questions/show'
-    end
-  end
-
-  def destroy
+ /// inside the controller 
+ def destroy 
     answer = Answer.find params[:id]
-    answer.destroy
-
+    if can?(:destroy, answer)
+      answer.destroy
     redirect_to question_path(answer.question)
-  end
+    end 
+ end 
+
+ /// inside make admin user , 
+
+ Admin user, 
+ use a simple boolean field in database, if it is true so it is admin and can be defaultm
+ you can have string field (array of string) 
+// rails g migration add_is_admin_to_users is_admin:boolean
+// then we can go to migration and add default is_admin: false
+ add_column :users, :is_admin, :boolean, default: false
+// run 
+
+in cancan there is a commented 
+// it means if it is true then user can manage with any model in application 
+// 
+if user.is_admin?
+  can :manage, :all
+and
+
+/// inside rails c 
+u.update is_admin:true 
+
+
+
+///// We need an admin panel
+
+usuall sepeate controller for admin ,  
+build a dashboard for admin, 
+
+rails g controller admin/dashboard
+// inside routes
+// namespace add as a prepended section name 
+// to write it without namespace we should use /admin/dashboard 
+// so dashboard_controoler.rb must be located in s subfoler of admin 
+//we have /dashbour
+namespace :admin do 
+   reosurces :dashboard, only: :indext
+end 
+
+// inside the controler we have 
+def index 
+   @stats = {
+      question: Question.count,
+      anwer_count: Answer.count,
+      user_count: User.count
+   }
+
+end 
+
+
+// inside the views/amin/dashboard we have index.html.erb
+<%= @stats[:quesiton_count] %>
+<%= @stats[:answer_count] %>
+<%= @stats[:user_count] %>
+
+
+ 
+// inside localhost  we have    /admin/dashboard
+
+/// all the contrlers should check user are sign in and admin
+// so it would be a repeatet codes
+// 
+ 
+
+// rails understand is_admin which return boolean is same as is_admin?
+// _ controller is convention helps for rails to access a common among all controllers 
+
+// notice inside controller/admin folder we add Admin:: ' modules'
+// to be able to hanlde 
+class Admin::BaseController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_admin!
 
   private
-  def answer_params
-    params.require(:answer).permit(:body)
+
+  def authorize_admin!
+    head :unauthorized unless current_user.is_admin?
   end
+
 end
 
+/// then all methods which are in admin controller folder, are inherited into admin controller
+/// beucase they are specific to admin controller, then we created a nested controler for admin 
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>AwesomeAnswers</title>
-    <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-  </head>
-
-  <body>
-    <a href="/">Home</a>
-    |
-    <!-- <a href="/contact">Contact Us</a> -->
-
-    <%# in ERB I can embed Ruby code by using `<%= .. `
-        link_to is a Rails View helper that generate <a> tag for us. Rails comes
-        with many built-in view helpers that makes it easy to generate different
-        HTML elements. The `link_to` first argument is the anchor text, the
-        second argument is the URL or URL helper.
-        When generating URLs in your `config/routes.rb` Rails will sometimes
-        auto-generate URL helpers for you and if not, you can always specify
-        a helper yourself using `as` option.
-    %>
-    <%= link_to('Contact Us', contact_path) %>
-    <!-- <%= link_to('Contact Us', contact_url) %> -->
-    |
-    <%= link_to('New Question', new_question_path) %>
-    |
-    <%= link_to('All Questions', questions_path) %>
-    <% if user_signed_in? %>
-      |
-      <span>Hello, <%= current_user.full_name %>!</span>
-      |
-      <%= link_to 'Sign Out', session_path, method: :delete %>
-    <% else %>
-      |
-      <%= link_to 'Sign In', new_session_path %>
-      |
-      <%= link_to 'Sign Up', new_user_path %>
-    <% end %>
-    <hr>
+// assets are the things that are not change 
+// robost.txt // you can tell google to index which part and not index which part 
 
 
+///inpublic
+<img stc='/dragon.jps'> 
 
-    <% if flash[:notice] %>
-      <div class='alert alert-success'>
-        <%= flash[:notice] %>
-      </div>
-    <% elsif flash[:alert] %>
-      <div class='alert alert-danger'>
-        <%= flash[:alert] %>
-      </div>
-    <% end %>
-
-    <%= yield %>
-  </body>
-</html>
+// in assets 
+// this is rails hash function 
+<%= image_tag 'a.jpg', style: 'width: 100%' %>
 
 
+/// SCSS is callled sass 
+
+SASS is CSS for developers
+nested variables and functions are available beside 
+normal css that works as well, 
+
+///
+
+h1 {
+  color:red; 
+}
+
+//also we have it 
+$main-color: #ffffff;
+
+// rails assets:precompile combine all 
+// Rails in production precompile 
+
+/// bootsprap sasss 
+
+bootstarp sass add to gem 
+
+// scss postfix is important 
+inside stylesheet/boostrap_override.scss
+then copy two import files inside that 
+
+// got to bootstrap webside  cosuomize
+// bootstrap uses less  
+ @less uses  @ as varibale 
+$sass uses $ the same 
+
+// inside bootstrap
+$brand-primary: orange;
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
 
+/// rails using coffescript is javascript looks like ruby
+// ES6 is new version of javascript 
 
+// coments are like // in javascript and in coffee is like #
+// in javascript folder, we can create js files 
 
+uglifier , takes all js, remove comments spaces and indentations for speed the 
+and space 
 
+// it is only when we go to production 
+raisl assets:precompile RAILS_ENV = production
+// then it creates a file assets folder inside public  
+then open up assets, then all the assets 
+somebrowers download gz files for some websites it is faster for browsers to first download them 
+
+//// Heroku 
+it gives you free test servers, 
+free account, has to sleep in 6 hours, 
 
 

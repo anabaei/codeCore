@@ -1,0 +1,14 @@
+<h1> Create one </h1>
+
+
+<%= form_for(@post) do |post| %>
+ <div>
+     <%= post.label :title %>
+     <%= post.text_field :title %>
+ </div>
+  <div>
+     <%= post.label :body %>
+     <%= post.text_field :body %>
+ </div>
+   <%= post.submit "hit!" %>
+<% end %>

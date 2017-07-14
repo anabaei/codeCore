@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714215704) do
+ActiveRecord::Schema.define(version: 20170713212639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,41 +21,24 @@ ActiveRecord::Schema.define(version: 20170714215704) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "products", force: :cascade do |t|
-    t.string "title"
-    t.string "description"
-    t.float "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.float "sale_price"
-    t.bigint "user_id"
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_products_on_category_id"
-    t.index ["user_id"], name: "index_products_on_user_id"
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.bigint "product_id"
+  create_table "comments", force: :cascade do |t|
+    t.bigint "post_id"
     t.string "body"
-    t.integer "rating"
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["product_id"], name: "index_reviews_on_product_id"
-    t.index ["user_id"], name: "index_reviews_on_user_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
-    t.string "password_digest"
+  create_table "posts", force: :cascade do |t|
+    t.bigint "category_id"
+    t.string "body"
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_posts_on_category_id"
   end
 
-  add_foreign_key "products", "categories"
-  add_foreign_key "products", "users"
-  add_foreign_key "reviews", "products"
-  add_foreign_key "reviews", "users"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "posts", "categories"
 end
