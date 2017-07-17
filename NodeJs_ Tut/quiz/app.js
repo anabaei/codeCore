@@ -39,7 +39,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 /// this one create cookie inside the cookie respond
 app.post('/', (req, res) => {
   const mycookie = req.body.mytask
@@ -88,10 +87,6 @@ app.get('/:id', (req, res) => {
     })
     .catch(err => res.send(err));
 });
-
-
-
-
 
 
 
