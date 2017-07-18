@@ -572,8 +572,99 @@ $('td').html('yaaas');
 // 2. Select parents of td tags
 $('tr').parent();
 
+// createElement method in javascript 
+// 1. Create a "small blue diamond" with $ function
+$(`
+  <div class="small blue diamond shape"></div>
+`)
+
+// 2. Append "small blue diamons" to all containers
+
+$('.container').append(
+  $(`
+    <div class="small blue diamond shape"></div>
+  `)
+)
+/// add a section to a DOM and append a circle inside a container to it.  
+// prepanad added before the current one and append added inside that 
+$('h1').append($('<div class="container"></div>'))
+$('.container:nth-of-type(1)').append($('<div class="small black circle shape"></div>'))
+
+// 3. Prepend a new link, "http://www.nyan.cat", to the list of links
+$('ul').prepend(
+  $(`
+    <li><a href="http://www.nyan.cat">Nyan Cat</a></li>
+  `)
+)
+
+$('ul').prepend(
+  $("<li><a href=\"http://www.nyan.cat\">Nyan Cat</a></li>")
+)
+
+///.on is more consitant 
+
+JavaScript is run before the entire HTML is loaded. 
+so all the dom manipulations that related to DOM so we need to wait the whole dom load first.
+
+//in JavaScript we put all stuff inside this which needs the DOM be loaded first. 
+document.addEventListener('DOMContentLoaded',() =>{
+
+})
 
 
+// Listening for events with jquery
+// use the .on method with a jQuery list. jQuery will add an event
+// listener for every in the list. It behaves nearly identically to addEventListener.
+// It takes an event name as the first argument and a callback as the second argument.
+
+document.addEventListener('DOMContentLoaded', () => {
+  $('.blue.circle').on('mouseenter', event => {
+    console.log('Blue circle away with DOMContentLoaded!')
+  })
+})
+
+$(function () {
+  $('.blue.circle').on('mouseenter', event => {
+    console.log('Blue circle away with jQuery!')
+  })
+
+  $('#button-1').on('click', event => {
+    $('.shape').remove()
+  })
+})
+
+
+// 
+
+$('#button-1').on('click', event =>{
+  const{currentTarget} = event;
+  $(currentTarget).attr('disable', true)
+
+})
+
+
+$('tr').on('mouseenter', event =>{
+  const{currentTarget} = event;
+  $(currentTarget).addClass('highlight');
+})
+
+
+/// Animations & affects
+// Velocity JS is very good 
+first one is the time we want to be done and second arg is the 
+call back when the effects is complete 
+
+// it is good idea to not to use => function because we need to use this here 
+$('.blue').fadeIn(5000, funciton(){
+    $(this).slidDown(1000);
+})
+
+/// also we can chain in another funciton 
+$('.blue').fadeIn(5000, funciton(){
+    $(this).slidDown(1000, function(){
+      $(this).fadeOut(200);
+    });
+});
 
 
 
