@@ -247,6 +247,38 @@ for (let doggo of document.querySelectorAll('.doggo')) {
 //////////
 
 //preventDefault // it stop the event to do anything 
+document.querySelector('#application-form').addEventListener('submit', event => {
+  const {currentTarget} = event;
+  // prevent the submit from causing a web request as submitted forms
+  // normally do
+  event.preventDefault();
+  new Audio('sounds/dog-bark-1.wav').play();
+})
+
+//Keyboard Events
+// ascii codes
+string.fromCharCode(68) --> returns d 
+
+
+// hist shift cntrol and n this code change the url 
+document.addEventListener('keydown', event => {
+  const {ctrlKey, shiftKey, key} = event;
+  if (ctrlKey && shiftKey && key.toLowerCase() === 'n')
+  	window.location.href = "somewher"
+})
+
+/// 
+/////////////////////////////
+let data = fd.entries();
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,6 @@
 
+https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_05/rspec_with_rails_models.md
+
 ### MiniTest 
 ####  A base test is a kind of unit testing for checking ruby files, models, databases
 #### Above that we have another layer which we have more functionality testing  controllers. Since controllers are brought everything togather we test if everything is render correctly or user has been redirected or the response to the user is authorized

@@ -486,5 +486,97 @@ function prepand(arg1,arg2){
 }
 
 
+//////    Day30  jQuery 
+////// Two capture phases in reading DOM. 
+
+Events are dipatch to target node, they trickes down descendants to dispatching node (capture phase)
+once the event reaches to target node, it is in between phase at target. Then event bubble up to parent 
+until to reach parent node it is bubble phase. by passing a third argument true to addEventListener are triggered. 
+
+/////// this phase is danger
+Event start from target travel upward to ancester nodes (bubble phase)
+
+/// we want to check how the events are spreading through capture phase,
+to see capturing and bubbling phases, we have to use debug mood 
+
+when you click on something then you would have all ancestors that are trigger. 
+// to see phases it is an object of event name phase 
+
+event.stopPropagation(); 
+// it stop going down and up in event. it means we want to just trigger it. 
+
+
+/// it returns tons of functions are available in jquery 
+console.dir($) 
+// tag name 
+$('button')
+$('button:nth-of-type(2)')
+
+//select all ancer tags a inside li tags
+$('li a')
+
+$('.blue.circle').length
+// it returns the length of object 
+
+// select individual nodes 
+$('.blue.circle')[0].className or
+$('.blue.circle').eq(0)
+
+add,remove,toggle alll are done in classList
+but in jquery we use addclass, removeclass and toggleclass
+
+// when you use a method to read it returns only one argument 
+
+// it changes all attributes of href to google
+$('a').attr('href', 'google')
+
+// look at the second circle there is no . 
+$('.circle').removeClass('circle').addClass('diamond')
+// if we had to do it in javascript we had to loop trhou all 
+// when writing in jquery all nodes all affected but when reading only the first node is affected
+// remove the blue class from all shapes and replace with red 
+$('.shape').removeClass('blue').addClass('.red')
+
+// EXERCISE: Practice
+
+// 1. Set the âclassâ attribute of all anchors to âhighlightâ with attr method
+$('a').attr('class','highlight') // this works, but avoid using it becaue it totaly replace the class
+// instead use addclass removeclass toggleclass instead.
+
+// 2. Replace all âcircleâ classes with the âdiamondâ class.
+$('.circle').removeClass('circle').addClass('diamond')
+// 3. Remove all shapes in the green & purple container.
+$('#green-container .shape, #purple-container .shape').remove();
+it retuens all the shapes inside containers 
+
+// DEMO: html
+innerHTML in jquery is html method
+children property in jquery is children method filters 
+parent property in jquery is a parent method filters 
+
+// 1. Get "html" of the reset button.
+$('#reset').html() it returns html inside that
+// 2. Get "html" of all links.
+$('ul').html() // returns only one 
+
+$('a').map((index,node) => node.innerHTML())
+$('a').map((index,node) => $(node).html())
+// javascript $('ul').[0]
+
+// 3. Change "reset" button to read "Launch Doggos!".
+  $('#reset').html('loaunch Doggos!');
+// EXERCISE: practice
+
+// 1. Replace contents of every "td" with "yass"
+$('td').html('yaaas');
+// 2. Select parents of td tags
+$('tr').parent();
+
+
+
+
+
+
+
 
 
