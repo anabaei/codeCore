@@ -1,2 +1,32 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
+
+<h1> new</h1>
+
+
+<%= form_for @post do |f| %>
+<div>
+<%= f.label :name %>
+<%= f.text_field :name %>
+</div>
+<div>
+<%= f.label :body %>
+<%= f.text_area :body %>
+</div>
+<div>
+<%= f.label :location %>
+<%= f.text_field :location %>
+</div>
+
+
+<!-- <div>
+ f.label :category %>
+ f.collection_select :category_id, Category.all, :id, :name %>
+</div> -->
+
+  
+
+
+<div>
+<%= f.submit %>
+</div>
+
+<% end %>

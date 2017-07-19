@@ -660,12 +660,129 @@ $('.blue').fadeIn(5000, funciton(){
 })
 
 /// also we can chain in another funciton 
-$('.blue').fadeIn(5000, funciton(){
-    $(this).slidDown(1000, function(){
+$('.blue').fadeIn(500, funciton(){
+     $(this).slidDown(1000, function(){
       $(this).fadeOut(200);
     });
 });
 
+/// To select a class combination of two or three in jquery we have to add them next to each other wihtout space
+// space in selections means we nested selector or 
+
+/// Exercise Labs
+document.addEventListener('DOMContentLoaded', () => {
+
+$('#form-1').append($(`
+    <div id="22"></div>
+  `));  
+$('#form-message').html(' ');
+  $('.shape').on('mouseenter', event => {
+     const{currentTarget} = event;
+     $(currentTarget).addClass('highlight');
+  })
+
+
+
+    $('.shape.small').on('click', event => {
+     const{currentTarget} = event;
+      
+     $(currentTarget).hide();
+  })
+
+  $('.shape.medium').on('click', event => {
+     const{currentTarget} = event;
+      
+     $(currentTarget).addClass('small');
+     $(currentTarget).removeClass('medium');
+  })
+    $('.shape.large').on('click', event => {
+     const{currentTarget} = event;
+      
+     $(currentTarget).addClass('medium');
+     $(currentTarget).removeClass('large');
+  })
+
+
+
+ $('table').prepend('<tr> <td>  0 </td>  <td>  - </td></tr>');
+
+
+    $('#button-1').on('click', event => {
+     const{Target} = event;
+      
+     $('#green-container').toggle();
+  })
+
+      $('#button-2').on('click', event => {
+      $('#button-2').fadeOut()
+  })
+      
+      $('#button-3').on('click', event => {
+      $('#button-2').fadeIn()
+  })
+
+       $('#button-4').on('click', event => {
+      $('#green-container').slideUp()
+  })
+
+  //      $('#button-2').on('click', event => {
+  //     $('#button-2').html("Button 2 ").fadeIn(30000)
+  // })
+
+  $(document).on('keyup', event => {
+    if(event.keyCode == 71){
+      $('.shape.grey').fadeOut()
+    }else if (event.keyCode == 32){
+      $('#green-container').append('<div class = "small blue circle shape"></div>')
+    }
+  })
+
+  
+  
+  $('input').on('keyup', event => {
+  a =   $('input').val();
+  b = 14 - a.length; 
+   $('#22').html(b);
+  })
+
+  /// Lab4 
+
+  $('#form-1').submit(event =>{
+   a = $('input').val();
+   b = "red blue yellow green"
+   
+   if (a === "red" ||a === "blue" || a === "yellow" ||a === "green" )
+
+   $('.'+a).hide();
+   else 
+   {
+    $('#form-message').html('Alert, the color inoput is invalid');
+   // event.stopPropagation(); 
+    $('input').val('')
+  }
+  })
+
+
+ /// Lab 5
+  rev = [];
+  $('input').on('keyup', event => {
+  a =   $('input').val();
+    a = a.slice(-1);
+   // console.log(a);
+   rev.push(a);
+    console.log(rev);
+    
+   $('#form-message').prepend(a);
+ //  $('#form-message').html(a);
+  })
+
+
+  $('#orange-container').on('click', event => {
+    $('.shape.red').hide();
+    
+ //  $('#form-message').html(a);
+  })
+})
 
 
 
