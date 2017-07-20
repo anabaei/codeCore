@@ -962,12 +962,12 @@ puts Cowsay.say("Created #{answers.count} answers", :ghostbusters)
 //  
 if we dont have instance variable so we use form_tag 
 
-
-  //////////// Day 28   
-  //// Tam
-
-
-
+//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////// Tam Day28  /////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// Tam http://www.gitcast.io/tkbeili/user-authentication-from-scratch-with-rails
+//-----------------------------------------------------------------------------
+// Tam CanCanCan: http://www.gitcast.io/tkbeili/integrating-cancancan-with-a-rails-application
 /// we know the session[:user_id]; 
 // to hide availablity of reaching view pages we add 
 // 
@@ -991,25 +991,24 @@ end
 // ! it means dangerous or destruction, so many people use it at the end of mehtods that can be redirected elsewhere
 before_action :authorize_user!, only: [:edit, :destroy, :update]
 
-
   #head will send an empty HTTP response, it takes one argument as a symbol
-     # instead it can do it as below 
-     head :unauthorized 
+  # instead it can do it as below 
+  // here head can send unauthorzied from controler to view 
+    head :unauthorized 
 
-     you can find the symbols from below 
+    // you can find the symbols from below 
      http://billpatrianakos.me/blog/2013/10/13/list-of-rails-status-code-symbols/
+     we can use postman app in chrome 
 
-     You can use postman in chrome 
-
-/// if  @question.user != current_user
-this one can be problem because many users can be addes as different rules for the password_confirmation
-// cancancan 
+// if @question.user != current_user
+// Notice: Many users can be addes as different rules for the password_confirmation
+// Therefor we need cancancan! 
 // DSL domain specific language is a ruby code that written in a certain weay to see as define one like what we have in migration 
-#this files helps all authorization for our app, 
-# we dont need to initialize an instance of the 'Ability' class ourselves, 
-# we have a mthod in controller 'current_user' that returns current_user return 
-# it is important that we define current_user function because many gems use it as convention already define
-# # user -> current_user 
+ 
+// we dont need to initialize an instance of the 'Ability' class ourselves, 
+// we have a mthod in controller 'current_user' that returns current_user return 
+// it is important that we define current_user function because many gems use it as convention already define
+#  user -> current_user 
 # if user not sign in then it would be nil 
 
 // inside alibilyt.rb model we add 
@@ -1024,7 +1023,7 @@ end
 
 
 // show.html.erb
-// can? is helper mehtod that comes from its gem 
+// can? is helper mehtod that comes from its gem cancancan
 if user_signed_in?  && can?(:manage, @question)
 
 

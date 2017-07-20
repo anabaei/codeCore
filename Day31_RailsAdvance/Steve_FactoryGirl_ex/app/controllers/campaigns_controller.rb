@@ -6,7 +6,7 @@ class CampaignsController < ApplicationController
   end
 
   def create
-    byebug
+   # byebug
     @campaign = Campaign.new campaign_params
     if @campaign.save
       redirect_to campaign_path(@campaign)
@@ -15,6 +15,11 @@ class CampaignsController < ApplicationController
     end
   end
 
+  def index
+    @campaigns = Campaign.order(created_at: :desc)
+  end
+
+   
   private
   def campaign_params
     params.require(:campaign).permit(:title, :body, :goal, :end_date)

@@ -9,6 +9,8 @@ RSpec.describe CampaignsController, type: :controller do
   # to create it. The code below 👇 is essentially equivalent to the
   # above 👆
   let(:user) { FactoryGirl.create(:user) }
+  let(:campaign)   { FactoryGirl.create(:campaign) }
+  let(:campaign_1) { FactoryGirl.create(:campaign) }
 
   describe '#new' do
     context 'with no user sign in' do
@@ -102,8 +104,29 @@ RSpec.describe CampaignsController, type: :controller do
     end
   end
 
+    it 'sets an instance to all campaigns in the database ordered by creation' do
+      # we're calling the `campaign` and `campaign_1` methods because we want
+      # the campaigns to be created before we do a GET request to the `index`
+      # action
+      campaign
+      campaign_1
+
+      get :index
+
+      expect(assigns(:campaigns)).to eq([campaign_1, campaign])
+    end
+  end
 
   describe '#destroy' do
     it 'removes the record from the database'
   end
 end
+
+
+
+
+
+
+
+
+
