@@ -333,12 +333,14 @@ expect(assigns(:product)).to eq(name)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// everyexample in test clear database 
 ////////// REVIEW the Page ///
+
 describe '#show' do
-
+  // check 
     it 'render the show template' do 
-
+    
       // Given is what you expect to be there 
-      // Campaign exist in database 
+      // Campaign exist in database
+      // check instance vaariable inside the show action  
         campaign = FactoryGirl.create(:campaign)
     // When what you testing 
         get :show, params: {id: campaign.id}
@@ -352,7 +354,7 @@ describe '#show' do
     it 'assigns an instance variable to the campaign'
  
       campaign = FactoryGirl.create(:campaign)
-    // When what you testing 
+    // When what you testing // defining a params to send to show 
       get :show, params: {id: c.id}
       // Send a get request to the show action 
      ///assigns checking for instance vairable named 
@@ -515,6 +517,8 @@ Factorygirl.define do
 
   describe '#destroy' do
     # TODO: research using shared examples to refactor user not signed in
+    
+
     context 'with user NOT signed in' do
       it 'redirects to the sign in page'
     end
@@ -534,10 +538,68 @@ Factorygirl.define do
       end
     end
 
-    
-
-
 
 ///
+// 
+FactoryGirl.attributes_for(:user).merge(first_name: nil)
+
+user = User.new(valid_attribute).
+
+
+
+///////////////////0000000/////////////////////
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+  def valid_attributes(new_attributes = {})
+    attributes = {
+      first_name: 'Jacky',
+      last_name: 'Chui',
+      email: 'jc@example.com',
+      password: '123456'
+    }
+
+    attributes.merge(new_attributes)
+  end
+
+  describe "Validations" do
+    it "requires a first_name" do
+      user = User.new(valid_attributes(first_name: nil))
+      expect(user).to be_invalid
+    end
+
+    it "requires a last_name" do
+      user = User.new(valid_attributes(last_name: nil))
+      expect(user).to be_invalid
+    end
+
+    it "requires a email" do
+      user = User.new(valid_attributes(email: nil))
+      expect(user).to be_invalid
+    end
+
+    it "requires an unique email" do
+      User.create(valid_attributes)
+      user = User.new(valid_attributes)
+      expect(user).to be_invalid
+      # user.save
+      # expect(user.errors.messages).to have_key(:email)
+    end
+
+    it "requires a valid email" do
+      user = User.new(valid_attributes(email: 'blahblahblah'))
+      expect(user).to be_invalid
+    end
+
+  end
+   .titlezie.strip
+
+end
+
+// check the flash 
+/// expect(flash[:alert]).to be 
+
+
+
 
 
