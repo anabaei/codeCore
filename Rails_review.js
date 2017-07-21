@@ -390,6 +390,15 @@ end
 Question.order({created_at: :desc})
 
 
+
+   resources :quesions
+   post('questions/', to: 'questions#create', as: :questions)
+   get('questions/new', to: 'questions#new', as: :new_question)
+   get('questions/:id', to: 'questions#show', as: :question)
+   get('questions/:id/edit', to: 'questions#edit', as: :edit_question)
+   patch('questions/:id', to: 'questions#update')
+   get('questions/', to: 'questions#index')
+   delete('questions/:id', to: 'questions#destroy')
 //// Day 23
 // helper means the ruby commands that create html for us. 
 
