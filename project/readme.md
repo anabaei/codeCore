@@ -1,5 +1,6 @@
 # One To Many
 
+* We have post and comments models 
 * Each post has many comments, so we add post reference to comments  
 ``` ruby
     rails g migration add_post_to_comment post:references  
