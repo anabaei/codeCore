@@ -391,7 +391,8 @@ Question.order({created_at: :desc})
 
 
 
-   resources :quesions
+   resources :quesions 
+   is equal to:
    post('questions/', to: 'questions#create', as: :questions)
    get('questions/new', to: 'questions#new', as: :new_question)
    get('questions/:id', to: 'questions#show', as: :question)
