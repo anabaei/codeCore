@@ -29,6 +29,13 @@ get "/posts/:id" => "posts#show"
  <% end %>
 ```
 * Then we create nested resource comments inside posts to go next level
+* now in each page we can show all comments related to that post, show action inside post would be like this
+``` ruby
+def show
+  	@post = Post.find params[:id]
+  	@comments = Comment.where(post_id: params[:id])
+  end 
+```
 
 
 ### Validation
