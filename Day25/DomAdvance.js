@@ -784,6 +784,148 @@ $('#form-message').html(' ');
   })
 })
 
+//////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////// Day 39 /////////////////////////////////////////
+////////////////////////////// Advance JavaScript /////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//concept of promises 
+promises are kind of abstraction of asynchronyses 
+callback is a function that call another function. 
+all callbacks are asynchronyses. 
+getting values from asynchronyses functiones. 
+so when we want to get asynchronyses, we use callbacks. 
+promises. ES6 
+An abstraction
+
+new Promise(function (){})
+// here [[]] are set in language, open the promise, we gonna use 'catch' and 'then' methods 
+new Promise((resolve, reject)=>{
+  const resolveValue = 'It worked';
+  resolve(resolveValue);
+})
+
+// promise contstrcutor returns two call back functions 
+//here in below only reject works and another one doesnt work, 
+new Promise((resolve, reject)=>{
+  if (true) {
+    // to throw an error inside a promise, user the reject function with error as its argument.
+    reject(new Error('oops'))
+  }
+  const resolveValue = 'It worked';
+  // to return a value from a promise, call the resolve function with the value as its argument
+  // 
+  resolve(resolveValue);
+})
+
+// DEMO: Flipping coin 
+
+function flipCoin(){
+  return new Promise((resolve, reject) =>{
+    const side = ['head','tail'][Math.floor(Math.random()*2)]
+    resolve()
+  })
+
+}
+
+/// call function with call back in asyncronize mood 
+function flipCoinWithCb(cb){
+    const side = ['head','tail'][Math.floor(Math.random()*2)]
+    if (typeof cb === 'function') cb(side);
+}
+
+
+// my solution 
+// function rolldie(n){
+//    const number = Math.floor(Math.random()*n + 1);
+//       resolve(number)
+// }
+
+
+function roll((resolve, reject)=>{
+  const number = Math.floor(Math.random()*n + 1);
+      resolve(number);
+}
+
+new Promise((resolve, reject)=>{
+  if (true) {
+    // to throw an error inside a promise, user the reject function with error as its argument.
+    reject(new Error('oops'))
+  }
+  const resolveValue = 'It worked';
+  // to return a value from a promise, call the resolve function with the value as its argument
+  // 
+  resolve(resolveValue);
+})
+
+// resolve is somthing has meaning 
+
+
+// EXERCISE: Roll Die
+function random (number) {
+  return Math.ceil(Math.random() * number);
+}
+
+function rollDie(number) {
+  return new Promise(function (res, rej) {
+    res(random(number));
+  });
+}
+ 
+
+// DEMO: Throwing the Coin Too Far
+function flipCoin () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const side = ['heads', 'tails'][random(2) - 1];
+      resolve(side);
+    }, 1000 + random(3000));
+  });
+};
+
+// promises has three states, 
+// [[]] means they are properties that you can not touch them, and already defien in lang
+
+function flipCoin () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const side = ['heads', 'tails'][random(2) - 1];
+      resolve(side);
+    }, 1000 + random(3000));
+    setTimeout(()=>{
+     reject('the coin was thrown too far!');
+    },3000);
+  });
+};
+
+// .then always return a promise, argument pass to next then is the result 
+// catch is the error 
+// now you can run it inside the chrome 
+flipCoin().then(resolveValue => {console.log(resolveValue)})
+.then(resolveValue => {console.info('next value', resolveValue); return 10})
+.then(resolveValue => {console.info('next value', resolveValue); return 14})
+.then(resolveValue => {console.info('next value', resolveValue); return 18})
+
+// output is 
+head
+10
+14
+18 
+// these are asyncronize after  each other, the return always hand the value as resolveValue to 
+// the next then. 
+
+// the return of the flip always going be that 
+flip.then(function(value){console.log(value)});
+
+
+
+
+
+
+
+
+
+
 
 
 
