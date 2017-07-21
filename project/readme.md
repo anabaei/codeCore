@@ -46,6 +46,7 @@ def show
     <%= f.submit %>
  <% end %>
 ```
+it is a new comment, so in show action we have to define `@comment = Comment.new' and the @post is the same one already exist
 
 
 ### Validation
