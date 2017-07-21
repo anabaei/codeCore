@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
 
-  get 'posts/show'
+  #get 'posts/show'
+  get "/posts/:id" => "posts#show" 
+  resources :posts do
+       resources :comments, only: [:create, :destroy]
+  end
   
   resources :posts
 

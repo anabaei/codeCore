@@ -1,2 +1,11 @@
 <h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+
+
+<% @posts.each do |p| %>
+  
+  <a> <%= link_to p.name, post_path(p) %>  </a>
+  <%= p.location %>
+  <%= p.title %> 
+  <%= p.body %> 
+ 
+<% end %> 
