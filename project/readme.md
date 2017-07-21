@@ -12,8 +12,8 @@ belongs_to :post, optional: true
 ``` ruby
 has_many :comments, dependent: :nullify 
 ````
-`CASCADE
-Whenever rows in the master (referenced) table are deleted (resp. updated), the respective rows of the child (referencing) table with a matching foreign key column will get deleted (resp. updated) as well. This is called a cascade delete `
+`CASCADE`
+Whenever rows in the master (referenced) table are deleted (resp. updated), the respective rows of the child (referencing) table with a matching foreign key column will get deleted (resp. updated) as well. This is called a cascade delete 
 * ...
 
 
