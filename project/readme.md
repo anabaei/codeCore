@@ -16,6 +16,12 @@ has_many :comments, dependent: :nullify
 Whenever rows in the master (referenced) table are deleted, the respective rows of the child (referencing) table with a matching foreign key column will get deleted as well. This is called a cascade delete 
 
 
+### Validation
+
+* We can add below validations on first line of a model
+``` ruby
+  validates :age, presence: true, uniqueness: true, numericality: { greater_than_or_equal_to: 10 }
+``` 
 * ...
 
 
