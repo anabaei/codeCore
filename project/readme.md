@@ -39,7 +39,7 @@ def show
 ```
 
 ### Add Comment to each post
-* since we have nested resource, we can define this `/posts/20/comments` as an action in out form in view 
+* since we have nested resource, we can define this `/posts/20/comments` as an action in form 
 ```ruby
  <%= form_for [@post, @comment] do |f| %>
     <%= f.text_area :body %>
