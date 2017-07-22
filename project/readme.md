@@ -50,6 +50,24 @@ it is a new comment, so in show action we have to define `@comment = Comment.new
 Rignt now we have ready text area. To actually save the comments we work on comment/create controller/action. 
 * `Notice` To see what is in controller, put byebug and type `params` or `params.require(:comment)` to see active conttroller, also as an hash we have `params[:comment][:body]` inside console.
 
+* Just in controller first find the post id, then create a new comment and add that post_id to it.
+```ruby
+  def create
+  	postid = params.require(:post_id)
+  	newcomment = Comment.new(params.require(:comment).permit(:body)) 
+  	newcomment.post_id = postid
+  	if(newcomment.save)
+     redirect_to posts_path
+    end  		
+  end
+``` 
+* Also we can have another way, here comments means the controller name in the middle 
+```ruby
+def create
+    @post = Post.find params[:post_id]
+    newcomment = @post.comments.build(params.require(:comment).permit(:body))
+    if(newcomment.save)
+```
 
 ### Validation
 
