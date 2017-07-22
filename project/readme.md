@@ -48,6 +48,7 @@ def show
 ```
 it is a new comment, so in show action we have to define `@comment = Comment.new` and the @post is the same one already exist
 Rignt now we have ready text area. To actually save the comments we work on comment/create controller/action. 
+* `Notice` To see what is in controller, put byebug and type `params` or `params.require(:comment)` to see active conttroller, also as an hash we have `params[:comment][:body]` inside console.
 
 
 ### Validation
