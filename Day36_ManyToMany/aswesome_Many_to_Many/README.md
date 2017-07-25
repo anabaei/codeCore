@@ -134,5 +134,12 @@ def find_like
  @like = Like.find(params[:id])
 end 
 
+inside the view 
+
+pluralize number, theword
+<%= pliralize @question.likes.count, 'like' %>
+
+
+
 
 
