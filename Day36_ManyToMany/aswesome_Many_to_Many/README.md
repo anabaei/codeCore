@@ -201,4 +201,5 @@ question.likers = [4,43,21]
 at the button of seeds 
 puts Cowsay.say("created #{Like.count}", :cheese) -- cheese are available for cowsay
 
-
+http://www.gitcast.io/tkbeili/building-a-like-feature-many-to-many-with-rails
+https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_08/like_many_to_many.md
