@@ -36,3 +36,17 @@ if we put liked_questions before has_many we get error. Through association must
 * Now lets go to question model,
 `has_many :likers, through: :likes, source: :user`
 
+in console.
+
+q = Question.last(10).first
+q.likers << User.all.sample
+q.likers
+q.likes -- corresponding likes 
+q.liker_ids 
+return the ids 
+q.liker_ids = [12,32,43[ to overwriete 
+q.likes.destroy_all -- remvoe all 
+
+q.likers = User.where(first_name: 'jon) it returns an array of users 
+
+activerecord collection has its own << which are really commands that everyone can define them or costomize them.
