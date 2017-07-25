@@ -1,0 +1,56 @@
+<h1><%= @question.title %></h1>
+<p><%= @question.body %></p>
+
+<p><strong>Author: </strong> <%= @question.user&.full_name %></p>
+
+<%# can? is a helper method that came from the CanCanCan gem which will check the
+    rules in our /app/models/ability.rb file %>
+<% if user_signed_in? && can?(:manage, @question) %>
+  <%= link_to 'Edit', edit_question_path(@question) %>
+  <%# When you use `method: :delete`, Rails will use
+  Javascript to mimick a delete request to the server %>
+  <%= link_to 'Delete',
+    question_path(@question),
+    method: :delete %>
+<% end %>
+
+<h2>Answers</h2>
+
+<%# If we want to create a form for a resource that is nested inside another,
+we must give `form_for` the resources in array in the order of parent to descendant
+like below. This will create a `form` with `question_answers_path(@question)` for
+its `action` attribute. Inspect this form to know more! %>
+
+<!-- <% unless @answer.errors.empty? %>
+<div>
+  <%= @answer.errors.full_messages.join(', ') %>
+</div>
+<% end %> -->
+
+<% if user_signed_in? %>
+  <%= errors_for @answer %>
+
+  <%= form_for [@question, @answer] do |f| %>
+    <div>
+      <%= f.text_area :body %>
+    </div>
+    <%= f.submit %>
+  <% end %>
+<% end %>
+
+<ul class='answer-list'>
+<% @answers.each do |answer| %>
+  <li>
+    <p><%= answer.body %></p>
+    <p><strong>Commentor: </strong> <%= answer.user&.full_name %></p>
+    <p>
+      <strong>Created at:</strong> <%= answer.created_at.to_formatted_s(:long) %>
+      <% if user_signed_in? && can?(:destroy, answer) %>
+        <%= link_to 'Delete', question_answer_path(@question, answer),
+          method: :delete, data: { confirm: 'Are you sure?'} %>
+      <% end %>
+    </p>
+    <%# https://apidock.com/rails/ActiveSupport/CoreExtensions/DateTime/Conversions/to_formatted_s %>
+  </li>
+<% end %>
+</ul>
