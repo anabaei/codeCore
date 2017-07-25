@@ -1,24 +1,13 @@
-# README
+# Many to Many 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+has_and_belongs_to_many 
+means that the join table woold not have a corresponding model, but the associated table is not accessable, we use another way 
 
-Things you may want to cover:
+create join table and access it,
+so it is like 'like' table among users and questions
 
-* Ruby version
+* Connecting togather through a table togather  
+`rails g model like user:references question:references` 
 
-* System dependencies
 
-* Configuration
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
