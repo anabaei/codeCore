@@ -50,3 +50,27 @@ q.likes.destroy_all -- remvoe all
 q.likers = User.where(first_name: 'jon) it returns an array of users 
 
 activerecord collection has its own << which are really commands that everyone can define them or costomize them.
+
+
+to avoid a user to like a thing twice we use validation 
+
+in like model
+
+The following validation guarantee that there can be only one of the same question_id per user_id. This means that a user 
+// scope means this is unique for user_id 
+// to have an error message
+// validation in columns is with :user_id 
+`validates :question_id, uniqueness: {
+scope: :user_id 
+message: "has already been liked %{model} %{value}  %{attribute.downcase}"
+}`
+
+
+
+
+
+
+
+
+
+
