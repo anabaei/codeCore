@@ -93,8 +93,46 @@ rails g conttroller --help
 
 --no-assets --skip-routes --no-helper 
 
+before_action :find_question, only: [:create]
+before_action :find_like, only: [:destroy]
 
 
+def create
+ like = Like.new user: current_user, question: @question
+ if like.save
+   reduret_to @question, notice: 'Thanks for liking' 
+ else 
+   reduret_to @question, alert: like.errors.full_message.join(',') 
+ end
+ // render json: params 
+end 
+
+private 
+def find_question
+  @question = Question.find(params[:question_id])
+end 
+
+* Adding another button only if the question is liked, 
+
+in view we add below unlike and pass the like id 
+<% like = @question.likes.find_by(user: current_user) %>
+<% if like.present? %>
+  <%= link_to 'unlike', question_like_path(@question, like), method: :delete %>
+<% else %>
+
+now question inspect has both qustion and like ids, 
+
+---- 
+inside the controller 
+def destroy
+   if @like.destroy 
+     redirect_to @like.question
+   end 
+end 
+
+def find_like
+ @like = Like.find(params[:id])
+end 
 
 
 
