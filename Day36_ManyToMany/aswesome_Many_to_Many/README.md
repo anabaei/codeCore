@@ -139,7 +139,66 @@ inside the view
 pluralize number, theword
 <%= pliralize @question.likes.count, 'like' %>
 
+/// users authentication better to be in controller then people can not 
+
+### Authentication
+in controller add 
+before_action :authenticate_user!
+
+in veiws
+if user not sign in
+<% if !user_sign_in? %
+
+my question: like is model here? or action 
+to stop we go to ability file 
+can :like, Question do |question|
+ question.user != user
+end
+
+cannot :like, Question do |question|
+ question.user == user
+end
+
+*now back to controler and check 
+if cannot? :like, @question 
+ redirect_to @question, notice: 'cannot happen'
+
+/// use font awesome
+install for our application gem 'font-awesome-rails' 
+font awesome rails add just use .css in github for that
+inside application css, 
+add *=require font-awesome on top of tree
+then in rails we need just say fa icon and name of icon, 
+fa_icon 'cammera'
+because they are methods inside methos we put inside brackets 
+fa_icon('cammera lg') gives bigger 
 
 
+scss is complie to css, sass means there is whitespace indentation instead of brackets
+
+### seeds for likes 
+
+so we add lights at the same time questions created 
+
+
+100.times do
+  question = Question.create(title: Faker::ChuckNorris.fact,
+                  body: Faker::Hacker.say_something_smart,
+                  view_count: rand(1000),
+                  user: users.sample
+)
+question.likers = users.shuffle.slice(0..rand(users.count))
+end
+
+//inside the rails console.
+users = User.all
+users.shuffle   change the order 
+
+users.shuffle.slice(0..rand(users.count))  -- it gives back a range of numbers, also it gives me unique results  the result is an array of users
+like: 
+question.likers = [4,43,21]
+
+at the button of seeds 
+puts Cowsay.say("created #{Like.count}", :cheese) -- cheese are available for cowsay
 
 
