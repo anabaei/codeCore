@@ -65,9 +65,33 @@ scope: :user_id
 message: "has already been liked %{model} %{value}  %{attribute.downcase}"
 }`
 
+anonymosoeu fucniton in Ruby
+object is argument
+// this 
+message: ->(object, data) do {"#{data[:object]}"}
 
+end
 
+// craete  a button like in API
+add a button, 
 
+likes would be nested in question 
+<%= link_to 'Like', question_likes_path(@question), method: :post %>
+<%= @question.likes.count %> likes
+
+inside resource :question
+resources :likes, only: [:create, :destroy]
+
+rails g controller likes 
+
+// need it 
+rails help g
+
+we can skipp coffee scripts or extra
+
+rails g conttroller --help
+
+--no-assets --skip-routes --no-helper 
 
 
 
