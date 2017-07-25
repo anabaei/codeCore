@@ -33,4 +33,6 @@ u.liked_questions
 
 if we put liked_questions before has_many we get error. Through association must be define before, 
 
+* Now lets go to question model,
+`has_many :likers, through: :likes, source: :user`
 
