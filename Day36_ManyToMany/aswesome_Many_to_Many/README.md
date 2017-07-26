@@ -209,14 +209,14 @@ Votes we gonna have
 ```ruby
 rails g model vote user:references answer:references is_up:boolean
 ```
-a column added as is_up, if it is true is up else is down, and add `, index: true` in migration in front of both foreign keys
-
-inside vote model belongs to already created, 
+A column added as is_up, if it is true is up else is down, and add `, index: true` in migration in front of both foreign keys and inside vote model belongs to already created, 
+* Now in both models define relation to middle table votes and then second like define a relationship through that table to reach another one 
 Answer model 
 ```ruby
 has_many :votes, dependent: :destroy 
 has_many :voter, through: :votes, source: :user 
 ```
+
 User model 
 ```ruby
 has_many :votes, dependent: :destroy 
