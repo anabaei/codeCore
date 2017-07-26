@@ -384,4 +384,95 @@ if it gets a model instance, redirect to `question_path(@answer.question)` is sa
 ```
 ## Tags 
 
+Order the asnwers by votes, 
+
+`rails g model tag name`
+this is a relation between question and tags 
+`rails g model tagging question:references tag:references`
+now add indexes into tagging migration `,index: true`
+usually we have a foreign key that is search alot.
+
+* Inside tag moel
+```ruby
+has_many :taggings, dependent: :destroy 
+has_many :questions, through: :taggings 
+
+validates :name, presence: true, uniqueness: {case_sensetive: false}
+
+before_validation :downcase_name
+
+private 
+def downcase_name
+  self.name.downcase!
+ end 
+```
+we want all downcase.
+
+
+* in Question model
+```ruby
+ has_many :taggings, dependent: :destroy
+ has_many :tags, though: :taggings
+```
+in console
+```ruby
+Tag.create(name: 'Science')
+q = Question.first
+q.tags << Tag.first
+
+```
+* in question/new view page 
+form_for @question do |f|
+.
+.
+<%= f.labe :tag_list, "tags " %>
+<%= f.text_field :tag_list %>
+ 
+
+
+*in question create controller action 
+
+
+*inside quesiton modle we add a setter or virtual method , this is called attribute setter 
+// this means question.tag_list = 'something' it would call below 
+def tag_list=(value)
+end 
+
+By adding above we add one attribute to our params in form 
+the question doesnt have colum for tags, the form thinks question has tag colmun now 
+
+
+rails console
+
+tags = 'aaa,ddd,ds'
+tags.split(/\s*,\s*/)   -- remove anyspace, * as many as it is 
+
+it search first and if it can not find anything then created 
+Tag.where(name: 'thins').first_or_create!
+
+we let the user automatic to input tags, 
+
+tags.split(/\s*,\s*/).map do |name|
+  Tag.where(name: name.downcase).first_or_create!
+ end
+ 
+ this create three tags right now, even if they exist it returns 
+ put above inside tag_list=(value) 
+ and equal to  self.tag = value.split(/\s*,\s*/).map do |name|
+               Tag.where(name: name.downcase).first_or_create!
+              end
+self if we are writing to attribute of this , kind of refrencesing 
+
+
+def tag_list
+  tag.map{ |tag| tag.name } same as below code
+  tag.map(&:name).join(", ")
+end
+
+* In question controller we add one attribute name tag_list 
+
+
+
+
+
 
