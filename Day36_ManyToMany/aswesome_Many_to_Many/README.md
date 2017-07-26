@@ -232,8 +232,9 @@ The relationship that users has with answers is how they voted the answers
 in rails console:
 ```ruby
 Answer.all
-Answer.first.voters << 
+Answer.first.voters << User.last
 ```
+* It assign one user to answer inside like table 
 In Vote model 
 ```ruby
 Validates :answer_id, uniqueness: {
@@ -243,10 +244,23 @@ message: "has already been voted"
 validates :is_up, inclusion: {in: [true, false]}
 ```
 inclusion instead of present means whatever we give it to attribute either be true or false. 
+in terminal
+```ruby
+u = User.last
+Answer.first.votes << u
+```
+now it gives error because of validation 
 
-
-
-
+```ruby
+Answer.first.votes.create(user: u, is_up: true)
+OR
+Answer.first.votes << Vote.create(user: u, is_up: true) *notice
+```
+*notice, in this part since it create first without answer referencing, so it first create inside the like and when want to assign answer to it, it fails
+* Among all this way is more useable in controllers
+```ruby
+Vote.Create(user: User.all.sample, answer: Answer.all.sample, is_up: true)
+```
 
 
 
