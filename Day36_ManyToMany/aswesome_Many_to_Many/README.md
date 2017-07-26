@@ -530,3 +530,7 @@ $(function() {
   }
  )
  
+ in rails console we can have 
+ Question.join(:tags_
+ 
+ 
