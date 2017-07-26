@@ -301,3 +301,69 @@ a.votes.up
 <%= f.vote_total %> 
 
 
+some csss
+.voting_widget {
+width: 75px;
+display: flex;
+flex-shrink: 0;
+flex-flow: column;
+aligh-item: center;
+width: 100px;
+justify-content: center;    -- it makes it 
+}
+
+.answer-list > li {
+ display: flex;
+ margin: 5px 0;  -- it margines top & bottum and zero asides 
+}
+
+
+
+flex-shrink is 1 by default 
+
+----
+in routes:
+
+*votes are inside answer so nested routes 
+```ruby
+link_to "up", answer_votes_path(answer, {is_up: true}), method: :post
+link_to "down", answer_votes_path(answer, {is_up: false}), method: :post
+```
+is_up we set an attribute, and we added in params 
+
+
+notice: rails put the params as get although we said is post in url top
+```ruby
+resources :answer, only: [], shallow: true  do 
+  resources :votes, only: [:create, :destroy, :update]
+end 
+```
+votes controller 
+```ruby
+before_action :find_answer, only: [:create]
+befpre_action :find_vote, only: [:destroy]
+ def create 
+  vote = Vote.new(user: current_user, answer: @answer. is_up: params[:is_up])
+  if vote.save 
+    redirect_to @answer.question, notice: 'good'
+  end
+  render jason:params
+ end
+ 
+ def destroy 
+  ender jason:params
+ end
+ 
+  def update 
+   ender jason:params
+  end
+ 
+  def find_asnwer
+    @answer = Answer.find(params[:answer_id]
+  end
+
+```
+
+if it gets a model instance, redirect to `question_path(@answer.question)` is same as `@answer.question`
+
+
