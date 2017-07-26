@@ -22,8 +22,15 @@ u.likes
 u.likes.create question: Question.first(2).last
 * it is not went to many to many so far 
 Now we add inside user model
-we come out with a name that shows all questions likes , through likes tells which table is accociated, source is saying from where we get them. through likes it goes on top has_many likes 
-`has_many :liked_questions, through: :likes, source: :question`
+we come out with a name that shows all questions that user liked , 
+
+```ruby
+has_many :liked_questions, through: :likes, source: :question
+```
+
+liked_questions is what we call our relationship, it doesnt have to be a table that exist, it is a name of choosing to define a name and then have to specify what tables it associated. First we tell which table it associates through(middle table) and then what `id` im getting in likes table. Here we get question id in likes table to get all questions are in likes table. 
+
+
 
 u = User.first
 u.liked_questions it gives the questions user has liked
