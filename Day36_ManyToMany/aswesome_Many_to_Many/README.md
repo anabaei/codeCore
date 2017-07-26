@@ -412,7 +412,7 @@ we want all downcase.
 * in Question model
 ```ruby
  has_many :taggings, dependent: :destroy
- has_many :tags, though: :taggings
+ has_many :tags, through: :taggings
 ```
 in console
 ```ruby
@@ -471,8 +471,62 @@ end
 
 * In question controller we add one attribute name tag_list 
 
+inside the show @question we add 
+* the setter and getters tag_list helps us to devide the input users into a list and be able to save an assoicatied list to a question in join table which is tagging 
+
+@question.tag_ist to see the list 
 
 
+in seeds 
 
+50.times do 
+   tag = Tag.create(name: Faker::Book.genre)  
+end 
 
+tags = Tag.all
+then inside question 
+    question.tags = tags.shuffle.slice(0..rand(10))
+    
+    
+ selectize.js 
+ dist, 
+ js, css, sectize folder, 
+ dist/js/selectize.js copy to asset javascript add new file selectize.min.js  and past there, 
+ we should user standanlone folders 
+ we need to select our input object, and then call selectize on it, 
+ 
+ inside application.js 
+ //=requre jquery3
+ //= require selectize.min.js 
+ //=require jquery_ujs
+ //= require tree. 
+ 
+ 
+ # change question.coffee to question.js 
+ then write your js there
+to load after page is loaded 
 
+$(function() {
+ $('#quesiton_tag_list').selectize(
+  delimeter: ',',
+  persist: false,
+  create: function(input){
+   return {
+    value: input,
+    text: input
+   }
+ })
+ 
+ 
+ 
+ $('#quesiton_tag_list').selectize(
+  delimeter: ',',
+  persist: false,
+  create: function(input){
+   return {
+    value: input,
+    text: input
+   }
+  }
+ )
+ 
