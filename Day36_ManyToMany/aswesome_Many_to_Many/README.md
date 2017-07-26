@@ -351,19 +351,37 @@ befpre_action :find_vote, only: [:destroy]
  end
  
  def destroy 
+  @vote.destroy 
   ender jason:params
  end
  
   def update 
+   @vote.update is_up: params[:is_up]
    ender jason:params
   end
  
   def find_asnwer
     @answer = Answer.find(params[:answer_id]
   end
+  
+    def find_vote
+     @vote = Vote.find(params[:id])
+  end
 
 ```
-
 if it gets a model instance, redirect to `question_path(@answer.question)` is same as `@answer.question`
+
+* show the color of bottum 
+
+```ruby
+<% vote = answer.votes.find_by(user: current_user) %
+<% if vote.nil? %>
+<% elsif vote.is_up? %>
+  <%= link_to fa_icon('arrow-up'), vote_path(vote), method: :delete, class: 'active' %>
+   <%= link_to fa_icon('arrow-up'), vote_path(vote), method: :patch %> -- it sends me to update 
+<% else %>
+<% end %>
+```
+## Tags 
 
 
