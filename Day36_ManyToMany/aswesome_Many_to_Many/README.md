@@ -16,43 +16,38 @@ Now the model likse has its own associations, but we still have to add below to 
 `l = Like.new user: User.first, question: Question.first`
 l.question gives the question associtated to it
 l.user.likes gives all the likes user have 
-
-u = User.first
+`u = User.first
 u.likes
-u.likes.create question: Question.first(2).last
-* it is not went to many to many so far 
-Now we add inside user model
-we come out with a name that shows all questions that user liked , 
+u.likes.create question: Question.first(2).last`
+it is not went to many to many so far 
 
+*  Inside `user` model we define a new relationship through a middle table with another table. The association 
 ```ruby
 has_many :liked_questions, through: :likes, source: :question
 ```
-
 liked_questions is what we call our relationship, it doesnt have to be a table that exist, it is a name of choosing to define a name and then have to specify what tables it associated. First we tell which table it associates through(middle table) and then what `id` im getting in likes table. Here we get question id in likes table to get all questions are in likes table. 
 
-
-
-u = User.first
-u.liked_questions it gives the questions user has liked
+`u = User.first
+u.liked_questions  it gives all the questions that the user has liked
 u.like_questions << Question.last
 Like.all 
-u.liked_questions 
+u.liked_questions`
 
-if we put liked_questions before has_many we get error. Through association must be define before, 
+if we put liked_questions before has_many we get error. Through association table must be exist then the new relation that we define knows through what should pass, 
 
 * Now lets go to question model,
-`has_many :likers, through: :likes, source: :user`
-
-in console.
-
-q = Question.last(10).first
+```ruby
+has_many :likers, through: :likes, source: :user
+```
+* in console.
+`q = Question.last(10).first
 q.likers << User.all.sample
 q.likers
 q.likes -- corresponding likes 
 q.liker_ids 
 return the ids 
 q.liker_ids = [12,32,43[ to overwriete 
-q.likes.destroy_all -- remvoe all 
+q.likes.destroy_all -- remvoe all `
 
 q.likers = User.where(first_name: 'jon) it returns an array of users 
 
@@ -61,22 +56,23 @@ activerecord collection has its own << which are really commands that everyone c
 
 to avoid a user to like a thing twice we use validation 
 
-in like model
+#### in like model
 
 The following validation guarantee that there can be only one of the same question_id per user_id. This means that a user 
-// scope means this is unique for user_id 
-// to have an error message
-// validation in columns is with :user_id 
-`validates :question_id, uniqueness: {
+```ruby
+validates :question_id, uniqueness: {
 scope: :user_id 
 message: "has already been liked %{model} %{value}  %{attribute.downcase}"
-}`
+}
+```
+scope means this is unique for user_id 
+to have an error message
+validation in columns is with :user_id 
 
-anonymosoeu fucniton in Ruby
+* Anonymosoeu fucniton in Ruby
 object is argument
 // this 
 message: ->(object, data) do {"#{data[:object]}"}
-
 end
 
 // craete  a button like in API
