@@ -208,7 +208,7 @@ http://www.gitcast.io/tkbeili/building-a-like-feature-many-to-many-with-rails
 https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_08/like_many_to_many.md
 
 
-## Part II Many to Many 
+# Part II Many to Many 
 
 Votes we gonna have 
 ```ruby
