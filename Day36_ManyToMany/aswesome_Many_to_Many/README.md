@@ -8,18 +8,22 @@ so it is like 'like' table among users and questions
 
 * Connecting togather through a table togather  
 `rails g model like user:references question:references` 
-* Then we add , `,index: true` in migrations in front of foreign keys because searching through these foreign keys are always happen
-Now the model likse has its own associations, but we still have to add below to both user and question models 
-`has_many :likes, dependent: :destroy`
+* Then we add `,index: true` in migrations in front of foreign keys because searching through these foreign keys are always happen
+Now the model likse has its own associations, but we still have to add below to both `user` and `question` models 
+```ruby
+has_many :likes, dependent: :destroy
+```
 * depenedent :destroy means when user deleted all the likes are gone
-*In console we have :
-`l = Like.new user: User.first, question: Question.first`
+*In console we have:
+```ruby
+l = Like.new user: User.first, question: Question.first
 l.question gives the question associtated to it
 l.user.likes gives all the likes user have 
-`u = User.first
+u = User.first
 u.likes
-u.likes.create question: Question.first(2).last`
-it is not went to many to many so far 
+u.likes.create question: Question.first(2).last
+```
+it has not went to many to many yet! 
 
 *  Inside `user` model we define a new relationship through a middle table with another table. The association 
 ```ruby
@@ -40,23 +44,21 @@ if we put liked_questions before has_many we get error. Through association tabl
 has_many :likers, through: :likes, source: :user
 ```
 * in console.
-`q = Question.last(10).first
+```ruby
+q = Question.last(10).first
 q.likers << User.all.sample
 q.likers
 q.likes -- corresponding likes 
 q.liker_ids 
 return the ids 
 q.liker_ids = [12,32,43[ to overwriete 
-q.likes.destroy_all -- remvoe all `
-
+q.likes.destroy_all -- remvoe all 
 q.likers = User.where(first_name: 'jon) it returns an array of users 
-
+```
 activerecord collection has its own << which are really commands that everyone can define them or costomize them.
-
-
 to avoid a user to like a thing twice we use validation 
 
-#### in like model
+##### in like model
 
 The following validation guarantee that there can be only one of the same question_id per user_id. This means that a user 
 ```ruby
@@ -70,35 +72,27 @@ to have an error message
 validation in columns is with :user_id 
 
 * Anonymosoeu fucniton in Ruby
-object is argument
-// this 
+object is argument 
 message: ->(object, data) do {"#{data[:object]}"}
-end
 
-// craete  a button like in API
-add a button, 
+
+##### Craete a button like in API
 
 likes would be nested in question 
 <%= link_to 'Like', question_likes_path(@question), method: :post %>
 <%= @question.likes.count %> likes
 
-inside resource :question
-resources :likes, only: [:create, :destroy]
-
-rails g controller likes 
-
-// need it 
-rails help g
-
-we can skipp coffee scripts or extra
-
-rails g conttroller --help
-
---no-assets --skip-routes --no-helper 
-
+* In routes
+```ruby
+resource :question do
+  resources :likes, only: [:create, :destroy]
+end 
+```
+`rails g conttroller likes --help --no-assets --skip-routes --no-helper`
+* In likes controller
+```ruby
 before_action :find_question, only: [:create]
 before_action :find_like, only: [:destroy]
-
 
 def create
  like = Like.new user: current_user, question: @question
@@ -114,19 +108,21 @@ private
 def find_question
   @question = Question.find(params[:question_id])
 end 
-
+```
 * Adding another button only if the question is liked, 
 
 in view we add below unlike and pass the like id 
+```ruby
 <% like = @question.likes.find_by(user: current_user) %>
 <% if like.present? %>
   <%= link_to 'unlike', question_like_path(@question, like), method: :delete %>
 <% else %>
-
+```
 now question inspect has both qustion and like ids, 
 
 ---- 
-inside the controller 
+*inside likes controller 
+```ruby
 def destroy
    if @like.destroy 
      redirect_to @like.question
@@ -136,13 +132,12 @@ end
 def find_like
  @like = Like.find(params[:id])
 end 
-
-inside the view 
-
+```
+* In the view 
+```ruby
 pluralize number, theword
 <%= pliralize @question.likes.count, 'like' %>
-
-/// users authentication better to be in controller then people can not 
+```
 
 ### Authentication
 in controller add 
