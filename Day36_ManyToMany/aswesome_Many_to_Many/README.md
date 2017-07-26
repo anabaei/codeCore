@@ -206,3 +206,47 @@ puts Cowsay.say("created #{Like.count}", :cheese) -- cheese are available for co
 
 http://www.gitcast.io/tkbeili/building-a-like-feature-many-to-many-with-rails
 https://github.com/CodeCoreYVR/bootcamp_summary_notes/blob/master/week_08/like_many_to_many.md
+
+
+## Part II Many to Many 
+
+Votes we gonna have 
+```ruby
+rails g model vote user:references answer:references is_up:boolean
+```
+a column added as is_up, if it is true is up else is down, and add `, index: true` in migration in front of both foreign keys
+
+inside vote model belongs to already created, 
+Answer model 
+```ruby
+has_many :votes, dependent: :destroy 
+has_many :voter, through: :votes, source: :user 
+```
+User model 
+```ruby
+has_many :votes, dependent: :destroy 
+has_many :voted_answerts, through: :votes, source: :answer
+```
+The relationship that users has with answers is how they voted the answers
+
+in rails console:
+```ruby
+Answer.all
+Answer.first.voters << 
+```
+In Vote model 
+```ruby
+Validates :answer_id, uniqueness: {
+scope: :user_id,
+message: "has already been voted"
+}
+validates :is_up, inclusion: {in: [true, false]}
+```
+inclusion instead of present means whatever we give it to attribute either be true or false. 
+
+
+
+
+
+
+
