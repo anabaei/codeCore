@@ -17,12 +17,12 @@ has_many :likes, dependent: :destroy
 *In console we have:
 ```ruby
 l = Like.new user: User.first, question: Question.first
-l.question gives the question associtated to it
 l.user.likes gives all the likes user have 
 u = User.first
 u.likes
 u.likes.create question: Question.first(2).last
 ```
+`l.question` gives the question associtated to it
 it has not went to many to many yet! 
 
 *  Inside `user` model we define a new relationship through a middle table with another table. The association 
@@ -222,12 +222,14 @@ User model
 has_many :votes, dependent: :destroy 
 has_many :voted_answerts, through: :votes, source: :answer
 ```
-The relationship that users has with answers is how they voted the answers
+The relationship that users have with answers is how they voted the answers
 
 in rails console:
 ```ruby
 Answer.all
-Answer.first.voters << User.last
+A = Answer.last
+A.votes -- returns all votes related to this answer 
+Answer.first.voters << User.last -- it assigns a user to 
 ```
 * It assign one user to answer inside like table 
 In Vote model 
@@ -528,4 +530,7 @@ $(function() {
  in rails console we can have 
  Question.join(:tags_
  
+ *difference between find & find_by 
+ find_by if the result has not found it is nil  
+ find if not find returns 404 error so it is suggested. 
  
