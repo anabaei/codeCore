@@ -262,5 +262,42 @@ Answer.first.votes << Vote.create(user: u, is_up: true) *notice
 Vote.Create(user: User.all.sample, answer: Answer.all.sample, is_up: true)
 ```
 
+* Now go to View and question/show and add inside @answer  do f form 
+```ruby
+
+<%= link_to fa_icon('arrow_up') %>
+<%= %> 
+<%= link_to fa_icon('arrow_down') %>
+```
+
+*Answer model
+```ruby 
+def vote_total
+  votes.up.count - votes.down.count 
+end 
+```
+* Vote model 
+The class methods need self before the name. We create a self method to be accessibel everywhere
+```ruby
+def self.up
+  where(is_up: true)  
+end 
+
+def self.down
+ where(is_up: false)
+end 
+```
+```ruby
+a = Answer.last
+a.votes 
+a.votes.up
+a.votes.create(user:User.all.sample, is_up: [true, false].sample)
+a.votes
+a.vote_total 
+a.votes.down
+a.votes.up 
+```
+* Now inside the show
+<%= f.vote_total %> 
 
 
