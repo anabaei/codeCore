@@ -220,7 +220,7 @@ has_many :voter, through: :votes, source: :user
 User model 
 ```ruby
 has_many :votes, dependent: :destroy 
-has_many :voted_answerts, through: :votes, source: :answer
+has_many :voted_answers, through: :votes, source: :answer
 ```
 The relationship that users have with answers is how they voted the answers
 
@@ -229,9 +229,10 @@ in rails console:
 Answer.all
 A = Answer.last
 A.votes -- returns all votes related to this answer 
-Answer.first.voters << User.last -- it assigns a user to 
+u.voted_answer << A  -- create an association in votes table 
+Answer.first.voters << User.last -- it assigns a user to -- this one works from other side
 ```
-* It assign one user to answer inside like table 
+* To Add restriction we define as: 
 In Vote model 
 ```ruby
 Validates :answer_id, uniqueness: {
@@ -246,57 +247,59 @@ in terminal
 u = User.last
 Answer.first.votes << u
 ```
-now it gives error because of validation 
-
+now it gives error because of validation which should be either true or false.  
+### Assign attribute to middle table 
 ```ruby
 Answer.first.votes.create(user: u, is_up: true)
 OR
 Answer.first.votes << Vote.create(user: u, is_up: true) *notice
 ```
 *notice, in this part since it create first without answer referencing, so it first create inside the like and when want to assign answer to it, it fails
-* Among all this way is more useable in controllers
+* Best practice to write assign attributes 
 ```ruby
 Vote.Create(user: User.all.sample, answer: Answer.all.sample, is_up: true)
 ```
-
-* Now go to View and question/show and add inside @answer  do f form 
+* Now go to View and question/show and add inside @answer do f form 
 ```ruby
-
-<%= link_to fa_icon('arrow_up') %>
-<%= %> 
-<%= link_to fa_icon('arrow_down') %>
-```
-
-*Answer model
+<%= link_to fa_icon('arrow-up') %>
+<%= @total %> 
+<%= link_to fa_icon('arrow-down') %>
+``` 
+* Inside answer model or any model we want to pass object to `vote_total` function we define this funciton. Or we can make it a class method by just adding self. before method to be accessible for any object. 
 ```ruby 
 def vote_total
-  votes.up.count - votes.down.count 
+  votes.where(is_up: true).count - votes.where(is_up: false).count
 end 
 ```
-* Vote model 
-The class methods need self before the name. We create a self method to be accessibel everywhere
-```ruby
-def self.up
-  where(is_up: true)  
-end 
-
-def self.down
- where(is_up: false)
-end 
-```
-```ruby
+* Calling the method we would have samething  
+```ruby 
 a = Answer.last
-a.votes 
-a.votes.up
+a.votes.where(is_up: true).count - a.votes.where(is_up: false).count
+or
+a.vote_total
+```
+If define function in User model or class method then we can assign user to function as well 
+```ruby
+u = User.last
+u.vote_total
+```
+#### votes 
+* `votes`, `likes` and all relational tables by passing objects return list of associated rows. 
+
+In below for an array of answers inside `a` creat votes with rand users and rand is_up. Then run `a.vote_total` for total votes. 
+```ruby
+a = Answer.Where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
 a.votes.create(user:User.all.sample, is_up: [true, false].sample)
-a.votes
-a.vote_total 
 a.votes.down
 a.votes.up 
 ```
+> Hirb.enable
+
 * Now inside the show
 <%= f.vote_total %> 
 
+* Here we successfully assigned and show the number of likes for each comment. 
+-------
 
 some csss
 .voting_widget {
