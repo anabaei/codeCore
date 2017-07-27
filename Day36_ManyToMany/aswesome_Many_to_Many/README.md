@@ -300,44 +300,21 @@ a.votes.up
 
 * Here we successfully assigned and show the number of likes for each comment. 
 -------
+### Routes 
+```ruby
+resources :answer, only: [], shallow: true do 
+  resources :votes, only: [:create, :destroy, :update]
+end 
+```
+* only 3 action are valid for votes, and then when we pass it 
 
-some csss
-.voting_widget {
-width: 75px;
-display: flex;
-flex-shrink: 0;
-flex-flow: column;
-aligh-item: center;
-width: 100px;
-justify-content: center;    -- it makes it 
-}
-
-.answer-list > li {
- display: flex;
- margin: 5px 0;  -- it margines top & bottum and zero asides 
-}
-
-
-
-flex-shrink is 1 by default 
-
-----
-in routes:
-
-*votes are inside answer so nested routes 
+*Votes are inside answer as nested routes and we set up an attribute in params with `is_up` object name and value `true` or `false` 
 ```ruby
 link_to "up", answer_votes_path(answer, {is_up: true}), method: :post
 link_to "down", answer_votes_path(answer, {is_up: false}), method: :post
 ```
-is_up we set an attribute, and we added in params 
 
 
-notice: rails put the params as get although we said is post in url top
-```ruby
-resources :answer, only: [], shallow: true  do 
-  resources :votes, only: [:create, :destroy, :update]
-end 
-```
 votes controller 
 ```ruby
 before_action :find_answer, only: [:create]
