@@ -1,5 +1,7 @@
 # Many to Many 
 
+`Hirb.enable`
+
 has_and_belongs_to_many 
 means that the join table woold not have a corresponding model, but the associated table is not accessable, we use another way 
 
@@ -389,42 +391,36 @@ in console
 ```ruby
 Tag.create(name: 'Science')
 q = Question.first
-q.tags << Tag.first
-
+q.tags << Tag.first 
 ```
 * in question/new view page 
+```ruby
 form_for @question do |f|
-.
-.
+
 <%= f.labe :tag_list, "tags " %>
 <%= f.text_field :tag_list %>
- 
-*in question create controller action 
-
-
-*inside quesiton modle we add a setter or virtual method , this is called attribute setter 
- this means question.tag_list = 'something' it would call below 
+ ```
+*in question create controller we add `:tag_list` to require params 
+*inside quesiton model we add a setter or virtual method , this is called attribute setter this means question.tag_list = 'something' it would call below 
+```ruby
 def tag_list=(value)
 end 
-
-By adding above we add one attribute to our params in form 
-the question doesnt have colum for tags, the form thinks question has tag colmun now 
-
+```
+By adding above we add one attribute to our params in form, the question doesnt have colum for tags, the form thinks question has tag colmun now 
 
 rails console
-
+```ruby
 tags = 'aaa,ddd,ds'
-tags.split(/\s*,\s*/)   -- remove anyspace, * as many as it is 
-
-it search first and if it can not find anything then created 
+tags.split(/\s*,\s*/)  # remove anyspace, * as many as it is 
+# it search first and if it can not find anything then created 
 Tag.where(name: 'thins').first_or_create!
-
-we let the user automatic to input tags, 
-
+```
+* Let the user automaticaly input tags, 
+```ruby
 tags.split(/\s*,\s*/).map do |name|
   Tag.where(name: name.downcase).first_or_create!
  end
- 
+```
  this create three tags right now, even if they exist it returns 
  put above inside tag_list=(value) 
  and equal to  self.tag = value.split(/\s*,\s*/).map do |name|
@@ -432,22 +428,24 @@ tags.split(/\s*,\s*/).map do |name|
               end
 self if we are writing to attribute of this , kind of refrencesing 
 
-
+```ruby
 def tag_list
-  tag.map{ |tag| tag.name } same as below code
+  # tag.map{ |tag| tag.name } same as below code
   tag.map(&:name).join(", ")
 end
+```
 
 * In question controller we add one attribute name tag_list 
 
 inside the show @question we add 
 * the setter and getters tag_list helps us to devide the input users into a list and be able to save an assoicatied list to a question in join table which is tagging 
-
+```ruby
 @question.tag_ist to see the list 
-
+```
 
 in seeds 
 
+```ruby
 50.times do 
    tag = Tag.create(name: Faker::Book.genre)  
 end 
@@ -455,8 +453,8 @@ end
 tags = Tag.all
 then inside question 
     question.tags = tags.shuffle.slice(0..rand(10))
-    
-    
+```    
+ -----------   
  selectize.js 
  dist, 
  js, css, sectize folder, 
@@ -506,3 +504,10 @@ $(function() {
  find_by if the result has not found it is nil  
  find if not find returns 404 error so it is suggested. 
  
+
+
+/// Product backlog devides into small parts, spring backlog: assign each backlog to each team , sprint each team does own baclklog sprint. spring is a timeframe you get the work done. 
+Wireframe s sketch that how pages connected to each other and then go to ERD.
+
+https://github.com/voormedia/rails-erd 
+after running: open erd.pdf
