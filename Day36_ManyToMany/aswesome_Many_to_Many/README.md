@@ -511,3 +511,32 @@ Wireframe s sketch that how pages connected to each other and then go to ERD.
 
 https://github.com/voormedia/rails-erd 
 after running: open erd.pdf
+
+
+## Git 
+Git checkout -b newbranch
+git push
+inside `github` ask a `pull request` 
+merge pull request added the branch to master 
+we can revert the merge request
+
+#### Git Rebase
+* change the base of git, it is vert structive. 
+git log 
+
+git checkout -b a1 
+
+git checkout -b b1
+
+* here rebase branch b inside a, go inside branch a and rebase branch b as below:
+```git
+git rebase branch_b 
+```
+Now we may get conflift, so we go to file and modify it removing `<<<<<<<<<<<<<<<<` and `>>>>>>>>>>`inside the files and `git add .` and rung `git rebase --continue` for next commit unitl we get `git status` all same. 
+Or we can have 
+```git 
+git merge branch_d 
+``` 
+with merge it shuffle in when you log in, so big differenes in rebase is time order would change in order to the way we add them to master branch but in merge the order automatically fix based on the last time they edited. 
+
+
