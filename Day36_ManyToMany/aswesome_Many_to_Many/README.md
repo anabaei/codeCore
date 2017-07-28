@@ -301,57 +301,52 @@ a.votes.up
 * Here we successfully assigned and show the number of likes for each comment. 
 -------
 ### Routes 
+* Because answers are already nested in questions, therefore if votes or likes become nested inside answers then they would be third nested resource which is not suggested with Rails. Therefore we use `shallow` attribute and also add `only []` becuase we dont need have overridden routes for answers. For examlpe we already have `edit_idea_answer` to edit answer and without [] creates new path for answer to edit. 
+Without creating any routes for answers. 
 ```ruby
 resources :answer, only: [], shallow: true do 
   resources :votes, only: [:create, :destroy, :update]
 end 
 ```
-* only 3 action are valid for votes, and then when we pass it 
+* only 3 action are required. 
 
 *Votes are inside answer as nested routes and we set up an attribute in params with `is_up` object name and value `true` or `false` 
 ```ruby
 link_to "up", answer_votes_path(answer, {is_up: true}), method: :post
 link_to "down", answer_votes_path(answer, {is_up: false}), method: :post
 ```
-
-
-votes controller 
+* In both cases above it creates new row in like table for that answer. If we want a user to be able to update we should first find all votes for that user, then find votes for that answer and update it as below:
+inside params[:id] is answer id
 ```ruby
-before_action :find_answer, only: [:create]
+def update
+    u = current_user 
+  	vote = u.votes.find_by(review_id: params[:id])
+  	if(vote)
+  	vote.update is_up: params[:is_up]
+  	#vote.destroy -- or destroy
+     redirect_to request.referrer, alert: 'you update!!'
+  	end 
+ end
+```
+* Also we can add create to the conditions that like or vote doesnt exist
+* Votes controller 
+```ruby
+before_action :find_review, only: [:create]
 befpre_action :find_vote, only: [:destroy]
  def create 
-  vote = Vote.new(user: current_user, answer: @answer. is_up: params[:is_up])
+  vote = Vote.new(user: current_user, review: @review. is_up: params[:is_up])
   if vote.save 
-    redirect_to @answer.question, notice: 'good'
+    redirect_to @review.idea, notice: 'good'
   end
   render jason:params
  end
- 
- def destroy 
-  @vote.destroy 
-  ender jason:params
- end
- 
-  def update 
-   @vote.update is_up: params[:is_up]
-   ender jason:params
-  end
- 
-  def find_asnwer
-    @answer = Answer.find(params[:answer_id]
-  end
-  
-    def find_vote
-     @vote = Vote.find(params[:id])
-  end
-
 ```
-if it gets a model instance, redirect to `question_path(@answer.question)` is same as `@answer.question`
+ redirect to `question_path(@answer.question)` is same as `@answer.question` because it redirects to instance model we can use short way
 
-* show the color of bottum 
+* show the color of botton 
 
 ```ruby
-<% vote = answer.votes.find_by(user: current_user) %
+<% vote = review.votes.find_by(user: current_user) %
 <% if vote.nil? %>
 <% elsif vote.is_up? %>
   <%= link_to fa_icon('arrow-up'), vote_path(vote), method: :delete, class: 'active' %>
@@ -367,7 +362,7 @@ Order the asnwers by votes,
 this is a relation between question and tags 
 `rails g model tagging question:references tag:references`
 now add indexes into tagging migration `,index: true`
-usually we have a foreign key that is search alot.
+usually we have a foreign key that search alot.
 
 * Inside tag moel
 ```ruby
@@ -384,7 +379,6 @@ def downcase_name
  end 
 ```
 we want all downcase.
-
 
 * in Question model
 ```ruby
@@ -405,13 +399,11 @@ form_for @question do |f|
 <%= f.labe :tag_list, "tags " %>
 <%= f.text_field :tag_list %>
  
-
-
 *in question create controller action 
 
 
 *inside quesiton modle we add a setter or virtual method , this is called attribute setter 
-// this means question.tag_list = 'something' it would call below 
+ this means question.tag_list = 'something' it would call below 
 def tag_list=(value)
 end 
 
