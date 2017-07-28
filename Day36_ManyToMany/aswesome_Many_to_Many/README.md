@@ -505,13 +505,11 @@ $(function() {
  find if not find returns 404 error so it is suggested. 
  
 
-
 /// Product backlog devides into small parts, spring backlog: assign each backlog to each team , sprint each team does own baclklog sprint. spring is a timeframe you get the work done. 
 Wireframe s sketch that how pages connected to each other and then go to ERD.
 
 https://github.com/voormedia/rails-erd 
 after running: open erd.pdf
-
 
 ## Git 
 Git checkout -b newbranch
@@ -540,3 +538,11 @@ git merge branch_d
 with merge it shuffle in when you log in, so big differenes in rebase is time order would change in order to the way we add them to master branch but in merge the order automatically fix based on the last time they edited. 
 
 
+git log --oneline  --graph 
+git pull --rebase
+git config 
+
+#### VPS 
+#### AWS
+using ducker to deploy, you have your rails app inside that container and push it inside in AWS
+Ducker EC2
