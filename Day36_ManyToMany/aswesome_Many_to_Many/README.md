@@ -370,33 +370,21 @@ usually we have a foreign key that search alot.
 ```ruby
 has_many :taggings, dependent: :destroy 
 has_many :questions, through: :taggings 
-
 validates :name, presence: true, uniqueness: {case_sensetive: false}
-
 before_validation :downcase_name
-
 private 
 def downcase_name
   self.name.downcase!
  end 
 ```
-we want all downcase.
-
 * in Question model
 ```ruby
  has_many :taggings, dependent: :destroy
  has_many :tags, through: :taggings
 ```
-in console
-```ruby
-Tag.create(name: 'Science')
-q = Question.first
-q.tags << Tag.first 
-```
 * in question/new view page 
 ```ruby
 form_for @question do |f|
-
 <%= f.labe :tag_list, "tags " %>
 <%= f.text_field :tag_list %>
  ```
@@ -407,7 +395,25 @@ def tag_list=(value)
 end 
 ```
 By adding above we add one attribute to our params in form, the question doesnt have colum for tags, the form thinks question has tag colmun now 
+* Inisde Idea model we added tag_list function.
+```ruby
+ has_many :taggings, dependent: :destroy 
+    has_many :tags, through: :taggings
+        def tag_list
+	    # tags.map { |tag| tag.name }
+	    tags.map(&:name).join(", ")
+	  end
 
+	  # We can create methods that are called `setters`. They
+	  # simulate an instance attribute. When assigning a value to it,
+	  # it is instead passed as argument to the method.
+	  def tag_list=(value)
+	    self.tags = value.split(/\s*,\s*/).map do |name|
+	      Tag.where(name: name.downcase).first_or_create!
+	    end
+	  end
+```
+------
 rails console
 ```ruby
 tags = 'aaa,ddd,ds'
@@ -428,16 +434,6 @@ tags.split(/\s*,\s*/).map do |name|
               end
 self if we are writing to attribute of this , kind of refrencesing 
 
-```ruby
-def tag_list
-  # tag.map{ |tag| tag.name } same as below code
-  tag.map(&:name).join(", ")
-end
-```
-
-* In question controller we add one attribute name tag_list 
-
-inside the show @question we add 
 * the setter and getters tag_list helps us to devide the input users into a list and be able to save an assoicatied list to a question in join table which is tagging 
 ```ruby
 @question.tag_ist to see the list 
@@ -453,63 +449,7 @@ end
 tags = Tag.all
 then inside question 
     question.tags = tags.shuffle.slice(0..rand(10))
-```    
- -----------   
- selectize.js 
- dist, 
- js, css, sectize folder, 
- dist/js/selectize.js copy to asset javascript add new file selectize.min.js  and past there, 
- we should user standanlone folders 
- we need to select our input object, and then call selectize on it, 
- 
- inside application.js 
- //=requre jquery3
- //= require selectize.min.js 
- //=require jquery_ujs
- //= require tree. 
- 
- 
- # change question.coffee to question.js 
- then write your js there
-to load after page is loaded 
-
-$(function() {
- $('#quesiton_tag_list').selectize(
-  delimeter: ',',
-  persist: false,
-  create: function(input){
-   return {
-    value: input,
-    text: input
-   }
- })
- 
- 
- 
- $('#quesiton_tag_list').selectize(
-  delimeter: ',',
-  persist: false,
-  create: function(input){
-   return {
-    value: input,
-    text: input
-   }
-  }
- )
- 
- in rails console we can have 
- Question.join(:tags_
- 
- *difference between find & find_by 
- find_by if the result has not found it is nil  
- find if not find returns 404 error so it is suggested. 
- 
-
-/// Product backlog devides into small parts, spring backlog: assign each backlog to each team , sprint each team does own baclklog sprint. spring is a timeframe you get the work done. 
-Wireframe s sketch that how pages connected to each other and then go to ERD.
-
-https://github.com/voormedia/rails-erd 
-after running: open erd.pdf
+```
 
 ## Git 
 Git checkout -b newbranch
