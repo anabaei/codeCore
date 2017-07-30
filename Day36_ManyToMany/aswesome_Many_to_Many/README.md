@@ -487,6 +487,15 @@ git config
 using ducker to deploy, you have your rails app inside that container and push it inside in AWS
 Ducker EC2
 
+### Git project
+
+```git 
+git add .
+git commit -m "few changes"
+git checkout -b newchagne
+git  pull  https://github.com/RailsonFire/ROF.git 
+git push origin newchange
+```
 
 # Project;
 
