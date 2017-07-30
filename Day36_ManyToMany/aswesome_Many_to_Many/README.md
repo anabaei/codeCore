@@ -486,3 +486,23 @@ git config
 #### AWS
 using ducker to deploy, you have your rails app inside that container and push it inside in AWS
 Ducker EC2
+
+
+# Project;
+
+```ruby
+<%= form_for [@question,@answer] do |f| %>
+      <div class="">
+        <!-- <%= f.label :body %> -->
+        <%= f.text_area :body, class:'form-control nav-bar-forms' %>
+      </div>
+      <div class="">
+        <%= f.submit "Submit", class:'btn btn-default red-button top-button-margin' %>
+      </div>
+    <% end %>
+```
+Notice: it submit the form  with  question/:id/answer params inside answer controller, then in create answer we can get it and work on it. 
+
+while answer is nested inside question 
+
+
