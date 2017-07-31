@@ -1,0 +1,4 @@
+# Only replace 'PUT YOUR *' after you've copied me as
+# `app_keys.rb`. Do not change this file. Only the copy.
+ENV['EMAIL_USER_NAME'] = 'PUT YOUR EMAIL HERE'
+ENV['EMAIL_PASSWORD'] = 'PUT YOUR PASSWORD HERE'
