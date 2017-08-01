@@ -55,7 +55,10 @@ npm i -g sequelize sequelize-cli pg pg-hstore
 ## Setup Database in Express 
 
 sequelize   then it show you all commands
-sequelize init    it create several files, seeds, migration etc 
+```javascript
+sequelize init   
+```
+it create several files, seeds, migration etc 
 
 
 in config confgi jason, 
