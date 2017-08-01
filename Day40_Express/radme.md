@@ -39,6 +39,9 @@ line27: indentsyntax make it to false
 after renaming the file just add {} after body and : after padding: font: etc..
 
 
+inside gitignore add below , these dont need to commit and everytime they created from scss
+git/stylesheet/*.css 
+
 
 
 

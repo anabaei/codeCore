@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "debug": "nodemon --inspect ./bin/www",
+    "db:create": "createdb eco aae_dev",
+    "db:drop": "dropdb  --if-exists --echo aae_dev"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
@@ -13,6 +16,12 @@
     "express": "~4.15.2",
     "morgan": "~1.8.1",
     "node-sass-middleware": "0.9.8",
+    "pg": "^7.0.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.4.2",
     "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0"
   }
 }

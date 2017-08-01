@@ -1,0 +1,16 @@
+{
+  "development": {
+   
+    "database": "aa_dev",
+    "dialect": "postgres"
+  },
+  "test": {
+
+    "database": "aa_test",
+    "dialect": "postgres"
+  },
+  "production": {
+    "database": "aa_production",
+    "dialect": "postgres"
+  }
+}

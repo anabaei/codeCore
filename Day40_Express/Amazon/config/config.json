@@ -1,0 +1,16 @@
+{
+  "development": { 
+    "database": "amz_dev",
+    "dialect": "postgres"
+  },
+  "test": {
+
+    "database": "amz_test",
+    "dialect": "postgres"
+  },
+  "production": {
+
+    "database": "amz_pro",
+    "dialect": "postgres"
+  }
+}
