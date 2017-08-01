@@ -64,6 +64,9 @@ it create several files, seeds, migration etc
 in config confgi jason, 
 if you remove user name and password it assume yor databasa dont need password and use yoru com[uter databqase 
 inside the app go to scripts and add belows 
+add `"dialect": "postgres"` instead of mysql
+
+
 "db:create":"createdb echo aae_dev",
 "db:drop":"dropdb --if-exists --echo aae_dev"
 
