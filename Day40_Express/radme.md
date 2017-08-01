@@ -1,5 +1,7 @@
 
  # Express Steps
+ https://github.com/CodeCoreYVR/AwesomeAnswersExpressJun2017
+ 
 ```javascript
   npm install -g express-generator
 ```
@@ -113,9 +115,10 @@ Question.findAll({raw: true}).then(console.info)
 q1 = Question.create({title: 'this, content: 'yes'})
 
 ### seeds 
+```express
 yarn add -D faker
 sequelize seed:create --name create-questions
-
+```
 
 const {Question} = require('./models')
 // The methods up and down must always return the promise, this is only way sequelize can know that the seed is completed
@@ -142,6 +145,7 @@ psql -d aae_dev
 
 ### routes
 
+Rename routes/users.js to questions.js
 inside app.js 
 instead in line 9-10 
 var question= require('./routes/questions')
@@ -160,12 +164,30 @@ const {Question} = require('questions')
 
 get user listing
 
-routes.get('/', function(req, res, next) {
- Question 
-  .all()
-  
-
+router.get('/', function(req, res, next) {
+  Question
+    .all()
+    .then(questions => {
+      res.send(questions);
+    })
 });
+
+#### To address a show page same in product.js
+router.get('/:id', function(req, res, next) {
+  const{id} = req.params;
+  Product
+  	.findById(id)
+    .then(product => {
+
+      res.render('products/show', {product});
+    })
+});
+module.exports = router;
+
+
+* First express look at app.js, if ay routes matches like / or /user then it goes to second params which we defined on top page as line 9`var products = require('./routes/products');` as params name inside routes folder, and there it reades get and params and send back the templates with params objects as above. 
+
+
 
 -- now it list all questions
 
