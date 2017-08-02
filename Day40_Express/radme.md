@@ -598,3 +598,66 @@ router.delete('/:id', (req, res, next) => {
     .catch(next);
 })
 ```
+* Notice: () => res.redirect(`/questions/` -- this is a function that its budy is after => and returns everything after => 
+
+### Edit
+
+// question
+```javascript
+// questions#edit
+router.get('/:id/edit', (req, res, next) => {
+  const {id} = req.params;
+  Question
+    .findById(id)
+    .then(question => res.render('questions/edit', {question}))
+    .catch(next)
+})
+
+// questions#updated
+router.patch('/:id', (req, res, next) => {
+  res.send(req.body);
+});
+````
+
+* Add form to question 
+```javascript
+<%- include './_form`, {question} %>
+
+```
+
+if it sees a pass a question with id the it call it otherwise if nothing is there then it wont go there,
+this checks if the question we pass to the form is in the databse then we put that hidden field to put it into the path,
+
+```javascript
+
+<form action="/questions/<%= question.id %>" method="post">
+ <% if (!question.isNewRecord) { %>
+    <input type="hidden" name="_method" value="PATCH" />
+  <% } %>
+  <div>
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" value="<%= question.title %>" />
+  </div>
+
+  <div>
+    <label for="content">Content</label>
+    <textarea
+      type="text"
+      id="content"
+      name="content"><%= question.content %></textarea>
+  </div>
+
+  <input type="submit" value="Submit" />
+
+</form>
+```
+
+* to add the edit button, we need to make it a button with empty tag with just a link to edit 
+
+```javascript
+<a href="/questions/<%= question.id %>/edit">Edit</a>
+```
+
+
+
+
