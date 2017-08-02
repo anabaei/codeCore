@@ -544,7 +544,45 @@ all the answers routs are going to begin with first argument of below function
 ```javascript
 route.used('/:QuestionId/answers', answers)
 ```
+### Order by
+the first arg is model, second is the field and third is order 
+order: [ [Answer, 'careatedAt', 'DESC' ]]
+* inside question controller 
+```javascript
+findById(id, { order: [ [Answer, 'careatedAt', 'DESC' ]], include: ... same as above the rest
+```
+### Deletion
+* Add delete button in question 
+* To create mehtod delete we create a button in question show page, just right before the answers we add delete button
+html method only supports post and get so we can not write delete in mthod, but we add a hidden button to trigeer the middlewear function delete 
+```javascript
+<form action="/questions/<%= question.id %>" method="post">
+  <input type="hidden" name="_method" value="DELETE" />
+  <input type="submit" value="Delete" />
+</form>
+```
+* mthod-override express allow us to override th post mehtod, use custom logic look at
+we have middle wear methodoverrid check if resuw body exiss t  hten assign to a variable and ddelete whatever it returns is used as hettp request 
 
+* to indtal add yarn add method-override 
+* inside app.js
+load middle weara
+```javascript
+const methodOverrid = rewuire('method-override');
 
-
+```
+* inside the app.js 
+* in checks inside of the object if the property exist or not 
+```javascript
+const methodOverride = require('method-override');
+app.use(methodOverride((req, res) => {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    const method = req.body._method;
+    delete req.body._method;
+    // Whatever is returned from this callback will be used
+    // by methodOverride to replace the request's HTTP verb.
+    return method;
+  }
+}))
+```
 
