@@ -408,3 +408,143 @@ funciton random(n) {
 
 ### Forms for Ansers
 
+* in quesiton router 
+* in sequelize doc and in queryinh part there is `include` key word to allow us to render question through answer to allow us add multiple nested associations 
+include takes an array of objects, 
+to
+below is like byebug to dump question objects and instead of rendering we always put it 
+res.send(question).
+routes/question.js 
+```javascript
+const express = require('express');
+const router = express.Router();
+const {Question, Answer} = require('../models');
+
+// questions#index PATH: /questions METHOD: GET
+router.get('/', function(req, res, next) {
+  Question
+    .all()
+    .then(questions => {
+      // To pass a variable to a template, pass
+      // an object as a second argument to res.render.
+      // All the properties of that object will be available
+      // as local variables inside of the template.
+      res.render('questions/index', {questions});
+    })
+});
+
+// questions#new PATH: /questions/new METHOD: GET
+router.get('/new', (req, res, next) => {
+  const question = Question.build();
+  res.render('questions/new', {question});
+});
+
+// questions#create PATH: /questions METHOD: POST
+router.post('/', (req, res, next) => {
+  const {title, content} = req.body;
+
+  Question
+    .create({title, content})
+    .then(question => {
+      res.redirect(`/questions/${question.id}`)
+    })
+    .catch(next)
+});
+
+// questions#show PATH: /questions/:id METHOD: GET
+router.get('/:id', (req, res, next) => {
+  // To get params from Express, use req.params. It's a property
+  // of the request object. It doesn't contain form data. It only
+  // has params related to the path such as `id`, `question_id`, etc.
+  const {id} = req.params;
+  Question
+    .findById(id, {include: [ {model: Answer} ] })
+    .then(question => {
+      res.render('questions/show', {question, answers: question.Answers});
+    })
+    // .catch(error => next(error))
+    // 👆 👇 are equivalent
+    .catch(next)
+})
+
+module.exports = router;
+```
+
+* now inside question show we display answers
+
+```javascript
+<%- include('../partials/header') %>
+
+<h1><%= question.title %></h1>
+
+<p><%= question.content %></p>
+<p><strong>Created At:</strong> <%= question.createdAt %></p>
+<p><strong>Updated At:</strong> <%= question.updatedAt %></p>
+
+<h2>Answers</h2>
+
+<ul class="answers-list">
+  <% answers.forEach(answer => { %>
+    <li>
+      <p><%= answer.content %></p>
+      <p><strong>Last Edited:</strong> <%= answer.updatedAt %></p>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('../partials/footer') %>
+```
+* We gonna add form on top of the the answers show page
+* we have to able to pass the qestion id the action pot 
+
+So we add this on answr show page 
+```javascript
+<form action="/questions/<%= question.id %>/answers" method="post">
+  <div>
+    <textarea name="content" rows="8" cols="80"></textarea>
+  </div>
+  <input type="submit" value="Submit" />
+</form>
+```
+* Next we set up routes for the form 
+* create new routes file name answer.js
+get instance of the router we write const router = express.Router()
+when we set opetion mergeparams to true when we create a router it will preserve the params of `req.params` from the parent router. 
+// res.send(req.params) // this code is for checking the results, the rest is doing inside questio.js 
+```javascript
+const express = require('express');
+const {Question, Answer} = require('../models');
+const router = express.Router({mergeParams: true});
+
+// Setting the option mergeParams to true when creating
+// a router, it will preserve the params of `req.params` from
+// the parent router.
+
+router.post('/', async (req, res, next) => {
+  try {
+    const {content} = req.body;
+    const {questionId} = req.params;
+    const question = await Question.findById(questionId);
+
+    await Answer.create({content, QuestionId: questionId});
+    res.redirect(`/questions/${questionId}`);
+  } catch (error) {
+    next(error);
+  }
+})
+
+module.exports = router;
+```
+* in question js we add
+```javascript
+const answers = require('./answer')
+```
+`.user` is used for everything get post path ... 
+all the answers routs are going to begin with first argument of below function 
+```javascript
+route.used('/:QuestionId/answers', answers)
+```
+
+
+
+
