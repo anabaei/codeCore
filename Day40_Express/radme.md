@@ -226,17 +226,184 @@ inside questions/views/show.ejs
 
 catch(error=> news(error))
 
+## Next Step Express
+lab :https://github.com/CodeCoreLabs/AmazonExpress
+### Routing 
+
+#### Question/new
+
+* inside routes/questions.js  
+* the path is new and we just render new form so it is like this:
+```Javascript
+router.get('/new', function(req, res, next) {
+ const question = Question.build(); // just pass a new question to form 
+  res.render('questions/new', {question});
+});
+```
+* inside viewsnew, we have to provide the action  
+```Javascript
+<%- include('../partials/header') %>
+
+<h1>New Question</h1>
+
+<form action="/questions" method="post">
+  <div>
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" value="<%= question.title %>" />
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <textarea
+      type="text"
+      id="description"
+      name="description"><%= question.description %></textarea>
+  </div>
+
+  <input type="submit" value="Submit" />
+
+</form>
+
+<%- include('../partials/footer') %
+```
+* So we have to handle the post in routes. with question create with post mehtod . inside `routes/quesitions.js`
+* The information is inside the body not inside the params like rails 
+```Javascript
+router.post('/', function(req, res, next) {
+res.send(req.body)
+});
+```
+* now if we submit we would have the info about the forms 
+* rewrite above to get parameters that we need 
+```Javascript
+ router.post('/', function(req, res, next) {
+   const {title,content} = req.body;
+   Question.create({title,content}).then(question => {res.redirect(`/questions/${question.id}`)
+    }).catch(next)   
+  res.send(req.body)
+ });
+```
+
+## Many to Many 
 
 
+create model answers
+* notice capitalizing in naming is important 
+*foreignkey is capitalize and kamel key, very importatnt 
+```javascript
+sequelize model:create --name Answer --attributes content:text,QuestionId:integer
+```
+* now check migration we aff references property inside QuestionId migration to configure foreign key 
+* what happen if it gets destroy, we wanted to make sure the question is deleted the answer is deleted 
+references: {
+    model:'Questions',
+    key: 'id'    specify the key inside the model on the column that host the key, questionid inside answer table is foreign     
+    
+},
+    onDelete: 'cascade', // when question delete answer is deleted same as dependant: :destroy 
+    onUpdate: 'cascade',
+    allowNull: false   // it means we wont allow to create answer without question id on database 
+ },
+* Now in terminal we migrate 
+* Now we go to by running 
+`psql -d aae_dev`
+```javascript
+\d "Answers"
+\q 
+```
+inside answer model setup association
+```javascript
+'use strict';
+module.exports = function(sequelize, DataTypes) {
+  const Answer = sequelize.define('Answer', {
+    content: DataTypes.TEXT,
+    QuestionId: DataTypes.INTEGER
+  });
 
+  Answer.associate = function({Question}) {
+    Answer.belongsTo(Question);
+    
+  // now because of that answer only gets two methods 
+  // Answer#setQuestion
+  // Answer#getQuestion
+  
+  }
 
+  return Answer;
+};
 
+```
+* now inside question model we do the same 
 
+```javascript
+.
+.
+ Question.associate = function({Answer}) {
+    Question.hasMany(Answer);
+    
+  // we get following instance methods from hasMany 
+  // Question#getAnswers
+  // Question#setAnswers
+  // Question#addAnswer
+  //usage: 
+  // Question.findById(2).then(question => question.addAnswer(answer))
+  
+  };
+```
 
+#### seeds 
 
+```javascript
+sequelize  seed:create --name create-answers
+```
+* inside the seed to access those models we assign 
+* when use async we can use await for the result value of the promise and 
+* we wait for all questions for answers and we move another line 
+```javascript
+'use strict';
+const faker = require('faker');
+const {Question, Answer} = require('../models');
 
+function random (n) {
+  return Math.floor(Math.random() * n);
+}
 
+module.exports = {
+  // When declaring a function with the keyword `async`, we
+  // can use the keyword `await` inside its body to wait for the
+  // resolved value of a promise and assign to variables.
+  up: async (queryInterface, Sequelize) => {
+    const questions = await Question.all();
 
+    for (let question of questions) {
+      // Create up to 5 answers for every question and associate them
+      for (let i = 0, max = random(6); i <= max; i += 1) {
+        await Answer.create({
+          content: faker.lorem.paragraph(),
+          QuestionId: question.id
+        });
+      }
+    }
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    await Answer.destroy({where: {}});
+  }
+};
+```
+
+```javascript
+sequelize db:seed:undo:all
+```
+select * from "Question"
+
+* To generate a random number we create below random funciton add to create seed above 
+```javascript
+funciton random(n) {
+ return Math.floor(Math.random() * n);
+}
+```
+*inside the forloop it is acceptable to have `let i = 0, max = random(6);` to initialize the i 
 
 
 
