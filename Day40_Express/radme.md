@@ -585,4 +585,16 @@ app.use(methodOverride((req, res) => {
   }
 }))
 ```
+in question.js add new route
+```javascript
+// questions#destroy
+router.delete('/:id', (req, res, next) => {
+  const {id} = req.params;
 
+  Question
+    .findById(id)
+    .then(question => question.destroy())
+    .then(() => res.redirect(`/questions/`))
+    .catch(next);
+})
+```
