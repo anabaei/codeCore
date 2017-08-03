@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AwesomeAnswers</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <a href="/">Home</a>
+    |
+    <!-- <a href="/contact">Contact Us</a> -->
+
+    <%# in ERB I can embed Ruby code by using `<%= .. `
+        link_to is a Rails View helper that generate <a> tag for us. Rails comes
+        with many built-in view helpers that makes it easy to generate different
+        HTML elements. The `link_to` first argument is the anchor text, the
+        second argument is the URL or URL helper.
+        When generating URLs in your `config/routes.rb` Rails will sometimes
+        auto-generate URL helpers for you and if not, you can always specify
+        a helper yourself using `as` option.
+    %>
+    <%= link_to('Contact Us', contact_path) %>
+    <!-- <%= link_to('Contact Us', contact_url) %> -->
+    |
+    <%= link_to('New Question', new_question_path) %>
+    |
+    <%= link_to('All Questions', questions_path) %>
+    <% if user_signed_in? %>
+      |
+      <span>Hello, <%= current_user.full_name %>!</span>
+      |
+      <%= link_to 'Sign Out', session_path, method: :delete %>
+    <% else %>
+      |
+      <%= link_to 'Sign In', new_session_path %>
+      |
+      <%= link_to 'Sign Up', new_user_path %>
+    <% end %>
+    <hr>
+
+
+
+    <% if flash[:notice] %>
+      <div class='alert alert-success'>
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:alert] %>
+      <div class='alert alert-danger'>
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>
