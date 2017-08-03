@@ -23,13 +23,31 @@ just automatic data
 Javascript engine request a data to server which is Ajax
 
 #### XML HTTP request 
-make a get request, to this url. once that set up then you send it. 
+make a get request, to this url. once that set up then you send req request. 
 
-Jquery ended up 
+```javascript
+const getReq = new XMLHttpRequest();
+getReq.addEventListener('load', function () { console.log(this.responseText)});
+getReq.open('GET', 'http://example.com');
+getReq.send();
+```
 
-use the method ajax, and method and make a property and once it is complete you get response. 
+*Jquery Ajax, first argument is the method, second is the url you want and third is property kind of success function once it it complete,  you gonna get your data back. 
 
-new standards
+```jquery
+$.ajax({
+methid: 'GET', url: 'http://example.com', success: function (data) {console.log(data)}
+});
+```
+* New standards fetch.
+```javascript
+fetch('http://www.example.com').then(function(response) { return resonse.text(); }).then(function(text) {console.log(text);});
+```
+* Using promises, firt we ask a request and if it is a get dont need to specify and is default so first argument is a url that make a get request to it and then you have a promise back. you can check it at chrome console
+```chrome
+fetch('http://chat-battle.herokuapp.com/')
+```
+
 
 fetch gives new promise, then you get the promise back and response object then you get back and you get back. 
 
