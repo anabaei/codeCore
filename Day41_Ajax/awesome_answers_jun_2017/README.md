@@ -195,6 +195,13 @@ qs('.delete-button').forEach(deleteButton => { deleteButton.addEventListener('cl
 })})})
 
 
+
+
+
+
+
+
+
 event.target.matches('.delete-button')  -- true 
 event.target.matches('a.delete-button')  -- true 
 
@@ -207,5 +214,17 @@ function deleteMessage(id)
 {
   
 }
+
+
+
+
+const fData = new FormData();
+fData.set('body','Steve');
+fetch('/messages', { method: 'POST', body: fData})
+
+
+
+
+
 
 
