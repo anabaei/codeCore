@@ -57,4 +57,15 @@ Now inside routes, we need to have /api/v1/... so we have to make the routes for
 ```
 All these controller should not respond to html, so we go to routes and change the default by adding `defaults: { format: :json}`. 
 
-
+Now inside API questinon controller
+```ruby  
+   def index
+          @questions = Question.all 
+          render json: @questions
+    end  
+end 
+```
+then inside the url if we type below we would see the json api
+```ruby
+local3000/api/v1/questions 
+```
