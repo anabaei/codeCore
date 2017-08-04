@@ -53,10 +53,51 @@ fetch('http://chat-battle.herokuapp.com/').then(function(promise) { return promi
 to parse it to json and a usefull datastructure we can use .json
 fetch('/messages').then(function(p) { return p.json(); });  // 
 ```
-* .json converts string containing JSON notation into javascript object an array with a bunch of objects. 
+* Json converts string containing JSON notation into javascript object an array with a bunch of objects. 
+## Hit server, retrive data, dump into a div tag
+- [x] Hit the server with get request with `/messages` . The result renders as a promise and we convert it to json format 
+* Then convert it to as an `array of objects` which is called `json`. 
 ```javascript
-fetch(`/messages`).then(response => response.json()).then(console.info)   
-// above returns an array of objects which are messages this is making basic request. 
+fetch(`/messages`).then(response => response.json()).then(re => console.info(re))    
+```
+- [x] first argument in promise is the result from previouse function and after `=>` is the actual function go through an array 
+```javascript
+.then(messages => messages.map(message => `
+      <li>
+        <p>
+          <strong>!!${message.id}</strong>
+          ${message.content}
+        </p>
+        <a class="delete-button" href>Delete</a>
+      </li>
+    ` )
+    .join(''))
+```
+ - [x]  Define `a` as a place to insert results into it, we select from document by id
+ ```javascript
+ a = document.querySelector('#messages');
+ ```
+  - [x] Then  pass the result from previouse promise into an HTML.
+ ```javascript
+ .then( result => a.innerHTML = result)
+ ```
+
+
+* To be ease create a function to get an array and go through this array and returns each element with html format. 
+```javascript
+function renderMessages (messages = []) {
+  return messages
+    .map(message => `
+      <li>
+        <p>
+          <strong>#${message.id}</strong>
+          ${message.content}
+        </p>
+        <a class="delete-button" href>Delete</a>
+      </li>
+    ` )
+    .join('');
+}
 ```
 * we can create a function getMessages 
 ```javascript
