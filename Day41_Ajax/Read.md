@@ -47,42 +47,36 @@ fetch('http://www.example.com').then(function(response) { return resonse.text();
 ```chrome
 fetch('http://chat-battle.herokuapp.com/')
 ```
-
-
-fetch gives new promise, then you get the promise back and response object then you get back and you get back. 
-
-### Json
-lightweight format of javascript. create objects of strings.
-
+* To see the result as a text, we use then and pass whatever feth url returns as promise into a function which returns it as a text, try it in chorme
 ```javascript
-fetch(`/messages`)
-fetch(`/messages`).then(response => response.text())
-// this is jason returns instead 
+fetch('http://chat-battle.herokuapp.com/').then(function(promise) { return promise.text(); });
+to parse it to json and a usefull datastructure we can use .json
+fetch('/messages').then(function(p) { return p.json(); });  // 
+```
+* .json converts string containing JSON notation into javascript object an array with a bunch of objects. 
+```javascript
 fetch(`/messages`).then(response => response.json()).then(console.info)   
 // above returns an array of objects which are messages this is making basic request. 
 ```
-* write a function to get all the messages and show them in page
-* becuase we run it several times, so we create a function getMessages 
+* we can create a function getMessages 
 ```javascript
 function getMessages() {
-return fetch('messages').then(res => res.json());
+return fetch('/messages').then(res => res.json());
 }
 ```
-by defining const getmessages = function () => {} and function getessates are available everywhere but with const it only acceissble after it in DOM. 
-
+* By defining `const getmessages = function () => {}` and `function getessates` are available everywhere but with const it only acceissble after it in DOM. 
+* Basic post to a page 
+* got to `http://chat-battle.herokuapp.com`
 ```javascript
-/// short cuts functions to fetch into web request 
-function q (cssQuery){
-	return document.querySelector(cssQuery);
-}
-function qs (cssQuery){
-	return document.querySelectorAll(cssQuery);
-}
-
-function getMessages() {
-return fetch('messages').then(res => res.json());
-}
+fData = new FormData();
+fData.set('body', 'Hello ');
+fetch('/messages', {method: 'post', body: fData });
 ```
+* In order to post a form 
+```javascript
+fetch('/messages', {method: 'post', body: new FormData(document.querySelector('#form')) });
+```
+
 
 ```javascript
 document.addEventListener('DOMContentLoaded', () => {
@@ -259,8 +253,102 @@ const fData = new FormData();
 fData.set('body','Steve');
 fetch('/messages', { method: 'POST', body: fData})
 
+### in class hack 
+
+```javascript
+
+fetch('/messages', {
+method: 'POST',
+headers: { 'Content-Type':'application/json'},
+body: JSON.stringify({
+  body: `
+<style>
+@keyframes Cycle {
+  0% {
+background-color: Black;
+}
+  100% {
+    background-color: DeepSkyBlue;
+  }        
+}
+
+body {
+animation: 1s linear 0s infinite alternate Cycle;
+}
+</style>
+`
+})
+})
+```
+```javascript
+fetch('/messages', {
+method: 'POST',
+headers: { 'Content-Type':'application/json'},
+body: JSON.stringify({
+  body: `
+<script>
+document.querySelector('.page-header').innerHTML = '😎👋💵💵💵💵💵💵💵';
+</script>
+`
+})
+})
+```
 
 
+
+
+### Lab solutions
+```javascript
+function setFlagStatus(id, status) {
+  return fetch(`/messages/${id}`, {
+    headers: {'Content-Type': 'application/json'},
+    method: 'PATCH',
+    body: JSON.stringify({ flagged: status })
+  }).then(getMessages)
+}
+
+function renderMessages (messages = []) {
+  return messages
+    .map(message => {
+      let flag = renderFlagElement(message)
+
+      return `
+        <li>
+          <p>
+            <em>#${message.id}</em>
+            <br/>
+            <strong>${message.username}</strong>: ${message.content} ${flag}
+          </p>
+          <a data-id="${message.id}" class="delete-button" href>Delete</a>
+        </li>
+      `
+    })
+    .join('');
+}
+
+function addFlagClickHandler() {
+  const flags = document.querySelectorAll('i.fa')
+
+  flags.forEach((flag) => {
+    flag.addEventListener('click', (event) => {
+      event.preventDefault()
+      let messageId  = event.currentTarget.dataset.id
+      // let messageId  = event.currentTarget.getAttribute('data-id')
+      let flagStatus = event.currentTarget.dataset.flagged === 'false'
+      
+      setFlagStatus(messageId, flagStatus)
+    })
+  })
+}
+
+function renderFlagElement(message) {
+  if (message.flagged) {
+    return `<i class="fa fa-flag" data-id="${message.id}" data-flagged="${message.flagged}"></i>`
+  } else {
+    return `<i class="fa fa-flag-o" data-id="${message.id}" data-flagged="${message.flagged}"></i>`
+  }
+}
+```
 
 
 
