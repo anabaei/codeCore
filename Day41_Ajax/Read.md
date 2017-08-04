@@ -16,7 +16,7 @@ Write your client-side JavaScript in `public/javascripts/main.js`!
 
 ✨🤓✨
 
-
+* link to steve notes https://github.com/CodeCoreYVR/chatr-express/commit/f27aeff5e002d8bfeed883eef077297f1c550bc6
 # Ajax
 
 just automatic data 
