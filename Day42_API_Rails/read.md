@@ -69,3 +69,76 @@ then inside the url if we type below we would see the json api
 ```ruby
 local3000/api/v1/questions 
 ```
+
+### 
+* inside the api::v1::controller add show action
+```ruby
+before_action :find_question, only: [:show]
+
+def show 
+  render json: @question
+end 
+
+
+def find_question
+  @question = Question.find(params[:id])
+end 
+```
+* postman is a tool, download desktop application 
+
+fetch('/api/v1/question').then(res => res.json).console.info
+
+
+#### Faraday
+* this is how you consume webapi on your computer, 
+
+
+require 'faraday'
+require 'json'
+
+response = Faraday.get 'http://localhost:3000/api/v1/questions'
+puts response.body
+
+// inside the console we have :
+
+res_json = JSON.parse(response.body) // returns as a hash 
+puts res_json
+
+// this is out of the folder 
+------  
+
+### jbuilder 
+
+respond back in api, customize the responds. jbuilder is template engine, we gonna use some methods out there to format json.
+
+inside api/vi/quesions create index.json.jbuilder 
+inside of jbuilder we get access to this object. if someone reply with array then we have to answer it by rray
+
+```ruby
+json.array! @question do |question|
+  json.id question.id 
+end
+```
+render json: @question means serialize the question and send back and we not tell them to use templadte, 
+now if we take it out, then it knows it is an array which is has an id.
+when using jbuilder make sure do not render .json this 
+
+instead of json.id we can have any key for that and we would have it. 
+```ruby
+json.array! @question do |question|
+  json.id question.id 
+  jsont.itle question.title 
+  json.author question.user.first_name
+  json.created_at question.created_at.to_formatted_s(:short)
+end
+```
+to convert a readable time 
+```ruby
+to_formatted_s(:short)
+```
+*this cal blow in loop reducint the performance to n^2 user includes to eager load all the asscoations 
+inside the controller 
+```ruby
+@questions = Question.all.includes(:user)
+```
+
