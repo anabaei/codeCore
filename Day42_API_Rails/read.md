@@ -23,7 +23,7 @@ usually it is RESTfull but facebook has another one which uses sql.
 
 in question controller
 respond_to enable us to send different blocks, default is html, 
-```
+```ruby
 def index
 @questions = Question.order(created_at: :desc)
 
