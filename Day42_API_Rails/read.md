@@ -142,3 +142,189 @@ inside the controller
 @questions = Question.all.includes(:user)
 ```
 
+#### Serializer 
+it is uses to show which part of the model we show, 
+add
+```ruby
+gem 'active_model_serializers'
+```
+rails g serializer user
+
+* Inside serializerio  question)sricielie add
+```ruby
+class 
+ attributes :id, :title 
+ belongs_to :user, key: :author 
+ has_many :answers 
+ 
+ class UserSrialize < ActiveModel::Serializer
+   attributes :id, :first_name, :last_name
+ end 
+ 
+ class AnswerSrialize < ActiveModel::Serializer
+   attributes :id, :body
+   belongs_to :user, key: :author
+ end
+ 
+```
+ 
+ then we only get id. 
+ has_mny automatically includes all answrs in request. 
+ change the name of user to auther,  key: :author 
+ 
+ `&` this means if full_name is nill then dont returns nill or give an error and skip it.  
+ user&.full_name
+ 
+ // nested eager loading.
+ @question = Question.includes(anwer: [:user]).find(params[:id])
+ 
+ 
+ #### Create
+
+```ruby
+ def create
+   question = Question.new(question_params)
+   
+   if question.save
+     render json: {id: question.id }\
+     else 
+     render json: {error: question.error.full_messages}
+     end 
+     
+ end
+ 
+ def destroy
+  if @question.destroy
+    head :ok
+  else 
+    head :bad_request
+  end
+ end 
+ 
+ def  question_params
+  params.require(:question).permit(:title, :body)
+ end 
+ 
+ end 
+ 
+ ```
+ `head :ok` means the we just render a header and saying the status is okay 
+ 
+ In rails when you create a form it added a hidden key inside it. 
+ 
+ ```ruby
+ rails g controller api::application --no-assets --no-helper
+ ```
+ to avoind that we create an application controller inheritet from application controller insdie the api 
+ 
+ and add below to 
+ This will allow to submiting forms by rails 
+ ```ruby
+ skip_before_action :verify_authenticity_token 
+ ```
+  Add Api::ApplicationController in controller 
+ 
+ ### Create userkey 
+ 
+ ```ruby
+ rails g migration add_api_key_to_users api_key
+ ```
+ no inside migration
+  
+  ```ruby
+ add_index :users, :api_key
+ ```
+ because eveytiem we find users by api keys.
+ 
+ ```ruby
+ rails db:migrate
+ ```
+ 
+ #### create a bunch of random charactors 
+ 
+ it generetes whenever 
+ SecureRandom.hex
+ 
+ inside the user model
+ 
+ refers to instance of the class, it means grabing api attribute 
+ 
+ ```ruby
+ 
+ private generate_api_key
+  loop do  
+    def generate_api_key
+     self.api_key = SecureRandom.hex(32)
+     break unless User.exists?(api_key: api_key)
+    end
+  end
+ ```
+ * To avoid having duplicate api_key we say break after creating unless that key already exists. 
+ 
+ ```ruby
+ before_create :generate_api_key
+ ```
+ if we run 
+ in rails db:seed 
+ rails c  then we have api keys 
+ 
+ u.send(:generate_api_key)
+ u.save 
+ then create a new api key
+ 
+ * if you want to use application api keys you may need it to make it public. 
+ 
+ inside applcaiton controller 
+ we want to create something like this 
+ 
+ ```ruby
+ =begin
+fetch(
+  'http://localhost:3000/api/v1/questions',
+  {
+    headers: {
+      'Authorization' : 'd5c234ff7b9b6bb96e7a125b8f6755ae539eb7e6b0ebabfc4dffe26f021059e8'
+    }
+  }
+)
+=end
+ ```
+ so inside api/applicaiton controller we add 
+```ruby
+  
+def current_user
+    @user ||= User.find_by(api_key: api_key) unless api_key.nil?
+  end
+
+private
+  def api_key
+   if request.headers['AUTHORIZATION'].length ==32 
+   headers['AUTHORIZATION'] 
+  end
+   ```
+   
+   inside contoler just cahgne
+   ```ruby
+   render json :user 
+   ```
+   
+   
+   under header add authorization and value shoudl be your key
+    ```ruby
+   and last thing is inside create function add this 
+   question = question.current_user 
+    ```
+   inside api::conontroler 
+    ```ruby
+   private 
+   def authenticate_user!
+     head :unauthorized unless current_user.present?
+   end 
+   
+   and in very top add 
+   before_aciton :authenticate_user!
+    ```
+   
+   
+ now if we check or uncheck the authorization field then we should get 200 or 401 respond.
+ 
