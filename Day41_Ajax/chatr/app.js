@@ -1,4 +1,4 @@
-// 🤖 M O D U L E S
+// ð¤ M O D U L E S
 const path = require('path');
 const logger = require('morgan');
 const multer = require('multer');
@@ -16,7 +16,7 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// 🏭 M I D D L E W A R E
+// ð­ M I D D L E W A R E
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -33,7 +33,7 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 🛣 R O U T E S
+// ð£ R O U T E S
 app.use('/', home);
 app.use('/messages', messages);
 
