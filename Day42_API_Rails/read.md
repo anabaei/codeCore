@@ -84,7 +84,7 @@ fetch('/api/v1/question').then(res => res.json).console.info
 
 respond back in api, customize the responds. jbuilder is template engine, we gonna use some methods out there to format json.
 
-inside api/vi/quesions create index.json.jbuilder 
+inside app/views/api/vi/quesions create index.json.jbuilder 
 inside of jbuilder we get access to this object. if someone reply with array then we have to answer it by array
 
 ```ruby
@@ -98,11 +98,14 @@ when using `jbuilder` make sure do not render .json anymore in controller.
 
 instead of json.id we can have any key for that and we would have it. 
 ```ruby
-json.array! @question do |question|
-  json.id question.id 
-  jsont.itle question.title 
-  json.author question.user.first_name
-  json.created_at question.created_at.to_formatted_s(:short)
+json.array! @questions do |question|
+  # Inside of this block, the method used with json will determine
+  # the name of the key in the json response.
+  json.id question.id
+  json.title question.title
+  json.author_name question.user.full_name
+  json.created_at question.created_at.to_formatted_s(:long)
+  json.updated_at question.updated_at.to_formatted_s(:long)
 end
 ```
 to convert a readable time 
