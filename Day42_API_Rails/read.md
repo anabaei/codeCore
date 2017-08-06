@@ -35,19 +35,19 @@ def index
  end 
 end 
 ```
+* Then we have different format in our url, with adding .json or .xml at the end of url
 * ActiveRecord has to jason method that converts everything to json 
 * With 'postman' we can make a request, add content-type as application/json and in body if we have a post and have form data there. Inside postman we call our app and set content-type to applicaion/json then we should see the results.
- 
-* Also the format can be csv, there is gem for that. 
+* Format can be csv, there is gem for that. 
 
-### Set a /api/v1/ namespace for json
-* we need to create a json version for API, sometimes you want to chenges and it is better to have versions, 
-you can put your controller inside moduls by collon, so it creates controllers inside the modules 
+## jbuilder 
+#### Set a /api/v1/ namespace for json
+*  you can put your controller inside moduls by collon, so it creates controllers inside the modules 
 without helper and without assets 
 ```ruby
 rails g controller api::v1::questions --no-aasets --no-helper
 ```
-Now inside routes, we need to have /api/v1/... so we have to make the routes for it 
+* Now inside routes, we need to have /api/v1/... so we have to make the routes for it 
 ```ruby
  namespace :api, defaults: { format: :json} do 
    namespace :v1 do 
@@ -61,58 +61,27 @@ then inside the url if we type below we would see the json api
 ```ruby
 local3000/api/v1/questions 
 ```
+* postman is a tool, download desktop application `fetch('/api/v1/question').then(res => res.json).console.info`
 
-### 
-* inside the api::v1::controller add show action
+* jbuilder is a template that cosumize the respond we get from json API request. 
+* inside views `app/views/api/v1/quesions create`  `index.json.jbuilder`
+
+* Inside the controller we create an action to pass @qestion to the view as 
 ```ruby
-before_action :find_question, only: [:show]
-
-def show 
-  render json: @question
-end 
-
-def find_question
-  @question = Question.find(params[:id])
-end 
+def index
+    @questions = Question.all.includes(:user)
+  end
 ```
-* postman is a tool, download desktop application 
-
-fetch('/api/v1/question').then(res => res.json).console.info
-
-
-### jbuilder 
-
-respond back in api, customize the responds. jbuilder is template engine, we gonna use some methods out there to format json.
-
-inside app/views/api/vi/quesions create index.json.jbuilder 
-inside of jbuilder we get access to this object. if someone reply with array then we have to answer it by array
-
+* Although the default is render index, we can add render template then it renders other templates `render :index` and no `render json: @questions`
+* It converts a list of json array with bang sign. it creats json on json like id etc..
 ```ruby
 json.array! @question do |question|
-  json.id question.id 
-end
-```
-render `json: @question` means serialize the question and send back and we not tell them to use templadte, 
-now if we take it out, then it knows it is an array which is has an id.
-when using `jbuilder` make sure do not render .json anymore in controller. 
-
-instead of json.id we can have any key for that and we would have it. 
-```ruby
-json.array! @questions do |question|
-  # Inside of this block, the method used with json will determine
-  # the name of the key in the json response.
   json.id question.id
-  json.title question.title
-  json.author_name question.user.full_name
-  json.created_at question.created_at.to_formatted_s(:long)
-  json.updated_at question.updated_at.to_formatted_s(:long)
+  json.anyname question.title
 end
 ```
-to convert a readable time 
-```ruby
-to_formatted_s(:short)
-```
-*this cal below in loop reducint the performance to n^2 user includes to eager load all the asscoations 
+To convert to a readable time we can use this method `to_formatted_s(:short)`
+* This cal below in loop reduce the performance to n^2 user includes to eager load all the asscoations 
 inside the controller 
 ```ruby
 @questions = Question.all.includes(:user)
@@ -311,6 +280,7 @@ private
  
  
  #### Faraday
+* Easy parse a json web api and revenive the response using `Faraday` in .rb file and run it with ruby command.
 * If you want to consume any API you should use this gem, unless a specific API has its own gem.
 install it in your machine. 
 ```ruby
@@ -323,7 +293,7 @@ response = Faraday.get 'http://localhost:3000/api/v1/questions/348'
 
 # To access the contents of the response, use `body`.
 # If we get json in return, we can use Ruby's JSON module to parse it.
-
+# it is loke javascript command  and returns object as a hash
 res_json = JSON.parse(response.body)
 puts res_json
 
