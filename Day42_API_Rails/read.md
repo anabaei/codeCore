@@ -55,17 +55,11 @@ rails g controller api::v1::questions --no-aasets --no-helper
    end 
  end 
 ```
-All these controller should not respond to html, so we go to routes and change the default by adding `defaults: { format: :json}`. 
-
-then inside the url if we type below we would see the json api
-```ruby
-local3000/api/v1/questions 
-```
+All these controller should not respond to html, so we go to routes and change the default by adding `defaults: { format: :json}`. Then inside the url if we type below we would see the json api `local3000/api/v1/questions`
 * postman is a tool, download desktop application `fetch('/api/v1/question').then(res => res.json).console.info`
-
 * jbuilder is a template that cosumize the respond we get from json API request. 
-* inside views `app/views/api/v1/quesions create`  `index.json.jbuilder`
-
+#### Set a views and controller 
+* inside views `app/views/api/v1/quesions` create  `index.json.jbuilder`
 * Inside the controller we create an action to pass @qestion to the view as 
 ```ruby
 def index
@@ -83,11 +77,13 @@ end
 To convert to a readable time we can use this method `to_formatted_s(:short)`
 * This cal below in loop reduce the performance to n^2 user includes to eager load all the asscoations 
 inside the controller 
+#### Avoid n^2 in reading one to many relation
+Since for every question it does the query so we pass the users associated with each question at first. so it would be 2n like this. We tell Rails to include association with each question. So it would select the question and it do one mor selection to get all users association with that question. 
 ```ruby
 @questions = Question.all.includes(:user)
 ```
 
-#### Serializer 
+## Serializer 
 it is uses to show which part of the model we show, 
 add
 ```ruby
