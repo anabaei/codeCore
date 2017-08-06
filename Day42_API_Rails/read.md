@@ -39,53 +39,9 @@ end
 * ActiveRecord has to jason method that converts everything to json 
 * With 'postman' we can make a request, add content-type as application/json and in body if we have a post and have form data there. Inside postman we call our app and set content-type to applicaion/json then we should see the results.
 * Format can be csv, there is gem for that. 
-
-## jbuilder 
-#### Set a /api/v1/ namespace for json
-*  you can put your controller inside moduls by collon, so it creates controllers inside the modules 
-without helper and without assets 
-```ruby
-rails g controller api::v1::questions --no-aasets --no-helper
-```
-* Now inside routes, we need to have /api/v1/... so we have to make the routes for it 
-```ruby
- namespace :api, defaults: { format: :json} do 
-   namespace :v1 do 
-      resources :questions, only: [:index, :show, :create]
-   end 
- end 
-```
-All these controller should not respond to html, so we go to routes and change the default by adding `defaults: { format: :json}`. Then inside the url if we type below we would see the json api `local3000/api/v1/questions`
-* postman is a tool, download desktop application `fetch('/api/v1/question').then(res => res.json).console.info`
-* jbuilder is a template that cosumize the respond we get from json API request. 
-#### Set a views and controller 
-* inside views `app/views/api/v1/quesions` create  `index.json.jbuilder`
-* Inside the controller we create an action to pass @qestion to the view as 
-```ruby
-def index
-    @questions = Question.all.includes(:user)
-  end
-```
-* Although the default is render index, we can add render template then it renders other templates `render :index` and no `render json: @questions`
-* It converts a list of json array with bang sign. it creats json on json like id etc..
-```ruby
-json.array! @question do |question|
-  json.id question.id
-  json.anyname question.title
-end
-```
-To convert to a readable time we can use this method `to_formatted_s(:short)`
-* This cal below in loop reduce the performance to n^2 user includes to eager load all the asscoations 
-inside the controller 
-#### Avoid n^2 in reading one to many relation
-Since for every question it does the query so we pass the users associated with each question at first. so it would be 2n like this. We tell Rails to include association with each question. So it would select the question and it do one mor selection to get all users association with that question. 
-```ruby
-@questions = Question.all.includes(:user)
-```
-
 ## Serializer 
-it is uses to show which part of the model we show, 
-add
+An object oriented way to approch json API
+* When a controller `render json: @anyobject` then we have all objects when parse the url, to costomize it we use serializer. 
 ```ruby
 gem 'active_model_serializers'
 ```
@@ -93,7 +49,10 @@ gem 'active_model_serializers'
 ```ruby
 rails g serializer question
 ```
-* Inside serializerio question sriailize add
+* Then inside the serialize folder it creates one file with rendering only id
+* Now if we recal that url then we only see the ids!
+#### Add more attributes in json 
+* Inside serializerio question sriailize we add title and also can assign associateion to it and be specific about what parts of association we want to be displayed. as here we want only names of users 
 ```ruby
 class 
  attributes :id, :title 
@@ -109,10 +68,7 @@ class
    belongs_to :user, key: :author
  end
  
-```
- 
- then we only get id. 
- has_mny automatically includes all answrs in request. 
+``` 
  change the name of user to auther,  key: :author 
  
  `&` this means if full_name is nill then dont returns nill or give an error and skip it.  
@@ -120,7 +76,6 @@ class
  
  // nested eager loading.
  @question = Question.includes(anwer: [:user]).find(params[:id])
- 
  
  #### Create
 
@@ -272,6 +227,50 @@ private
    
    
  now if we check or uncheck the authorization field then we should get 200 or 401 respond.
+## jbuilder 
+#### Set a /api/v1/ namespace for json
+*  you can put your controller inside moduls by collon, so it creates controllers inside the modules 
+without helper and without assets 
+```ruby
+rails g controller api::v1::questions --no-aasets --no-helper
+```
+* Now inside routes, we need to have /api/v1/... so we have to make the routes for it 
+```ruby
+ namespace :api, defaults: { format: :json} do 
+   namespace :v1 do 
+      resources :questions, only: [:index, :show, :create]
+   end 
+ end 
+```
+All these controller should not respond to html, so we go to routes and change the default by adding `defaults: { format: :json}`. Then inside the url if we type below we would see the json api `local3000/api/v1/questions`
+* postman is a tool, download desktop application `fetch('/api/v1/question').then(res => res.json).console.info`
+* jbuilder is a template that cosumize the respond we get from json API request. 
+#### Set a views and controller 
+* inside views `app/views/api/v1/quesions` create  `index.json.jbuilder`
+* Inside the controller we create an action to pass @qestion to the view as 
+```ruby
+def index
+    @questions = Question.all.includes(:user)
+  end
+```
+* Although the default is render index, we can add render template then it renders other templates `render :index` and no `render json: @questions`
+* It converts a list of json array with bang sign. it creats json on json like id etc..
+```ruby
+json.array! @question do |question|
+  json.id question.id
+  json.anyname question.title
+end
+```
+To convert to a readable time we can use this method `to_formatted_s(:short)`
+* This cal below in loop reduce the performance to n^2 user includes to eager load all the asscoations 
+inside the controller 
+#### Avoid n^2 in reading one to many relation
+Since for every question it does the query so we pass the users associated with each question at first. so it would be 2n like this. We tell Rails to include association with each question. So it would select the question and it do one mor selection to get all users association with that question. 
+```ruby
+@questions = Question.all.includes(:user)
+```
+
+
  
  
  
