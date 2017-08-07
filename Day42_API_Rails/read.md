@@ -52,7 +52,7 @@ rails g serializer question
 * Then inside the serialize folder it creates one file with rendering only id
 * Now if we recal that url then we only see the ids!
 #### Add more attributes in json 
-* Inside serializerio question sriailize we add title and also can assign associateion to it and be specific about what parts of association we want to be displayed. as here we want only names of users 
+* Inside add title and also can assign associateion to it and be specific about what parts of association we want to be displayed. as here we want only names of users 
 ```ruby
 class 
  attributes :id, :title 
@@ -70,24 +70,24 @@ class
  
 ``` 
  change the name of user to auther,  key: :author 
- 
- `&` this means if full_name is nill then dont returns nill or give an error and skip it.  
+ * To avoid contradiction with current controllers we can create a nother folder controller and views as in `Set a /api/v1/ namespace for json` section to make life easier inheritet from application controller insdie the api.
+ * `&` this means if full_name is nill then dont returns nill or give an error and skip it.  
  user&.full_name
  
- // nested eager loading.
- @question = Question.includes(anwer: [:user]).find(params[:id])
+ // nested eager loading for associated anwers and users. 
+ `@question = Question.includes(anwer: [:user]).find(params[:id])`
  
- #### Create
+ ### REST in Json
 
 ```ruby
  def create
    question = Question.new(question_params)
    
    if question.save
-     render json: {id: question.id }\
-     else 
+     render json: {id: question.id }
+   else 
      render json: {error: question.error.full_messages}
-     end 
+   end 
      
  end
  
@@ -99,84 +99,80 @@ class
   end
  end 
  
- def  question_params
-  params.require(:question).permit(:title, :body)
- end 
+  def  question_params
+     params.require(:question).permit(:title, :body)
+  end 
  
  end 
  
  ```
  `head :ok` means the we just render a header and saying the status is okay 
  
- In rails when you create a form it added a hidden key inside it. 
- 
+ In rails when you create a form it added a hidden key inside it. Therefore first for each Json API we need to remove it first
+ so we create an application controller inside api folder to just for APIs as below.
  ```ruby
  rails g controller api::application --no-assets --no-helper
  ```
- to avoind that we create an application controller inheritet from application controller insdie the api 
- 
- and add below to 
+ Add below to 
  This will allow to submiting forms by rails 
  ```ruby
- skip_before_action :verify_authenticity_token 
+  skip_before_action :verify_authenticity_token 
  ```
   Add Api::ApplicationController in controller 
+ 
  
  ### Create userkey 
  
  ```ruby
  rails g migration add_api_key_to_users api_key
  ```
- no inside migration
-  
+  Inside migration
+ 
   ```ruby
  add_index :users, :api_key
  ```
- because eveytiem we find users by api keys.
+ Because eveytiem we find users by api keys.
  
  ```ruby
  rails db:migrate
  ```
  
- #### create a bunch of random charactors 
- 
- it generetes whenever 
- SecureRandom.hex
- 
- inside the user model
- 
- refers to instance of the class, it means grabing api attribute 
- 
+ #### create a userkey 
+
+ * inside the user model add below conde
  ```ruby
- private generate_api_key
-  loop do  
-    def generate_api_key
-     self.api_key = SecureRandom.hex(32)
-     break unless User.exists?(api_key: api_key)
+before_create :generate_api_key
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
+  private
+  # We can use the `.send` method to dynamically call a method. We can also
+  # use this to get around the fact that a method is `private`.
+  # Use `u.send(:generate_api_key)` to call it even though its private.
+  def generate_api_key
+    # SecureRandom.hex(32) will generate a string of length 32 containing
+    # random hex characters.
+    loop do
+      self.api_key = SecureRandom.hex(32)
+      # In the eventuality that we accidently create an API key
+      # that already exists in our db, we're going to loop and regenerate it
+      # until that is no longer the case.
+      break unless User.exists?(api_key: api_key)
     end
   end
  ```
- * To avoid having duplicate api_key we say break after creating unless that key already exists. 
- 
+ * Check in rails c  then we have api keys using send to address one method only. 
  ```ruby
- before_create :generate_api_key
- ```
- if we run 
- ```ruby
- rails db:seed 
- ```
- rails c  then we have api keys 
- ```ruby
+ u = User.last
  u.send(:generate_api_key)
  u.save 
  ```
- then create a new api key
- 
- * if you want to use application api keys you may need it to make it public. 
- 
- inside applcaiton controller 
- we want to create something like this 
- 
+ * if you want to use application api keys you may need it to make this method public. 
+## Check Authorization by APIKEY 
+
+* Inside applcaiton controller we want to create something like this 
  ```ruby
  =begin
 fetch(
@@ -202,32 +198,21 @@ private
    headers['AUTHORIZATION'] 
   end
    ```
-   
-   inside contoler just cahgne
-   ```ruby
-   render json :user 
-   ```
-   
-   
-   under header add authorization and value shoudl be your key
-    ```ruby
-   and last thing is inside create function add this 
-   question = question.current_user 
-    ```
+* Under header add authorization and value shoudl be your key
+
    inside api::conontroler 
     ```ruby
    private 
    def authenticate_user!
      head :unauthorized unless current_user.present?
    end 
-   
+    ```   
    and in very top add 
    before_aciton :authenticate_user!
-    ```
-   
+
    
  now if we check or uncheck the authorization field then we should get 200 or 401 respond.
-## jbuilder 
+
 #### Set a /api/v1/ namespace for json
 *  you can put your controller inside moduls by collon, so it creates controllers inside the modules 
 without helper and without assets 
@@ -253,6 +238,7 @@ def index
     @questions = Question.all.includes(:user)
   end
 ```
+## jbuilder 
 * Although the default is render index, we can add render template then it renders other templates `render :index` and no `render json: @questions`
 * It converts a list of json array with bang sign. it creats json on json like id etc..
 ```ruby
