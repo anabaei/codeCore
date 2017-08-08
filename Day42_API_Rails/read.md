@@ -436,12 +436,78 @@ document.addEventListener('DOMContentLoaded', event => {
 
 ### Also we can setup some css
 
+### Add question show 
+
+* we use hide strategy we could have a container as well 
+* generate all show inside the add a dive question-details 
+* a function to take a question object as default 
+* this is for just in case if there is no question `author = {}} = question;`
+```javascript
+....
+ .join('');
+}
+
+function renderQuestion (question = {}) {
+  const {author = {}} = question;
+  return `
+    <h1>${question.title}</h1>
+    <p>${question.body}</p>
+    <p><strong>Author:</strong>${author.first_name} ${author.last_name}</p>
+    <p><strong>Created At:</strong>${question.created_at}</p>
+  `
+}
+```
+* To call the javascript above we have to do as below to test 
+```javascript
+  const questionDetails = q('#question-details');
+
+  Question
+    .get(470)
+    .then(renderQuestion)
+    .then(html => {
+      questionDetails.innerHTML = html;
+    })
+```
 
 
+current target always been the quesion list 
+add event delegation to check the taerget and if the target is mathces with a class and anchor as below  
+```javascript
+questionList.addEventListener('click', event => {
+    const {target} = event;
 
+    if (target.matches('.question-summary > a')) {
+      event.preventDefault();
+      console.log('I was clicked!');
+    }
+  });
+```
+now it would be as below to get attribute, to get what is the id of the target, after checking on 
+conosle and find if we click on each question we get id then we follwo as after 
+```javascript
+  questionList.addEventListener('click', event => {
+    const {target} = event;
 
+    if (target.matches('.question-summary > a')) {
+      event.preventDefault();
+      console.log(target.getAttribute('data-id'));
+```
+Then it would be as below a complete version:
+```javascript
+  questionList.addEventListener('click', event => {
+    const {target} = event;
 
+    if (target.matches('.question-summary > a')) {
+      event.preventDefault();
+      const id = target.getAttribute('data-id');
 
+      Question
+        .get(id)
+        .then(renderQuestion)
+        .then(html => { questionDetails.innerHTML = html });
+    }
+  });
+```
 
 
 
