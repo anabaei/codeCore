@@ -435,7 +435,11 @@ document.addEventListener('DOMContentLoaded', event => {
 * there is join to concad all the strings togather
 
 ### Also we can setup some css
-
+```css
+.hidden{
+display: none;
+}
+```
 ### Add question show 
 
 * we use hide strategy we could have a container as well 
@@ -508,7 +512,11 @@ Then it would be as below a complete version:
     }
   });
 ```
-
+To display everything not showing we can have 
+```javascript
+questionDetails.classList.remove('hidden');
+questionList.classList.add('hidden');
+```
 
 
 
