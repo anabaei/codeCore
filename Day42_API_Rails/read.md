@@ -21,7 +21,8 @@ fetch('/api/people/1').then(rs=> rs.json()).then(console.info)
 usually it is RESTfull but facebook has another one which uses graphsql and send back sql.
 
 #### Set a /api/v1/  for json
-*  you can put your controller inside moduls by collon, so it creates controllers inside the modules 
+* We can render json in any controller but to avoid contradiction with some current works we define new controller inside the folder to manage json format only (optional)
+* you can put your controller inside moduls by collon, so it creates controllers inside the modules 
 without helper and without assets 
 ```ruby
 rails g controller api::v1::questions --no-aasets --no-helper
@@ -90,7 +91,6 @@ class
  
 ``` 
  change the name of user to auther,  key: :author 
- * To avoid contradiction with current controllers we can create a nother folder controller and views as in `Set a /api/v1/ namespace for json` section to make life easier inheritet from application controller insdie the api.
  * `&` this means if full_name is nill then dont returns nill or give an error and skip it.  
  user&.full_name
  
