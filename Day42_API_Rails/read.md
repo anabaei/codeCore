@@ -20,6 +20,22 @@ fetch('/api/people/1').then(rs=> rs.json()).then(console.info)
 
 usually it is RESTfull but facebook has another one which uses graphsql and send back sql.
 
+#### Set a /api/v1/  for json
+*  you can put your controller inside moduls by collon, so it creates controllers inside the modules 
+without helper and without assets 
+```ruby
+rails g controller api::v1::questions --no-aasets --no-helper
+```
+* Now inside routes, we need to have /api/v1/... so we have to make the routes for it 
+```ruby
+ namespace :api, defaults: { format: :json} do 
+   namespace :v1 do 
+      resources :questions, only: [:index, :show, :create]
+   end 
+ end 
+```
+All these controller should not respond to html, so we go to routes and change the default by adding `defaults: { format: :json}`. Then inside the url if we type below we would see the json api `local3000/api/v1/questions`
+* postman is a tool, download desktop application `fetch('/api/v1/question').then(res => res.json).console.info`
 * Inside question controller we try to send data from controller as json. 
 
 * In index controller 
@@ -40,22 +56,7 @@ end
 * ActiveRecord has to jason method that converts everything to json 
 * With 'postman' we can make a request, add content-type as application/json and in body if we have a post and have form data there. Inside postman we call our app and set content-type to applicaion/json then we should see the results.
 * Format can be csv, there is gem for that. 
-#### Set a /api/v1/ namespace for json
-*  you can put your controller inside moduls by collon, so it creates controllers inside the modules 
-without helper and without assets 
-```ruby
-rails g controller api::v1::questions --no-aasets --no-helper
-```
-* Now inside routes, we need to have /api/v1/... so we have to make the routes for it 
-```ruby
- namespace :api, defaults: { format: :json} do 
-   namespace :v1 do 
-      resources :questions, only: [:index, :show, :create]
-   end 
- end 
-```
-All these controller should not respond to html, so we go to routes and change the default by adding `defaults: { format: :json}`. Then inside the url if we type below we would see the json api `local3000/api/v1/questions`
-* postman is a tool, download desktop application `fetch('/api/v1/question').then(res => res.json).console.info`
+
 * now we see the output json in /api/v1/quesions 
 * In order to manage the json output we use serialize 
 ## Serializer 
