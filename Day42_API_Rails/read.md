@@ -281,3 +281,168 @@ puts res_json
 // this is out of the folder 
 ------
 ```
+## SPA 
+
+Create a folder in app and create index html, js and css
+
+inside index.html load script and css with scr ="index" and rel="stylesheet" href="index"
+// build post and create functions 
+
+We try to create a question model from json then we able to use question.all or question.get to find our request
+
+then do the request from backend in chrome console as 
+
+fetch('/api/v1/questions', {header: {'Authorization':'APIKey'}}).then(res=> res.json()).then(console.table)
+then inside http inside the header we put the api key 
+
+then after this we can use it inside the application
+it is a cross origin request. When it happenning browser send option mehod to serer, by default it is not allowed. 
+
+so we gonna enable cross origin request. inside gem file and setup the config file on last line and instead of
+origin '*' then we can say which origin we gonna use. 
+then add this inside config/applicaiton
+```ruby
+config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [
+          :delete, :put, :patch, :get, :post, :options
+        ]
+      end
+```
+right now it allows doing cross origin request.
+now encapsulate everything inside a function.
+
+now we can assume we have a question inside index.js
+ inside index.js
+ ```javascript
+// 1. Build functions to fetch our data and test our backend in the process.
+
+const DOMAIN = 'http://localhost:3000';
+const API_PATH = '/api/v1';
+const API_KEY = 'cd2583a2eb688452be031bfdb79857c7133dad4c3d5c50bf7ec4d61635a9866a';
+
+const Question = {
+  // getAll: function () { ... }
+  // Property Method Shorthand. Syntax sugar 
+  getAll() {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions`,
+      {
+        headers: {'Authorization':API_KEY}
+      }
+    )
+      .then(res => res.json());
+  }
+}
+// usage:
+Question.getAll()
+```
+then inside the browser we would have :
+```javascript
+Question.getAll().then(console.table)
+```
+simulating different pages with javascript so we add  get property 
+
+
+```javascript
+...
+     .then(res => res.json());
+},
+  get (id) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/${id}`,
+      {
+        headers: {'Authorization': API_KEY}
+      }
+    ).then(res => res.json());
+  }
+
+```
+it returns the quesiton, we can test it even in console. 
+
+```javascript
+Question.get(400)
+```
+Create a question
+'Content-Type': we say to sever hery it is json 
+and in body take javascript object and pass it as json and also define the mthod 
+```javascript
+ ).then(res => res.json());
+  },
+  post (attributes) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': API_KEY
+        },
+        body: JSON.stringify(attributes)
+      }
+    ).then(res => res.json());
+  }
+```
+inside console chrome now we can have:
+Question.post({title:'fdd', body: 'what'}).then(console.info)
+
+save some git ignore to ignore >>
+```javascript
+gi macos, linux >> .gitignore
+```
+
+### Run your js when the page loaded inside 
+```javascript
+document.addEventListener('DOMContentLoaded', event => {
+
+});
+```
+
+#### Node selector helper 
+```javascript 
+function q (query) { return document.querySelector(query); }
+function qs (query) { return document.querySelectorAll(query); }
+```
+
+#### continue to display all questions  
+```javascript
+// View
+function renderQuestions (questions = []) {
+  return questions
+    .map(question => `
+      <div class='question-summary'>
+        <a href>${question.title}</a>
+      </div>
+    `)
+    .join('');
+}
+
+document.addEventListener('DOMContentLoaded', event => {
+  // Write code that needs to run after the DOM is fully loaded in here
+  const questionList = q('#question-list');
+
+  Question
+    .getAll()
+    .then(renderQuestions)
+    .then(html => {
+      questionList.innerHTML = html;
+    });
+});
+```
+* there is join to concad all the strings togather
+
+### Also we can setup some css
+
+
+
+
+
+
+
+
+
+
+
+
+
