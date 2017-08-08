@@ -291,8 +291,10 @@ inside index.html load script and css with scr ="index" and rel="stylesheet" hre
 We try to create a question model from json then we able to use question.all or question.get to find our request
 
 then do the request from backend in chrome console as 
-
+check with images!!
+```javascript
 fetch('/api/v1/questions', {header: {'Authorization':'APIKey'}}).then(res=> res.json()).then(console.table)
+```
 then inside http inside the header we put the api key 
 
 then after this we can use it inside the application
