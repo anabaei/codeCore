@@ -1,5 +1,6 @@
 
 https://github.com/CodeCoreYVR/awesome_answers_jun_2017
+https://github.com/CodeCoreYVR/AwesomeAnswersSPAJune2017
 ## Railsl API 
 
 what is `API`? Application program interface a set of routines, protocols, and tools for building software applications. An API specifies how software components should interact. 
@@ -612,7 +613,7 @@ inside event listetoenr add
 so we just create a showQuestion  that take id and render it and put it inside html 
 ```javascript
 function showQuestion (id) {
-    Question
+   return Question
       .get(id)
       .then(renderQuestion)
       .then(html => {
@@ -641,12 +642,24 @@ function showQuestion (id) {
   });
 });
 ```
+
 * Also we can show all questions 
 it destructure the id from the promise returns and pass it to showQuestion.
 ```javascript
  .then(({id}) => showQuestion(id))
 ```
 
-
+#### to clear the form 
+since we care about reseting we dont care about promises 
+* add after showQuestion
+```javascript
+...
+        Question
+          .getAll()
+          .then(renderQuestions)
+          .then(html => { questionList.innerHTML = html });
+      });
+  });
+```
 
 
