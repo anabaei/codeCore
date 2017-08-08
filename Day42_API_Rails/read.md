@@ -439,6 +439,9 @@ document.addEventListener('DOMContentLoaded', event => {
 .hidden{
 display: none;
 }
+#answer-list > *:not(:last-child) {
+  margin-bottom: 10px;
+}
 ```
 ### Add question show 
 
@@ -518,6 +521,131 @@ questionDetails.classList.remove('hidden');
 questionList.classList.add('hidden');
 ```
 
+#### Adding  a navbar
+
+```html
+  <a href data-href="question-list">Questions</a>
+      |
+      <a href data-href="question-new">New Question</a>
+```
+now we should say which one is click 
+inside index.js
+* The way is hide everything and show only the one we want 
+```javascript
+const nav = q('nav');
+
+  Question
+    .getAll()
+    .then(renderQuestions)
+    .then(html => { questionList.innerHTML = html });
+
+  nav.addEventListener('click', event => {
+    const {target} = event;
+    event.preventDefault();
+
+    const href = target.getAttribute('data-href');
+
+     switch (href) {
+      case 'question-list':
+        questionDetails.classList.add('hidden');
+        questionList.classList.remove('hidden');
+        break;
+    }
+  })
+```
+* In order to see answers related to each question in renderQuestion we add, so create renderAnswers function
+then inseid the question we render renderAnswer(question.answer) as 
+
+```javascript
+    <div class="answer-list">
+      ${renderAnswers(question.answers)}
+    </div>
+```
+* This is renderAnswers almost same as render questoin
+```javascript
+function renderAnswers (answers = []) {
+  return answers
+    .map(answer => `
+      <div class="answer-summary">
+        <p>${answer.body}</p>
+        <p><strong>Author:</strong> ${answer.author_full_name}</p>
+        <p><strong>Created At:</strong> ${answer.created_at}</p>
+      </div>
+    `).join('');
+}
+```
+### Form to Create Question
+To creare new answer we need to add new controller answer 
+Add div form wiht hidden class inside index.html
+
+the only thing we need to listen to submit event and prevent it. 
+```html
+ <div id="question-new" class="">
+      <form id=""question-form>
+        <div>
+          <label for="title">Title</label>
+          <input name="title" id="title" />
+        </div>
+        <div>
+          <label for="body">Body</label>
+          <textarea name="body" id="body"> </textarea>
+        </div>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+```
+inside event listetoenr add 
+```javascript
+ const questionNew = q('#question-new');
+ ```
+ we add below to nav 
+ ```javascript
+ case 'question-new':
+        questionDetails.classList.add('hidden');
+        questionList.classList.add('hidden');
+        questionNew.classList.remove('hidden');
+        break;
+```
+* now we gonna add a request to when a form is submmited so we add a new event listenr 
+* we gonna get form data from target because our targe is actually a form, also we perenvet deualt aciton
+* show the question is already created and get the id back, so when it is created we want to render show page 
+so we just create a showQuestion  that take id and render it and put it inside html 
+```javascript
+function showQuestion (id) {
+    Question
+      .get(id)
+      .then(renderQuestion)
+      .then(html => {
+        questionDetails.innerHTML = html;
+        questionDetails.classList.remove('hidden');
+        questionList.classList.add('hidden');
+        questionNew.classList.add('hidden');
+      });
+  }
+```
+* Then show the question 
+```javascript
+ questionForm.addEventListener('submit', event => {
+    const {currentTarget} = event;
+    event.preventDefault();
+
+    const fData = new FormData(currentTarget);
+
+    Question
+      .post({
+        title: fData.get('title'),
+        body: fData.get('body')
+      })
+    //  .then(showQuestion)
+     .then(({id}) => showQuestion(id))
+  });
+});
+```
+* Also we can show all questions 
+it destructure the id from the promise returns and pass it to showQuestion.
+```javascript
+ .then(({id}) => showQuestion(id))
+```
 
 
 
