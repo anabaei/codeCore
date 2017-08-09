@@ -1,8 +1,8 @@
-class Api::V1::QuestionsController < Api::ApplicationController
+class Api::V1::QuestionsController < ApplicationController
 	
   # before_action :authenticate_user!
   # before_action :find_question, only: [:show]
-
+  #before_action :question_params, only: [:create]
   # def show
   #   # render json: current_user
   #   render json: @question
@@ -24,8 +24,9 @@ class Api::V1::QuestionsController < Api::ApplicationController
   end
 
   def create
-    question = Question.new(question_params)
-    question.user = current_user
+    # byebug 
+    question = Question.new(params.require(:question).permit(:title, :body))
+    question.user = User.last
 
     if question.save
       render json: { id: question.id }
@@ -42,10 +43,10 @@ class Api::V1::QuestionsController < Api::ApplicationController
   #   end
   # end
 
-  # private
-  # def question_params
-  #   params.require(:question).permit(:title, :body)
-  # end
+  private
+  def question_params
+    params.require(:question).permit(:title, :body)
+  end
 
   # def find_question
   #   # 👇 Nested eager loading. Pre-queries for associated answers and users

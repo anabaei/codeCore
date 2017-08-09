@@ -44,10 +44,10 @@ class Question < ApplicationRecord
   # validates(:body, { presence: true, length: { minimum: 5, maximum: 2000 }})
   # validates(:view_count, numericality: { greater_than_or_equal_to: 0 })
 
-  validate :no_monkey
+  #validate :no_monkey
 
-  after_initialize :set_defaults
-  before_validation :titleize_title
+  # after_initialize :set_defaults
+  # before_validation :titleize_title
 
   # scope :recent, lambda {|count| order({ created_at: :desc }).limit(count) }
   def self.recent(count)
