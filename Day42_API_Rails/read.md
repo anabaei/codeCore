@@ -322,35 +322,57 @@ now encapsulate everything inside a function.
 
 now we can assume we have a question inside index.js
  inside index.js
+*1. Build functions to fetch our data and test our backend in the process.
  ```javascript
-// 1. Build functions to fetch our data and test our backend in the process.
-
 const DOMAIN = 'http://localhost:3000';
 const API_PATH = '/api/v1';
-const API_KEY = 'cd2583a2eb688452be031bfdb79857c7133dad4c3d5c50bf7ec4d61635a9866a';
+const API_KEY = 'cabaa75fd95929ca025b89dd59751dc7fe0b28bed841fd83cd8c87af49fc8682';
 
 const Question = {
-  // getAll: function () { ... }
-  // Property Method Shorthand. Syntax sugar 
-  getAll() {
-    return fetch(
-      `${DOMAIN}${API_PATH}/questions`,
-      {
-        headers: {'Authorization':API_KEY}
-      }
-    )
-      .then(res => res.json());
-  }
+ // getAll: function () { ... }
+ // Property Method Shorthand. Syntax sugar 
+ getAll() {
+   return fetch(
+     `${DOMAIN}${API_PATH}/questions`,
+     {
+       headers: {'Authorization':API_KEY}
+     }
+   )
+     .then(res => res.json());
+ 
 }
 // usage:
-Question.getAll()
+//Question.getAll()
 ```
 then inside the browser we would have :
 ```javascript
+Question.getAll()
 Question.getAll().then(console.table)
 ```
-simulating different pages with javascript so we add  get property 
-
+2- In order to define `post` function like `getAll` we coninute with `,`
+```javascript
+}, // from above 
+  post (attributes) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': API_KEY
+        },
+        body: JSON.stringify(attributes)
+      }
+    ).then(res => res.json());
+  }
+}
+```
+Then inside the browser we would have :
+```javascript
+Question.post({title: 'tmmi', body: 'body'})
+```
+--------
+* Also we can complete Question property with more functions like below 
 
 ```javascript
 ...
@@ -366,40 +388,21 @@ simulating different pages with javascript so we add  get property
   }
 
 ```
-it returns the quesiton, we can test it even in console. 
+* It returns the quesiton, we can test it even in console. 
 
 ```javascript
 Question.get(400)
 ```
-Create a question
-'Content-Type': we say to sever hery it is json 
-and in body take javascript object and pass it as json and also define the mthod 
-```javascript
- ).then(res => res.json());
-  },
-  post (attributes) {
-    return fetch(
-      `${DOMAIN}${API_PATH}/questions/`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': API_KEY
-        },
-        body: JSON.stringify(attributes)
-      }
-    ).then(res => res.json());
-  }
-```
-inside console chrome now we can have:
-Question.post({title:'fdd', body: 'what'}).then(console.info)
+* 'Content-Type': we say to sever hery it is json and in body take javascript object and pass it as json and also define the mthod 
+* Inside console chrome now we can have:
+`Question.post({title:'fdd', body: 'what'}).then(console.info)`
 
-save some git ignore to ignore >>
+* Save some git ignore to ignore >>
 ```javascript
 gi macos, linux >> .gitignore
 ```
 
-### Run your js when the page loaded inside 
+### Command to run when page loaded: 
 ```javascript
 document.addEventListener('DOMContentLoaded', event => {
 
@@ -412,9 +415,9 @@ function q (query) { return document.querySelector(query); }
 function qs (query) { return document.querySelectorAll(query); }
 ```
 
+## View 
 #### continue to display all questions  
 ```javascript
-// View
 function renderQuestions (questions = []) {
   return questions
     .map(question => `
