@@ -1,5 +1,4 @@
-
-https://github.com/CodeCoreYVR/awesome_answers_jun_2017
+https://github.com/anabaei/codeCore/tree/master/Day42_API_Rails/awesome_answers_jun_2017
 
 https://github.com/anabaei/codeCore/tree/master/Day42_API_Rails/AwesomeAnswerSPA
 ## Railsl API 
