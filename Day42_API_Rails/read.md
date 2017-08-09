@@ -667,3 +667,4 @@ since we care about reseting we dont care about promises
 ```
 
 
+fetch('http://localhost:3000/api/v1/questions',{method: 'POST', header: {'Content-Type': 'application/json'}, body: JSON.stringify({title: 'amir', body: 'tehran'}) }).then(console.info())
