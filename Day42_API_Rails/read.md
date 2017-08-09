@@ -1,6 +1,7 @@
 
 https://github.com/CodeCoreYVR/awesome_answers_jun_2017
-https://github.com/CodeCoreYVR/AwesomeAnswersSPAJune2017
+
+https://github.com/anabaei/codeCore/tree/master/Day42_API_Rails/AwesomeAnswerSPA
 ## Railsl API 
 
 what is `API`? Application program interface a set of routines, protocols, and tools for building software applications. An API specifies how software components should interact. 
