@@ -1,3 +1,6 @@
+
+https://github.com/CodeCoreYVR/react-demo-june-2017
+
 # React 
 
 is a library for compseable front end
@@ -461,6 +464,59 @@ Create a stop watch timer
    
    
    
-   
+ ## Stop Watch code
+ 
+ the basic is here 
+ ```javascript
+ import React, {Component} from 'react';
+
+class StopWatch extends Component {
+  render () {
+    return (
+      <div className='StopWatch'>
+        <strong>Count:</strong> 23121
+        <button>Start</button>
+        <button>Stop</button>
+        <button>Reset</button>
+      </div>
+    );
+  }
+}
+
+export default StopWatch;
+ ```
+ * Then if you run it you would have it as here:
+ * We need to keep track of initial values 
+
+```javascript
+import React, {Component} from 'react';
+
+class StopWatch extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      count: 0
+    };
+  }
+  render () {
+    return (
+      <div className='StopWatch'>
+        <strong>Count:</strong> {this.state.count}
+        <button onClick={this.start}>Start</button>
+        <button onClick={this.stop}>Stop</button>
+        <button onClick={this.reset}>Reset</button>
+      </div>
+    );
+  }
+}
+
+export default StopWatch;
+
+```
+so first we bind all these because we dont want to get lost track of them 
+method is an object of a property of a function
+if I take a method and assign it to a variable and this 
+call back is like,
 
 
