@@ -134,4 +134,173 @@ function Greetings (props) {
 Javascript consider zero as false and 1 as true 
 
 
+## React II Class base component
+* user reaction needs advacance 
+* props is property of this.
+convert hello world to class base component
+
+
+// import React from 'react';
+//when exporting default values imported as bove
+// other values without deualt should be surronded by braces
+// export default React
+// export Component
+// or 
+// export class Component extends ..
+import React, {Component} from 'react';
+
+instead of // function Hello (props)  we write it
+// All class based components must extends from Component or React.Component
+class Hello extends Component {
+// props is neign set as contruction and is inside 'this'
+// All ckass based components must have a render method that returns a React element. 
+
+
+#### State is the primary goal we want
+* State is used to keep track of what has changed. State is a property of props. 
+* super(props) to access props inside constructor. super should be before this. so never use this.props
+* this.state 
+* never muted stated directly,  there is a method setState.
+* reading from this.sate 
+```javascript
+this.setState({color:'blue'});
+```
+* Only it gets update when React know is good time for rendering. 
+* the only way we should pass a call back after changing 
+```javascript
+, function() {console.log(this.state.color) });
+```
+### Events
+* React access all events. we just use them as a props.
+```javascript
+return <input
+onChange = {function(){}}
+onClick = {function()}
+</input>
+```
+
+dont use $() on react. 
+
+
+constructor(props){
+  super(props);
+  this.state = {
+   hovered: false
+   
+  };
+}
+
+** The event prop work on 
+```javascript
+ <h1
+        onMouseLeave={() => {console.log('Mouse Left!')}}
+        onMouseEnter={() => {console.log('Mouse Entered!')}}
+        className='Hello' style={style}>
+        {greeting}, {this.props.name}!
+      </h1>
+```
+change the sate in correct way below is wrong 
+```javascript
+return (
+      <h1
+        onMouseLeave={() => {this.state.hovered = false}}
+        onMouseEnter={() => {this.state.hovered = true}}
+        className='Hello' style={style}>
+        {greeting}, {this.props.name}!
+      </h1>
+    );    
+ ```
+ this is right usign setState and needs React to rerender 
+ ```javascript
+return (
+      <h1
+        onMouseLeave={() => {this.setState({hovered: false}}
+        onMouseEnter={() => {this.setState({hovered: true}}
+        className='Hello' style={style}>
+        {greeting}, {this.props.name}!
+      </h1>
+    ); 
+ ```
+ to change the stule of hovered we can have 
+ ```javascript
+  if (this.state.hovered) {
+      style.border = 'solid thick Salmon';
+    }
+ ```
+
+class has construnce and render 
+this.
+
+```javascript
+import React, {Component} from 'react';
+
+const COLORS = ['Magenta', 'Yellow', 'Cyan'];
+
+class Shape extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      colorIndex: 0
+    };
+  }
+
+  colorCycle () {
+    console.log('Cycle!');
+  }
+
+  render () {
+    const {bgColor = 'Blue', type = 'square'} = this.props;
+
+    const style = {
+      borderRadius: type === 'circle' ? '99999999px' : '0px',
+      width: '150px',
+      height: '150px',
+      backgroundColor: COLORS[this.state.colorIndex]
+    }
+
+    return (
+      <div
+        onClick={this.colorCycle}
+        className='Shape'
+        style={style} />
+    );
+  }
+}
+
+/*
+function Shape (props) {
+  const {bgColor = 'Blue', type = 'square'} = props;
+
+  const style = {
+    borderRadius: type === 'circle' ? '99999999px' : '0px',
+    width: '150px',
+    height: '150px',
+    backgroundColor: bgColor
+  }
+
+  return (
+    <div className='Shape' style={style} />
+  );
+}
+*/
+
+export default Shape;
+```
+ above is when you click triged the color cycle,  
+colorCycle = () => {
+ const {colorIndex} = this.state;
+ this.setState({cololrIndex: (colorIndex +1) % COLORS.length });
+}
+
+
+Or we can go to prototype method just property of instance inside the constructor 
+
+```javascript
+this.colorCycle = this.colorCycle.bind(this)
+```
+
+
+
+
 
