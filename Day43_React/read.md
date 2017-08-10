@@ -288,19 +288,179 @@ function Shape (props) {
 export default Shape;
 ```
  above is when you click triged the color cycle,  
+
+```javascript
 colorCycle = () => {
  const {colorIndex} = this.state;
  this.setState({cololrIndex: (colorIndex +1) % COLORS.length });
 }
-
-
+```
 Or we can go to prototype method just property of instance inside the constructor 
-
 ```javascript
 this.colorCycle = this.colorCycle.bind(this)
 ```
 
+## Forms and Events
+
+get the current target after defining a class and before render 
+
+```javascript
+  addEntry (event) {
+    event.preventDefault();
+    const {currentTarget} = event;
+    const fData = new FormData(currentTarget);
+    console.log(Array.from(fData.entries()));
+  }
+ ```
+ inside the form all inputs have the name 
+ 
+* Now all login working and we go to check them out 
+.
+define a <div className='GuestBookEntries'>
+Every entry is an component. 
+  
+  To map through the enrirs and render a html result we go through it 
+  ```javascript
+  renderEntries () {
+    this.state.entries.map
+  }
+  ```
+  so we have it `this.addEntry = this.addEntry.bind(this)`
+  
+   ```javascript
+  addEntry (event) {
+    event.preventDefault();
+
+    const {entries} = this.state;
+    const {currentTarget} = event;
+    const fData = new FormData(currentTarget);
+
+    this.setState({
+      entries: entries.concat([{
+        message: fData.get('message'),
+        name: fData.get('name'),
+        date: new Date().toString()
+      }])
+    });
+  }
+ ```
+ to call the bunch of html and call it again. 
+
+we define a funciton as 
+ ```
+  renderEntries () {
+    return this.state.entries.map(
+      (entry, index) => (
+        <div key={index}>
+          <p>{entry.message}</p>
+          <p><strong>Name:</strong> {entry.name}</p>
+          <p><strong>Date:</strong> {entry.date}</p>
+        </div>
+      )
+    )
+  }
+   ```
+   
+   to call it inside render we hve
+     ``` 
+    <div className='GuestBookEntries'>
+          {this.renderEntries()}
+        </div>
+   ```
+   also we can add some style to it as below 
+   ```javascript
+   renderEntries () {
+    return this.state.entries.map(
+      (entry, index) => (
+        <div
+          key={index}
+          style={{backgroundColor: index % 2 ? 'White' : 'WhiteSmoke'}}>
+          <p>{entry.message}</p>
+          <p><strong>Name:</strong> {entry.name}</p>
+          <p><strong>Date:</strong> {entry.date}</p>
+        </div>
+      )
+    )
+  }
+   ```
+   
+   To clear a form we add a call back when 
+  ```javascript   
+   this.setState({
+      entries: entries.concat([{
+        message: fData.get('message'),
+        name: fData.get('name'),
+        date: new Date().toString()
+      }])
+    },() => { currentTarget.reset() }
+    // this.setState can take an optional second argument which is a callback
+    // that is called once the state has successfully updated.
+  );
+  }
+   ``` 
+   ### LifeCycle Call-back 
+   
+   before_save or before_validation
+   componentWillUpdate 
+   There are few lifecyclemethods as 
+   https://facebook.github.io/react/docs/react-component.html
+   
+   we should set the interval method only when the component is on the page and only way is componentdidmonunt and is called when the component is on the page
+   
+   ```javascript
+   import React, {Component} from 'react';
+
+class Timer extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      time: new Date().toString()
+    };
+  }
+
+  componentDidMount () {
+    setInterval(() => {
+      this.setState({time: new Date().toString() });
+    })
+  }
+
+  render () {
+    return (
+      <div className='Timer'>
+        <strong>Time:</strong> { this.state.time }
+      </div>
+    )
+  }
+}
+
+export default Timer;
+```
+* Now it is runing the page live time,
+* We want to clear the interval, when the component is removed then we can remove it
+
+???
+first we have to modify the intervalId this, so we add this here and after that we call clear intervall with this.intervall
+```javascript
+  componentDidMount () {
+   this.intervalId = setInterval(() => {
+      this.setState({time: new Date().toString() });
+    })
+  }
+```
 
 
+```javascript
+componentWillUnmount(){
+ clearInterval(this.intervalId)
+}
+```
+   
+ * Timer is done now!
+ 
+Create a stop watch timer 
+   
+   
+   
+   
 
 
