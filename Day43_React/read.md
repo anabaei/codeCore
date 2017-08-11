@@ -520,3 +520,250 @@ if I take a method and assign it to a variable and this
 call back is like,
 
 
+## React III
+
+* Just create a new app
+```javascript
+create-react-app awesomereact
+```
+* To use another port inside tha pachage we can add below 
+```javascript
+"scripts": {"start": "PORT=3001 react-scripts start",
+ ```
+ then inside the src create new folder name utilites  and create request 
+```javascript
+const DOMAIN = 'http://localhost:3000';
+const API_PATH = '/api/v1';
+const API_KEY = 'cd2583a2eb688452be031bfdb79857c7133dad4c3d5c50bf7ec4d61635a9866a';
+
+// To keep all methods that do requests to Questions together, we'll put
+// them inside an object named `Question`.
+const Question = {
+  // getAll: function () { ... }
+  // 👇 Property Method Shorthand. Syntax sugar for 👆
+  getAll() {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions`,
+      {
+        headers: {'Authorization': API_KEY}
+      }
+    ).then(res => res.json());
+  },
+  get (id) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/${id}`,
+      {
+        headers: {'Authorization': API_KEY}
+      }
+    ).then(res => res.json());
+  },
+  post (attributes) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': API_KEY
+        },
+        body: JSON.stringify(attributes)
+      }
+    ).then(res => res.json());
+  }
+}
+```
+when we export it we want to export only Question object and is not default export, which we call it Ajax request utilities 
+
+```
+export {Question};
+```
+* remove app.css, app.test., logo.svg and move app.js into components folder 
+insite 
+
+so inside the app.js then modify import to ./components/app
+
+All components are decending from app. and there would be something between app and page, app is going to choose which component to use, 
+
+in pages we have a class name page, so we create a page folder inside component
+
+so inside the pages we create wuestionindexpage, so then inside that page we  import it from 
+
+inside questionsindexanswers
+
+```javascript 
+import React, {Component} from 'react';
+import {Question} from '../../utilities/requests';
+
+class QuestionsIndexPage extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      questions: []
+    };
+  }
+
+  //  Lifecycle callback that will run once the
+  // component is first rendered in the browser.
+  componentDidMount () {
+    Question
+      .getAll()
+      .then(questions => this.setState({questions}));
+  }
+
+  render () {
+    return (
+      <div className='QuestionsIndexPage'>
+        { this.state.questions.toString() }
+      </div>
+    );
+  }
+}
+
+export default QuestionsIndexPage;
+```
+
+* Notice 
+it takes all the properties from each and pass it as prop of QuestionSummary 
+```
+question => <QuestionSummary key={question.id} {...question}
+```
+same as belwo 
+```
+          // ... <QuestionSummary key={question.id} id={question.id} title={question.title} created_at={question.created_at} ... />
+```
+choose all childeren except for the last one 
+```css
+.QuestionList > *:not(:last-child)
+```
+
+
+## React Routes 
+https://reacttraining.com/react-router/
+
+* Now we can import the react 
+```javascript
+yarn add react-router-dom
+```
+
+* inside App.js on tope we add 
+```javascript 
+import {
+  BrowserRouter as Router, // when importing we use as to alias an imported name 
+}
+```
+Inside App.js Then wtite the path, it means takes everything and route it as component
+```javascript
+ <Router>
+   <div className="App">
+     <Route path='/' component={QuestionsIndexPage} />
+     <Route path='/questions' component={QuestionsIndexPage} />
+   </div>
+ </Router>
+```
+* Adding exact word in Routes fix the url to a specific page 
+
+To get the id component 
+```javascript
+<Route path='/questions/:id'
+```
+
+in chrome react QestionsShowPage, 
+
+check the history location and math and see the params is exactly what is in url 
+
+use switch to be able to have most specific one comes in first. 
+
+
+```html
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor='title'>Title</label>
+        <input id='title' name='title' />
+      </div>
+
+      <div>
+        <label htmlFor='body'>Body</label>
+        <input id='body' name='body' />
+      </div>
+
+      <div>
+        <input type='submit' value='Submit'/>
+      </div>
+    </form>
+```
+
+handlesubmit is a call back for the form, 
+
+if we submit how we can send back data.
+
+gather all data from form first
+
+so we define handlesubm 
+// this prob effectivel an event for when submited
+const {onSubmit} = () => {}} = props;
+
+const handlesubmit = event => {
+ event.preventDefault();
+ const {currentTarget} = event;
+ 
+ const formData = new FormData(currentTarget);
+ onSubmit({
+   title: formData.get('title');
+   body:  formData.get('body');
+ });
+}
+
+//// no inside the questionew we can pass the params into the form
+
+to check it firs inside console we hav e
+```javascript
+class QuestionsNewPage extends Component {
+  render () {
+    return (
+      <div className='QuestionsNewPage'>
+        <h2>New Question</h2>
+        <QuestionForm onSubmit={question => console.log(question)} />
+      </div>
+    );
+  }
+}
+```
+* Now create a method instead of console.log to post it as a call back where we name it createQuestion. 
+
+so in request file we already have post so we use it as Question.post 
+still inside 
+```javascript
+ createQuestion (question) {
+    Question
+      .post(question)
+      // .then()
+  }
+```
+now it should work, then adding a redirect we can, so remember there is history prob which we have a push method. 
+
+add .then
+```javascript
+.then(({id})) => this.props.history.push('/questions/${id}`))
+```
+now it should work but it  doesnt because we need to bind it in constructor props 
+
+
+```javascript
+class QuestionsNewPage extends Component {
+  constructor (props) {
+    super(props);
+
+    this.createQuestion = this.createQuestion.bind(this);
+  }
+
+  createQuestion (question) {
+    Question
+      .post(question)
+      .then(({id}) => this.props.history.push(`/questions/${id}`));
+  }
+
+```
+now it works. 
+now back and forward working as well. 
+
