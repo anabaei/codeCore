@@ -3,28 +3,28 @@ https://github.com/CodeCoreYVR/react-demo-june-2017
 
 # React 
 
-is a library for compseable front end
-
-it is a framework that gives you a pattern. 
-
 * It is  just a view that takes data and displays it. 
 * Just start : now we use bare minimum and then we create a framework
-
+```javascript
 mkdir react-hello-world
 touch index.js
-touch index.html 
+touch index.html
+```
 add react cdn 
+```javascript
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.0.0-beta.5/cjs/react.development.js"></script>
-
-first argument is name of element you want to create, seocnd arg is props for that element, then we have to use className: and last argument is the content of argument, 
-
+```
+#### Functions 
+* All functions have prop and return value.
+* Retun have four elements. First argument is name of element you want to create, seocnd arg is props for that element, then we have to use className: and last argument is the content of argument, 
+```javascript
 function Hello (props) {
  return React.createElement('h1', {className: 'hello'}, 'Hello, world!');
 }
+```
+React dom takes all components and convert to html. 
 
-should be at least one div to insert into. React dom taking all components and convert to html. 
-
-```react
+```javascript
 <!DOCTYPE html>
 <html>
   <head>
@@ -60,19 +60,13 @@ should be at least one div to insert into. React dom taking all components and c
   </body>
 </html>
 ```
-This is vert basic react component.
-
+This is basic react component.
 Type: p , props: , childeren:
 Everytime there is a change in react then we render the entire DOM. from virtual dom to real dom. 
 
-React is default to DOM
-React renders to mobile name Native
+`Components` are basic building like functions and classes. composeable define thing. To make or form combining things or elements. 
 
-Components are basic building like functions and classes. composeable define thing. To make or form combining things or elements. 
-
-like creating shapes. 
-
-naem of function is name of component with capital and has to return single react element which can be html.
+Name of function is name of component with capital and has to return single react element which can be html.
 
 ReactDom take things put into DOM. 
 
@@ -80,7 +74,7 @@ Composing with react can be smaller.
 ### JSX
 {} everything here should be 
 user define components should be capital.
-code inside {} run as js like <% tags. 
+code inside `{}` run as js like `<%` tags. 
 
 ### Start JSX
 ```javascript
