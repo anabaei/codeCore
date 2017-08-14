@@ -103,8 +103,8 @@ then inside the config/initilizer create setup_fog.rb
 ```ruby
 CarrierWave.configure do |config|
   config.fog_credentials = {
-    provide: 'AWS',
-    aws_access_key: ENV['AWS_ACCESS_KEY_ID'] || '',
+    provider: 'AWS',
+    aws_access_key_id: ENV['AWS_ACCESS_KEY_ID'] || '',
     aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'] || '',
     region: 'us-west-2'
   }
@@ -125,3 +125,10 @@ then we specify what bucket we are usung, check your amazon.
 ENV['AWS_ACCESS_KEY_ID'] = 'PUT YOUR ACCESS KEY'
 ENV['AWS_SECRET_ACCESS_KEY'] = 'PUT YOUR SECRET ACCESS KEY'
 ```
+
+Now we go to image uloeaded we can specify where to switch where to save image 
+```runy
+#storage :file
+storage :fog 
+```
+Then it would save inside amazon 
