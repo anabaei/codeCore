@@ -88,7 +88,7 @@ inside app.js to see it works!
 ```javascript
 <button type="button" className="btn btn-primary">Primary</button>
 ```
-Alos you can have simpest way in index.html in public folder
+Also you can have simplest way in index.html in public folder
 ```javascript
  <Button bsStyle="primary">Primary</Button>
 ```
