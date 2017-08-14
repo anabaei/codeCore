@@ -94,7 +94,7 @@ it recreate a new version of the images, you can override each other
 q.image.create_versions!(:medium)
 ```
 ## Amazon
-
+* Setting up a bucket on amazon account and get access key and secret access keys then go back to our application. 
 ```ruby
 gem fog 
 ```
