@@ -39,6 +39,7 @@ create-react-app react-demo
 * We take one react element.
 * `Components` are cosmpose able thing to make or form combining parts
 * Name of function is name of component with `capital` and has to return `single react element` which can be html
+* Each component can have childerens components 
 #### Hello world! function
 * Create a component folder inside src folder and address it in app.js as 
 ```javascript
@@ -93,9 +94,8 @@ Alos you can have simpest way in index.html in public folder
 ```
 ---------------
 
-## Dynamically generate components.
 
- 
+## Dynamically generate components.
 isBye is same as isBye={true}
 
 if we have an array of components then it would send all to screen
