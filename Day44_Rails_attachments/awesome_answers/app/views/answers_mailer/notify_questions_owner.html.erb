@@ -1,0 +1,13 @@
+<p>Hello <%= @user.first_name %>,</p>
+
+<p style='font-weight: bold;'>
+  You got an answer to your question.
+</p>
+
+<p>Question Title: <%= @question.title %></p>
+<p>The Answer: <%= @answer.body %></p>
+
+<p><%= link_to 'Click here to see the question', question_url(@question) %></p>
+
+<p>Regards,</p>
+<p>Awesome Answers Team</p>
