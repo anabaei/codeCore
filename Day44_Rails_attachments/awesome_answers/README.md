@@ -132,7 +132,7 @@ Now we go to image uloeaded we can specify where to switch where to save image
 storage :fog 
 ```
 Then it would save inside amazon 
-
+```runy
 /public/uploads/*
 /config/initializers/app_keys.rb
 
@@ -155,3 +155,4 @@ Then it would save inside amazon
 /yarn-error.log
 
 .byebug_history
+```
