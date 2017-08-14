@@ -9,11 +9,23 @@ function Hello (props) {
       // - An object that represents the props (properties) of the component.
       //   These are similar to the arguments of a function.
       // - Another React element.
-      return (
-       <h1 className='Hello' >
-         Amir, {props.name}!
+      const {names = []} = props;
+     props.names == ['Jo', 'Dave', 'Lana', 'Dana', 'Tom']
+
+     const helloElements = names.map(
+    name => <h1> name={name} </h1>
+  //  (name, index) =>
+//     <h1> Hi
+//
+// </h1>
+      );
+     return (
+       <h1>
+
+             { helloElements }
 
        </h1>
-     );}
+     );
+   }
 
 export default Hello;

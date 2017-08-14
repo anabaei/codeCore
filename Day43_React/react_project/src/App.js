@@ -9,8 +9,10 @@ class App extends Component {
         <div className="App-header">
 
           <Hello  />
+           <Hello names={['Jo', 'Dave', 'Lana', 'Dana', 'Tom']} />
           <Hello  />
           <Hello  />
+
         </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
