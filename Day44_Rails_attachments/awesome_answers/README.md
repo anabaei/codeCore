@@ -19,3 +19,13 @@ rails g simple_fomr:install --bootstrap
 ```
 * We can create a partial _form and render `form` inside new and edit. Save time
 
+#### Form_tag 
+```ruby
+simple_form_for :new_session, url: session_path 
+```
+convert `f.submit_tag` to `f.button :submit`
+* Below code changes the name of model from new_session to session[email].  
+```ruby
+simple_form_for :seesion, as: :new_session, url: session_path 
+```
+* Beceuase it changes the params and nested it so we should modify the controler. for example it was available session[:emai] and now we have to use nested params. 
