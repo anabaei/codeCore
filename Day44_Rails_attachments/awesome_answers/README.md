@@ -17,4 +17,5 @@ rails g simple_fomr:install --bootstrap
 ```ruby
 <%= f.input_field :tag_list %>
 ```
+* We can create a partial _form and render `form` inside new and edit. Save time
 
