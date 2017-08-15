@@ -1,19 +1,11 @@
-// we gonna see how to test controllers
- // create a user 
+
+ ## create a user 
+ ```ruby
  rails g model user first_name last_name email password_digest
  rails db:migrate
-
-// we wanna add some features and test them
-
-// so we go to user spec which is almost empty
+```
 
 // first test for validation 
-
-describe 'validation' do 
-
-end  
-
-// then write to check an email is present first
 
  describe 'validation' do 
     describe 'email' do 
