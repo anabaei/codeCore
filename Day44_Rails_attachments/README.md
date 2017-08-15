@@ -269,7 +269,14 @@ beause we are calling directly on the class and not the instance of a class so w
 ```
 
 * Also if someone already answerred quesiton and removed it so we change the state when delete happen. 
-
+inside answers controller
+```ruby 
+if @answer.save
+      AnswersMailer.notify_questions_owner(@answer).deliver_now
+      @question.answer! if @question.may_answer? # change the state of the question to `answered`
+      redirect_to question_path(@question)
+    else
+```
 
 
 
