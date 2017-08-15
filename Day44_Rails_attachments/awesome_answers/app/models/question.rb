@@ -1,4 +1,7 @@
 class Question < ApplicationRecord
+  # mount_uploader :image, AvatarUploader, mount_on: :image
+  mount_uploader :image, ImageUploader
+  
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 

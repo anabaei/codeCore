@@ -1,27 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<style>
- .more {
-   display: none;
- }
-
-</style>
-
-<script>
-window.onload = function(){
-a = document.querySelectorAll(".bud");
-var cnt = 0;
-a.forEach(function(element) {
-
-   if(cnt> 1)
-    element.className = "more";
-   cnt++;
-});
-}
-
-
-</script>
 <body class="containre">
    <%= link_to 'New', new_post_path %>
   <div class="row">
@@ -64,7 +43,7 @@ program and make it a truly collaborative project.</p>
     </div>
     <div class="col-md-4 col-xs-12"></div>
     <div class="col-md-4 col-xs-12">
-        <%= link_to "Show More" %>
+
 
     </div>
     <div class="col-md-4 col-xs-12"></div>

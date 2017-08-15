@@ -43,11 +43,11 @@ its `action` attribute. Inspect this form to know more! %>
 <% if user_signed_in? %>
   <%= errors_for @answer %>
 
-  <%= form_for [@question, @answer] do |f| %>
+  <%= simple_form_for [@question, @answer] do |f| %>
     <div>
-      <%= f.text_area :body %>
+      <%= f.input :body %>
     </div>
-    <%= f.submit %>
+    <%= f.button :submit %>
   <% end %>
 <% end %>
 

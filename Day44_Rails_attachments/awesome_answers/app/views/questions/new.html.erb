@@ -21,25 +21,26 @@ In this case, the url for the `create` action to `questions` which is the
 
 <%= errors_for @question %>
 
-<%= form_for @question do |f| %>
+<%= simple_form_for @question do |f| %>
   <div>
-    <%= f.label :title %>
+
     <%# f.text_field will generate an `input` html tag with proper
     `name` attribute which will be `question[title]` in this case. It will
     also set the value to the input field to whatever Question.new object has
     preset for that particular attribute (in this case title) %>
-    <%= f.text_field :title %>
+    <%= f.input :title %>
   </div>
 
   <div>
-    <%= f.label :body %>
-    <%= f.text_area :body %>
+    <%= f.input :body %>
+
   </div>
 
   <div>
-    <%= f.label :tag_list, "Tags (seperated by commas)" %>
-    <%= f.text_field :tag_list %>
+
+    <%= f.input_field :tag_list %>
   </div>
 
-  <%= f.submit class: 'btn btn-primary'%>
+  <!-- <%= f.submit :button%> -->
+  <%= f.button :button, "Custom Button Text" %>
 <% end %>

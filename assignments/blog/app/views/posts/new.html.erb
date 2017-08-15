@@ -1,14 +1,13 @@
-<h1> Create one </h1>
-
-
-<%= form_for(@post) do |post| %>
- <div>
-     <%= post.label :title %>
-     <%= post.text_field :title %>
- </div>
-  <div>
-     <%= post.label :body %>
-     <%= post.text_field :body %>
- </div>
-   <%= post.submit "hit!" %>
+<div class="container">
+<h1> Create Post </h1>
+<%= bootstrap_form_for(@post) do |f| %>
+  <%= f.select(:category_id) do %>
+    <% [['Category 1', 1], ['Category 2', 2], ['Category 3', 3], ['Category 4', 4], ['Category 5', 5]].each do |c| -%>
+      <%= content_tag(:option, c.first, value: c.last) %>
+    <% end %>
+  <% end %>
+  <%= f.text_field :title %>
+  <%= f.text_field :body %>
+  <%= f.submit "Create Post" %>
 <% end %>
+</div>

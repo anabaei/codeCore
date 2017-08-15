@@ -1,2 +1,18 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+
+<div class="container">
+  <h1><%= @post.title %></h1>
+     <p><%= @post.body %></p>
+
+    <%= bootstrap_form_for [@post, @comment] do |f| %>
+      <%= f.text_field :body %>
+      <%= f.submit "comment" %>
+  <% end %>
+
+ <div class="container">
+   <% @comments.each do |f| %>
+   <div class="col-md-12">
+   <%= f.body %>
+  </div>
+   <% end %>
+ </div>
+</div>
