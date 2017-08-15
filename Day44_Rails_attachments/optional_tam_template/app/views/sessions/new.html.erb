@@ -1,0 +1,13 @@
+<h1>Sign In</h1>
+
+<%# You can use simple_form_for without passing an instance of a model. Instead,
+give it a simple and it's name will used as if it were the name of a model.
+
+You will need provide a url argument, because without a model instance simple
+will not be able to dertermine the correct url to post.
+%>
+<%= simple_form_for :session, as: :new_session, url: session_path do |f| %>
+  <%= f.input :email %>
+  <%= f.input :password %>
+  <%= f.button :submit, 'Sign In' %>
+<% end %>

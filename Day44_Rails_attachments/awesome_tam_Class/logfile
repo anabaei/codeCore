@@ -1,0 +1,5 @@
+LOG:  database system was shut down at 2017-08-15 09:17:12 PDT
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+FATAL:  database "awesome_answers_development_june_2017" does not exist

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814172042) do
+ActiveRecord::Schema.define(version: 20170815175915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,14 @@ ActiveRecord::Schema.define(version: 20170814172042) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "options", force: :cascade do |t|
+    t.bigint "survey_question_id"
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_question_id"], name: "index_options_on_survey_question_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -57,9 +65,18 @@ ActiveRecord::Schema.define(version: 20170814172042) do
     t.integer "view_count"
     t.bigint "user_id"
     t.string "image"
+    t.string "aasm_state"
     t.index ["body"], name: "index_questions_on_body"
     t.index ["title"], name: "index_questions_on_title"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "survey_questions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_survey_questions_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -104,7 +121,9 @@ ActiveRecord::Schema.define(version: 20170814172042) do
   add_foreign_key "answers", "users"
   add_foreign_key "likes", "questions"
   add_foreign_key "likes", "users"
+  add_foreign_key "options", "survey_questions"
   add_foreign_key "questions", "users"
+  add_foreign_key "survey_questions", "users"
   add_foreign_key "taggings", "questions"
   add_foreign_key "taggings", "tags"
   add_foreign_key "votes", "answers"

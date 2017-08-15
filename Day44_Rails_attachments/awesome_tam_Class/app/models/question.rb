@@ -70,6 +70,30 @@ class Question < ApplicationRecord
   end
   # usage:
   # question.tag_list = 'some,thing,etc'
+  include AASM
+ aasm do
+   state(:draft, { initial: true })
+   state :published
+   state :canceled
+   state :answered
+   state :closed
+
+   event :publish do
+     transitions from: :draft, to: :published
+   end
+
+   event :close do
+     transitions from: [:published, :answered], to: :closed
+   end
+
+   event :cancel do
+     transitions from: [:published, :answered], to: :canceled
+   end
+
+   event :answer do
+     transitions from: :published, to: :answered
+   end
+ end
 
   private
 

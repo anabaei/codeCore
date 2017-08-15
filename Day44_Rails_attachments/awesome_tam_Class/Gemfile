@@ -48,8 +48,9 @@ gem 'cancancan', '~> 2.0'
 gem 'font-awesome-rails'
 gem 'cowsay'
 gem 'jquery-rails'
-
+gem 'aasm'
 gem 'faker', github: 'stympy/faker'
+gem "cocoon"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
