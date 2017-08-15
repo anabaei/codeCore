@@ -285,7 +285,7 @@ we need to nested inside question, because we want the question id.
 ```ruby
 resources :publishing, only: :create 
 ```
-* nodify routes 
+* Modify routes to access the id of question inside the controller publishing 
 ```ruby
  resources :questions do
     resources :likes, only: [:create, :destroy]
@@ -335,6 +335,43 @@ end
    <%= link_to 'publish', question_publishings_path(@question),
                              method: :post %>
 ```
+-----------
+
+### Thin contorller and Fat models 
+Controlers shouldnt do alot of works. Move all methods from controller into models . Instead of having many if conditions in controller try to create another one. 
+-------------
+# Dynamic Model Form
+`First check it is not certain reserved word.`
+there would be one to many relation between survery_question and options. eahc survey_question has many options
+```ruby
+rails g model survey_question user:references title 
+rails g model option survey_question:references body 
+rails db:migrate
+```
+* Create a controler to have survey inside admin 
+```ruby
+rails g controller admin/survey_questions
+```
+inside the routes we add it
+```
+ namespace :admin do
+    resources :dashboard, only: :index
+    resources :survey_questions, only: [:index, :new, :create]
+  end
+```
+* Because the admin controller has some functions to check the authenticity of user and we inhertiate from it
+
+* nested routes form. To change the url method `[:admin, @survey_question]` 
+```ruby 
+<%= simple_form_for [:admin, @survey_question] do |f| %>
+  <%= f.input :title %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
+```
+also remember associated each survey_question to user, to avoid it we should assign optional: true in model. 
+
+
+
 
 
 
