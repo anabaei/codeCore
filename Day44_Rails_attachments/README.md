@@ -457,9 +457,39 @@ def create
 ```
 now inside the admin/views we create a partial field like `Formtastic`
 
+# Geo Location
+https://github.com/alexreisner/geocoder
+https://github.com/apneadiving/Google-Maps-for-Rails
 
+```ruby
+gem 'geocoder'
+gem 'gmaps4rails'
+gem 'underscore-rails'
+```
+inside application js modify as 
+```ruby
+//= require jquery
+//= require bootstrap-sprockets
+//= require rails-ujs
+//= require underscore
+//= require gmaps/google
+//= require_tree .
+```
+and put the src files put in app file:
 
-
-
-
+Then add one comulmn to user 
+```ruby
+rails g migration add_geocoding_to_users longitude:float latitude:float address
+```
+Inside user model add below code: 
+```ruby
+geocoded_by :address 
+after_validation :geocode
+```
+now inside the rails console, 
+```ruby
+u.address = "somewhere" 
+u.save
+```
+then you have lattitude and longtitude inisde the code. 
 
