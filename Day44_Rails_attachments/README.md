@@ -161,9 +161,119 @@ Then it would save inside amazon
 
 .byebug_history
 ```
-
+# State Machine
+https://github.com/aasm/aasm
 State diagram take one object from one state to another.
 there is a `gem aasm`
 bunlde update updates all gems. 
+check activeRecord in this gem github, 
+so we add a column to our table, we want to have state column in question
+then run this
+```ruby
+rails g migration add_asm_to_question aasm_state
+```
+Always after 
+### Cost 
+adding index after migration it means we would have something like find me all publish or cancel questions, adding index always give overhead to project everytime you  delete or update index should be updated so indexing has cost. So only add index if you have many querys about that 
+
+Extend iheritent everything as class method but include gives everything as instance. 
+
+now inside question model we have 
+DSL : Domain Specific language, it is a ruby code written in a certain way. 
+list all states and initial states. Also adding events like. aasm is just a method that gets a block, state is also function to get two arguemnts which the second one is optional, 
+they come from these statements with a question at tend 
+```ruby
+ include AASM
+  aasm do
+    state(:draft, { initial: true })
+    state :published
+    state :canceled
+    state :answered
+    state :closed
+
+    event :publish do
+      transitions from: :draft, to: :published
+    end
+
+    event :close do
+      transitions from: [:published, :answered], to: :closed
+    end
+
+    event :cancel do
+      transitions from: [:published, :answered], to: :canceled
+    end
+
+    event :answer do
+      transitions from: :published, to: :answered
+    end
+  end
+```
+* To test it go to rails c 
+
+q.draft?
+q.published?
+
+to save it we have 
+q.publish 
+q.save 
+then it chagne the state 
+also yo can not change state from answered to draft becuse not define in rules 
+
+by adding `winny_transaction` we can avoid getting error and getting a good exception. 
+
+so add it to code
+```ruby
+  aasm whiny_transitions: false do
+    state(:draft, { initial: true })
+```
+* Also it tells you can move from currnt state to another one like publish 
+```ruby
+q.may_publish?
+```
+it loops to all question, but find all first fetch all in memory and then do it interaction 
+This one is better and faster 
+```ruby
+Question.find_each {|q| q.publish!}
+```
+```ruby
+Question.find_each {|q| q.publish! }
+Question.where(user: nil).count
+Question.where(user: nil).find_each {|q| q.update(user: users.sample) }
+```
+* So like stackoverflow if a question has has  answered 
+* Update with `!` means if it can not succed it returns false otherwise without `!` if not succeed it returns error
+### Use state machine inside app
+* So we want to list all questions that are not draft or cancel.
+* inside question controller 
+
+Question.where(aasm_state: [:published, :closed, :answered]) 
+
+Question.where.not(aasm_state: [:published, :closed, :answered]) 
+
+To create a function from above we define a method like below as self because of `Question.sth` so we define as below  
+`def self.nameoffunciotn`
+#### Class method  
+beause we are calling directly on the class and not the instance of a class so we define self.
+
+* To change the state of a question we would have below code in create answer controller 
+```ruby
+ @question.answer! 
+```
+### Create a label in front of question
+
+* Inside view 
+```ruby
+  <% if question.answered? %>
+    <div class='label label-success'>answered</div>
+  <% end %>
+```
+
+* Also if someone already answerred quesiton and removed it so we change the state when delete happen. 
+
+
+
+
+
+
 
 
