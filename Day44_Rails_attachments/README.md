@@ -370,9 +370,66 @@ inside the routes we add it
 ```
 also remember associated each survey_question to user, to avoid it we should assign optional: true in model. 
 
+### Save the options
 
+inside survery_question model
 
+ belongs_to :user
 
+  has_many :options, dependent: :destroy
+  accepts_nested_attributes_for :options
+create options at the same time creating survery_question. 
+
+inside the rails c
+SurveyQuestion.create(title: 'abc', user: User.last, options_attributes: {"0" => { body: 'option 1'} })
+
+pass sperical attributes and pass a hash awith a key which is new and the value should be another hash  `{ body: 'option 1'}`  with attirbites inside it  option and now it would have tow inset function. Ruby hash should be unique. 
+
+this helps nested the dynamic form that will create optional inside the form 
+inside the controller
+```ruby
+ def new
+    @survey_question = SurveyQuestion.new
+    # this creates three associated options for the SurveyQuestion all in memory
+    # this will help us bested the dynamic form that will eventually create
+    # both the survey question and the options in one submission
+    3.times { @survey_question.options.build }
+  end
+  
+  def create
+    survey_question_params = params
+                             .require(:survey_question)
+                             .permit(:title, { options_attributes: [:body] })
+    @survey_question = SurveyQuestion.new survey_question_params
+    @survey_question.user = current_user
+    if @survey_question.save
+      redirect_to admin_survey_questions_path, notice: 'question created'
+    else
+      render :new
+    end
+```
+
+* Now inside the view, added nested controler 
+```
+
+<%= simple_form_for [:admin, @survey_question] do |f| %>
+  <%= f.input :title %>
+
+  <%= f.simple_fields_for :options do |opt| %>
+    <%= opt.input :body %>
+  <% end %>
+
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
+```
+### Validation inside models
+```ruby
+ validates :title, presence: true
+```
+* If you pass invalid so it can reject 
+```ruby
+accepts_nested_attributes_for :options, reject_if: :all_blank
+```
 
 
 
