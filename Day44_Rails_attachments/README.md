@@ -430,6 +430,33 @@ inside the controller
 ```ruby
 accepts_nested_attributes_for :options, reject_if: :all_blank
 ```
+### Add dynamic options 
+when you adding or removing 
+```ruby
+gem "cocoon"
+```
+so inside application.js add require after jquery, make sure you have jquery3 and jquery_ur 
+
+```javascript
+//= require jquery3
+//= require vendor/selectize.min
+//= require jquery_ujs
+//= require cocoon
+//= require_tree .
+```
+* Strong paramsteres Gotcha in github tom and modify create funtion as below 
+```ruby
+def create
+    survey_question_params = params
+                             .require(:survey_question)
+                             .permit(:title, { options_attributes: [:body,
+                                                                    :id,
+                                                                    :_destroy]
+                                              }
+                                    )
+```
+now inside the admin/views we create a partial field like `Formtastic`
+
 
 
 
