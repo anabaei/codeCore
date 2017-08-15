@@ -1,0 +1,28 @@
+<%# When using this partial, make sure that the @question
+variable is declared in the controller action that eventually loads it %>
+
+<%= simple_form_for @question do |f| %>
+  <%#
+  simple_form detects the type of the input fields based on the field's
+  database column type (e.g. string -> text field, text -> textarea,
+  integer -> number field, etc.)
+
+  simple_form will add a star near the label if there is a presence validator
+  on the field. You can disable this feature on specific inputs by passing it
+  the `required: false` argument.
+  %>
+  <%= f.input :title %>
+  <%= f.input :body %>
+
+  <%# Sometimes we don't want to use all the features from simple_form. In that
+  situation, we can just keep using standard form_for fields.
+  %>
+  <div class="form-group">
+    <%= f.label :tag_list, "Tags (seperated by commas)" %>
+    <%= f.input_field :tag_list %>
+  </div>
+
+  <%= f.input :image %>
+
+  <%= f.button :submit %>
+<% end %>
