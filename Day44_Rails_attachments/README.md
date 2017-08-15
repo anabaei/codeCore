@@ -1,5 +1,10 @@
+
 ## Simple form 
 https://github.com/plataformatec/simple_form
+common propblem in terminal
+```ruby
+pg_ctl -D /usr/local/var/postgres -l logfile start
+```
 
 ```ruby
 gem 'simple_form'
@@ -156,3 +161,9 @@ Then it would save inside amazon
 
 .byebug_history
 ```
+
+State diagram take one object from one state to another.
+there is a `gem aasm`
+bunlde update updates all gems. 
+
+
