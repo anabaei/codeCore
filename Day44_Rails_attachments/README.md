@@ -493,3 +493,50 @@ u.save
 ```
 then you have lattitude and longtitude inisde the code. 
 
+Inside the controller for admin we have 
+
+```ruby
+ class Admin::DashboardController < Admin::BaseController
+  def index
+    @products = Product.all
+    @reviews = Review.all
+    @users = User.all
+    @locations = users_json(@users)
+  end
+
+  def users_json(users)
+    Gmaps4rails.build_markers(users) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+      marker.infowindow user.first_name
+    end.to_json
+  end
+end
+```
+* now inside the view we have
+* raw means renderd as string in below code inside js a ruby 
+```ruby
+<div>
+  <div id="amazon_users_map" style="height: 400px; width: 600px"></div>
+</div>
+
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({provider: {}, internal: {id: 'amazon_users_map'}}, function() => {
+    markers = handler.addMarkers(<%= raw @locations %>)
+
+    handlers.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    
+  })
+</script>
+```
+### Adding set 
+set is a unorder hash that you can add things to that and if something was repeated it doesnt add. 
+```ruby
+s = Set.new 
+s.add("Dd")
+```
+
+
+
