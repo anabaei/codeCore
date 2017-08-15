@@ -1,3 +1,10 @@
+## Interview
+
+* Talk outloud, when you faced a problem try to ask more questions. Interview questions they ask you something that you dont know and see how you ask more questions. Red flag is you dont understand the question and try to solve it. 
+
+I dont know this questions but I can guess this is the solution. 
+rubber ducking 
+
 /// Create a bew directory and new file 
 
 require "minitest/autorun"
