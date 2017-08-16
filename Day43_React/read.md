@@ -1211,6 +1211,7 @@ function AuthRoute (props) {
 }
 export default AuthRoute;
 ```
+`props` above are all props that Rout pass them. 
 also import rout redirect from react-route 
 
 Now we go to app.js and import authroute form ./authroute change <Route to <AuthRoute 
