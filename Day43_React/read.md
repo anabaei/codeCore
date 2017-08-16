@@ -875,14 +875,163 @@ case token_type
   end
 ```    
 * In ruby instead of `try catch` we say `begin rescue`
+* to check validate epiration date 
+
+```ruby
+def payload
+    begin
+      payload = HashWithIndifferentAccess.new decode_token(token)&.first
+      return nil if Time.at(payload[:exp]) < Time.now
+      payload
+    rescue JWT::DecodeError => error
+      {}
+    end
+  end
+```
+
 * End of server side 
+https://github.com/CodeCoreYVR/awesome_answers_jun_2017
 ---------------
+# Now move on React 
+* in awsome answr revust.js 
+```ruby
+change the to conts API_Key = 'APIKEy hgoerhfrehferf9438r34'
+```
+* we create a form to sent
+* then copy the questionnew.js and rename it to sign in page, change signinpage name only from questionnewpage to it.
+* also we need sign in form.
+so it would be like this 
+```ruby
+import React, {Component} from 'react';
+import {Question} from '../../utilities/requests';
+import SignInForm from '../SignInForm';
+
+class SignInPage extends Component {
+  constructor (props) {
+    super(props);
+  }
+
+  render () {
+    return (
+      <div className='SignInPage'>
+        <h2>Sign In</h2>
+        <SignInForm onSubmit={() => {}} />
+      </div>
+    );
+  }
+}
+
+export default SignInPage;
+```
+now we create signin form 
+```ruby
+import React from 'react';
+
+function SignInForm (props) {
+  // By taking a `onSubmit` prop, I'm effectively going
+  // to implement a "event" for when QuestionForm is submitted
+  const {onSubmit = () => {}} = props;
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const {currentTarget} = event;
+
+    const formData = new FormData(currentTarget);
+    onSubmit({
+      email: formData.get('email'),
+      password: formData.get('password')
+    });
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor='email'>Email</label> <br />
+        <input type='email' id='email' name='email' />
+      </div>
+
+      <div>
+        <label htmlFor='password'>Password</label> <br />
+        <input type='password' id='password' name='password' />
+      </div>
+
+      <div>
+        <input type='submit' value='Sign In'/>
+      </div>
+    </form>
+  );
+}
+
+export default SignInForm;
+```
+* then inside app.js import singinpage from '.pages/
+* then route it in app.js and add nav bar
+```ruby
+<link to='/sign_in'>Sing in </link>
+<Route exact path='/sing_in' componet={Singinpage} />
+```
+* Now inside the front end we should have sign in page. 
+-------------
+now we define request to token inside utilities/request
+```javascript
+const Token = {
+  post (params) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/tokens/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      }
+    ).then(res => res.json());
+  }
+}
+
+export { Question, Token };
+```
+we are going to get a json response as `jwt` from above.  
+
+-----------
+* now inside signinpage.js we modify the sign in page by adding createToke as below
+```javascript
+class SignInPage extends Component {
+  constructor (props) {
+    super(props);
+
+    this.createToken = this.createToken.bind(this);
+  }
+
+  createToken (params) {
+    Token
+      .post(params)
+      .then(res => {
+        console.log(res)
+      });
+  }
+
+  render () {
+    return (
+      <div className='SignInPage'>
+        <h2>Sign In</h2>
+        <SignInForm onSubmit={this.createToken} />
+      </div>
+    );
+  }
+}
+
+export default SignInPage;
+
+```
+* When sign in form  submited the create token is call back.  
+* Now if we sign in then we should get token back in chrom console. 
+-----------
 
 
 
 
-
-The full copy of api application controller for Rails server side ***
+The full copy of api SERVER SIDE  controller for Rails server side ***
 ```ruby
 class Api::ApplicationController < ApplicationController
   # This will stop rails from raising an error if
@@ -902,6 +1051,7 @@ fetch(
   }
 )
 =end
+
   def current_user
     if token.present?
       case token_type
@@ -921,12 +1071,12 @@ fetch(
   end
 
   def token
-    authorization_header&.split(/\s+/).last
+    authorization_header&.split(/\s+/)&.last
   end
 
   def token_type
     #APIKEY, apikey, ApiKey
-    authorization_header&.split(/\s+/).first&.downcase
+    authorization_header&.split(/\s+/)&.first&.downcase
   end
 
   def decode_token(token)
@@ -940,7 +1090,11 @@ fetch(
       # HashWithIndifferentAccess creates a special hash where its keys
       # can be accessed as symbols or strings.
       # (e.g. hsh[:id], hsh["id"])
-      HashWithIndifferentAccess.new decode_token(token)&.first
+      payload = HashWithIndifferentAccess.new decode_token(token)&.first
+
+      # Validate the expiration in the payload
+      return nil if Time.at(payload[:exp]) < Time.now
+      payload
     rescue JWT::DecodeError => error
       {}
     end
