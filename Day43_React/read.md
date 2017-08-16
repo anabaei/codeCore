@@ -1027,10 +1027,212 @@ export default SignInPage;
 * When sign in form  submited the create token is call back.  
 * Now if we sign in then we should get token back in chrom console. 
 -----------
+## Find a way to store it
+you can put anything there 
+is like a big hash to sto re
+in chrome console
+```javascript
+window.localStorage.setITem('thing', 'rainbow')
+window.localStorage
+```
+* Click on arrow in console and go to application you can see local storage keys and values
+
+now inside sign in page when we get it back extracted from response 
+then we can access to histoy and send them to home page. 
+* here it saves jwt as jwt key inside local storage 
+```javascript
+ .then({jwt} => { window.localStorage.setItem('jwt', jwt);
+  // console.log();
+  this.props.history.push(`/`);
+```
+* Now it should return to home page
+----------------------
+* Create homepage.js to have a home page and send the user after login to it
+```javascript
+import React from 'react';
+function HomePage (props) {
+  return (
+    <div className='HomePage'>
+      <h2>Welcome!</h2>
+    </div>
+  )
+}
+
+export default HomePage;
+```
+Then in `app.js` import homepage from './pages/home'
+Then route it
+```javascript
+import HomePage from './pages/HomePage';
+<Route exact path='/' component={HomePage} />
+```
+--------- 
+## Authentication
+
+in app.js check if the user login  to do that we just check jwt is in localStorage 
+check console first 
+!! it means return true or false 
+```javascript
+isSignedIn(){
+return !!window.localStorage.getItem('jwt')
+}
+```
+
+To have user name and emails in react we need jwt-decode 
+```javascript
+yarn add jwt-decode 
+```
+* Now after install we go to sign in page and imported 
+```javascript
+import jwtDecode from 'jwt-decode';
+```
+to use it we just need to call methods
+```javascript
+ // a getter, use it as if its a property
+  // (i.e. this.currentTarget)
+  get currentTarget () {
+    return jwtDecode(window.localStorage.getItem('jwt'));
+```
+* Now we have everything to do user authentication
+remember const {currentUser} = this; deconstructor this to current user then we add in app.js 
+```javascript
+ {
+              this.isSignedIn()
+              ? (
+                <span>Hello, {currentUser.firstName} {currentUser.lastName}!</span>
+              ) : (
+                <Link to='/sign_in'>Sign In</Link
+              )
+            }
+```
+
+------------ 
+if it complains about returning one more element in return then put them inside an array! 
+
+
+## Sign out 
+--------- maybe skipp this part 
+in app.js
+```javascript
+  <a href onClick={this.signOut}>Sign out</a>
+```
+now implement the call back sign out
+```javascript
+ signOut (event) {
+   event.preventDefault();
+    window.localStorage.removeItem('jwt');
+  }
+```
+modify current to just check if the token is there bfere trying to decode it
+```javascript
+ get currentUser () {
+    const jwt = window.localStorage.getItem('jwt');
+    return jwt && jwtDecode(jwt);
+  }
+```
+now it works but problem is the state is not update 
+we can use this.forceUpdate insside sign out function 
+becuase we use `this` so we have to have construcotr and bind this as 
+```javascript
+constructor (props) {
+    super(props);
+
+    this.signOut = this.signOut.bind(this);
+  }
+  signOut (event) {
+    event.preventDefault();
+    window.localStorage.removeItem('jwt');
+    this.forceUpdate();
+  }
+```
+so it force react to change the state. Good solution is listion to localstorage and whenever the local storage 
+changes then it works and is better than manualy doing we have done so far. 
+
+----------------this is easier way 
+because we have to wait to component mount so
+first make userifsignin as false, and then add mountdidload
+modigy constructor as this 
+```javascript
+constructor (props) {
+    super(props);
+
+    this.state = {
+      isSignedIn: false
+    };
+
+    this.signOut = this.signOut.bind(this);
+  }
+
+  componentDidMount () {
+    this.setState({isSignedIn: !!window.localStorage.getItem('jwt')});
+    });
+  }
+```
+so in componentdidmount we setState is signin and then 
+and in render part change this.signin to this.state.signin 
+
+now modify signout to change the state 
+
+```javascript
+signOut (event) {
+    event.preventDefault();
+    window.localStorage.removeItem('jwt');
+    this.setState({isSignedIn: false});
+  }
+```
+-----------
+### Authenticating Routing 
+if the user not authenticate then dont go to those routes we call them authroute
+create AuthRout.js
+it is a higher order component to take a component and return a component 
+```javascript
+import React from 'react';
+
+export default AuthRoute;
+
+```
+we gonna return two things. from props we retturn structor of component and we expect to be authenticated props and all the rest properties and after the we check if authentication is true then render a component and false render another componrt among `? () : () `. If we need to first to rename them to capital letters. '<Component' returns that exact component among ifs.  We gonna all of the rest props we pass. . we need to use `render= ` to pass a function that we want to pass. this function is the one we want to pass this is what we really want and should be inside. We gonna render two things  these are the props that pass to components and if is not authenticate we gonna redirect to sign in page. 
+```javascript
+import React from 'react';
+import {Route, Redirect} from 'react-router-dom';
+
+function AuthRoute (props) {
+  const {component: Component, isAuthenticated = false, ...restProps} = props;
+  return (
+    <Route {...restProps}
+      render={props => {
+        if (isAuthenticated) {
+          <Component {...props} />
+        } else {
+         return <Redirect to={{pathname: '/sign_in'}} />
+        }
+      }} />
+  );
+}
+export default AuthRoute;
+```
+also import rout redirect from react-route 
+
+Now we go to app.js and import authroute form ./authroute change <Route to <AuthRoute 
+```javascript
+<AuthRoute
+              exact
+              isAuthenticated={isSignedIn}
+              path='/questions'
+              component={QuestionsIndexPage} />
+```
 
 
 
 
+
+
+
+
+
+
+
+----------
 The full copy of api SERVER SIDE  controller for Rails server side ***
 ```ruby
 class Api::ApplicationController < ApplicationController
