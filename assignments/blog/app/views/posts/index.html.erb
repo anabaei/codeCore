@@ -2,31 +2,51 @@
 <html lang="en">
 
 <style>
- .more {
+ /*.more {
    display: none;
  }
+ .show {
+   display: block;
+ }*/
+ .row.equal {
+     display: flex;
+     flex-wrap: wrap;
+   }
 
 </style>
 
 <script>
-window.onload = function(){
-a = document.querySelectorAll(".bud");
-var cnt = 0;
-a.forEach(function(element) {
+// window.onload = function(){
+// a = document.querySelectorAll(".bud");
+// var cnt = 0;
+// a.forEach(function(element) {
+//
+//    if(cnt> 0)
+//     element.className = "more";
+//    cnt++;
+// });
+//
+// }
 
-   if(cnt> 1)
-    element.className = "more";
-   cnt++;
-});
-}
-
+// function my() {
+//     // document.getElementById("demo").innerHTML = "Hello World";
+//  b = document.querySelectorAll(".more");
+//  b.forEach(function(e) {
+//
+//      e.remove("more");
+//
+//
+//
+//  });
+//   console.log("DS");
+// }
 
 </script>
 <body class="containre">
    <%= link_to 'New', new_post_path %>
   <div class="row">
      <div class="col-md-8">
-         <%= image_tag("https://www.axure.com/c/attachments/forum/7-0-general-discussion/3919d1401387174-turn-placeholder-widget-into-image-maintain-interactions-screen-shot-2014-05-29-10.46.57-am.png", size: "550x20" , class: "img-responsive") %>
+         <%= image_tag("https://www.axure.com/c/attachments/forum/7-0-general-discussion/3919d1401387174-turn-placeholder-widget-into-image-maintain-interactions-screen-shot-2014-05-29-10.46.57-am.png", size: "400x20" , class: "img-responsive") %>
        <%= fa_icon "heart", class: "fa-3x" %>
         433 <%= %>
        <h3>
@@ -46,10 +66,17 @@ right buzzwords. I actually wanted people to join in creating this
 program and make it a truly collaborative project.</p>
      </div>
    </div>
-   <div class="row">
-   <% @posts.each do |f| %>
-   <div class="bud">
-    <div class="col-md-4 col-xs-12">
+
+  <% cnt = 0 %>
+   <% @posts.each { |f|  %>
+    <% if cnt < 3 then %>
+    <% cnt +=1 %>
+    <% else %>
+    <div class="row equal">
+    <% end %>
+  <div class="bud">
+    <div class="col-md-4 col-xs-12 ">
+
       <%= image_tag("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU2HkgGsdwaUOVECPqgTjrQxIafigiPHEz5yeoGLapWVPhzsxGZw" , size: "350x100" , class: "img-responsive") %>
       <%= fa_icon "heart", class: "fa-3x" %>
         433 <%= %>
@@ -57,16 +84,28 @@ program and make it a truly collaborative project.</p>
       <%= link_to f.title, post_path(f) %>
       </h4>
       <p> <%= f.body %> </p>
+      <p> <br><br><br> </p>
     </div>
   </div>
-
+  <% if cnt > 2 then %>
+  <% cnt = 0 %>
+    </div>
   <% end %>
-    </div>
-    <div class="col-md-4 col-xs-12"></div>
-    <div class="col-md-4 col-xs-12">
-        <%= link_to "Show More" %>
+  </div>
+
+
+  <%  } %>
+
+
+
+
+
+
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+     <!-- <button onclick="my()">button</button> -->
 
     </div>
-    <div class="col-md-4 col-xs-12"></div>
+    <div class="col-md-4"></div>
 </body>
 </html>

@@ -33,6 +33,8 @@ gem 'bootstrap_form'
 gem 'carrierwave', '~> 1.0'
 gem 'responsive_images'
 gem "font-awesome-rails"
+gem 'faker', github: 'stympy/faker'
+gem 'cowsay'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
