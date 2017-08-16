@@ -735,3 +735,118 @@ class QuestionsNewPage extends Component {
 now it works. 
 now back and forward working as well. 
 
+# React IV Authentication
+
+*JWT token uses is like userkey.
+has 3 parts: first part holding data, middle one contain user info, and third part is signiture verification.
+* So first we add a json rails controller to responsible to get email and passwords and produce jwt or api key for react.
+```ruby
+rails g controller api::v1::tokens --no-assets --no-helper
+```
+* Above create just a controller without assets and views
+* So first chnage which controller we inherit from, so change it to 
+va::api
+
+*inside api Routes
+```ruby
+resources :tokens, only: [:create]
+```
+* So we expect email and passwords in create 
+```ruby
+def create
+  user = User.find_by(email: params[:email])
+  if user&.authenticate(params[:password])
+    rejder json:user 
+  else
+   //  head :unauthorized if we write unauthorized it tells hacker to try agaun
+     head :not_found
+  end 
+end 
+```
+In postman, write the url and use post in postman 
+```ruby
+{
+  "email": "pass@gmail.com",
+  "password": "password"
+}
+```
+Then we should see the users in postman. 
+------------
+* Now add gem jwt. After that encode method gives us authority to produce jwt. and decode a reverse one.
+```ruby
+gem 'jwt'
+```
+* now inside token controller
+```ruby
+ private 
+ 
+ def encode_token(payload = {}, exp= 24.hours.from_now)
+  payload[:exp] = exp.to_i
+  JWT.encode(payload, Rails.application.secrets.secrect_key_base)
+ end 
+```
+* `exp` is expiration date, also we need to add expiration date for safety, 
+* you can always check what is Rails application secret key is inside rails c `Rails.application.secrets.secrect_key_base`
+comes from secrets.yml. This key is used for to encrypt anything by rails. 
+* now inside tje create action we create a variable name jwt 
+```ruby
+render json: {
+jwt: encode_token({id: user.id, firstName: user.first_name, lastName: user.last_name})
+}
+```
+to test in rails c:
+```ruby
+JWT.encode({id: 2332}, Rails.application.secrets.secrect_key_base)
+```
+* Now if we test on postman the reply would be jwt token only. 
+---------------
+* Now we have to let them to authorize 
+inside application controller, so we say whether there is apikey or jwt key. So first we define 
+GROUP OF ONE SPACE OR ONE 
+```ruby
+def current_user
+    byebug 
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+def authorization_header 
+request.headers['AUTHORIZATION']
+end 
+
+def token 
+ authorization_header&.split(/\s+/).last
+end 
+
+def token_type
+  authorization_header&.split(/\s+/).first&.downcase
+end
+
+def decode_token(token)
+ JWT.decode(token, Rails.application.secrets.secret_key_base)
+end 
+
+
+```
+APiKey, APIKEY, ... all same 
+& for just in case if is not found or nil doesnt allow to crash and not continue 
+* Now if we test in post man it should work here . 
+in post man we add authorization token and add below  
+```ruby
+Authorization         JWT t9u4titn45th594ntthn54tn54ht54iuht
+```
+Now if we use postman and inside byebug we can check it.
+
+In rails c while byebug running. 
+```ruby
+token
+token_type
+decode_token(token)
+```
+* Now we should see decoded params 
+
+
+
+
+
+
+
