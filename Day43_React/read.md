@@ -113,25 +113,18 @@ Javascript consider zero as false and 1 as true
 
 
 ## React II Class base component
-* user reaction needs advacance 
-* props is property of this.
-convert hello world to class base component
 
-
-// import React from 'react';
-//when exporting default values imported as bove
-// other values without deualt should be surronded by braces
-// export default React
-// export Component
-// or 
-// export class Component extends ..
+* props is property of this
+```javascript
 import React, {Component} from 'react';
-
-instead of // function Hello (props)  we write it
-// All class based components must extends from Component or React.Component
+export default Greetings;
+```
+* All class based components must extends from Component or React.Component
+```javascript
 class Hello extends Component {
-// props is neign set as contruction and is inside 'this'
-// All ckass based components must have a render method that returns a React element. 
+```
+* `props` unlike functions we dont get as argument. `props` are property of `this`. So we use constructor 
+* All class based components must have a render method that returns a React element. 
 
 
 #### State is the primary goal we want
