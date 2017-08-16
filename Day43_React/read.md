@@ -113,25 +113,18 @@ Javascript consider zero as false and 1 as true
 
 
 ## React II Class base component
-* user reaction needs advacance 
-* props is property of this.
-convert hello world to class base component
 
-
-// import React from 'react';
-//when exporting default values imported as bove
-// other values without deualt should be surronded by braces
-// export default React
-// export Component
-// or 
-// export class Component extends ..
+* props is property of this
+```javascript
 import React, {Component} from 'react';
-
-instead of // function Hello (props)  we write it
-// All class based components must extends from Component or React.Component
+export default Greetings;
+```
+* All class based components must extends from Component or React.Component
+```javascript
 class Hello extends Component {
-// props is neign set as contruction and is inside 'this'
-// All ckass based components must have a render method that returns a React element. 
+```
+* `props` unlike functions we dont get as argument. `props` are property of `this`. So we use constructor 
+* All class based components must have a render method that returns a React element. 
 
 
 #### State is the primary goal we want
@@ -741,4 +734,583 @@ class QuestionsNewPage extends Component {
 ```
 now it works. 
 now back and forward working as well. 
+
+# React IV Authentication
+
+*JWT token uses is like userkey.
+has 3 parts: first part holding data, middle one contain user info, and third part is signiture verification.
+* So first we add a json rails controller to responsible to get email and passwords and produce jwt or api key for react.
+```ruby
+rails g controller api::v1::tokens --no-assets --no-helper
+```
+* Above create just a controller without assets and views
+* So first chnage which controller we inherit from, so change it to 
+va::api
+
+*inside api Routes
+```ruby
+resources :tokens, only: [:create]
+```
+* So we expect email and passwords in create 
+```ruby
+def create
+  user = User.find_by(email: params[:email])
+  if user&.authenticate(params[:password])
+    rejder json:user 
+  else
+   //  head :unauthorized if we write unauthorized it tells hacker to try agaun
+     head :not_found
+  end 
+end 
+```
+In postman, write the url and use post in postman 
+```ruby
+{
+  "email": "pass@gmail.com",
+  "password": "password"
+}
+```
+Then we should see the users in postman. 
+------------
+* Now add gem jwt. After that encode method gives us authority to produce jwt. and decode a reverse one.
+```ruby
+gem 'jwt'
+```
+* now inside token controller
+```ruby
+ private 
+ 
+ def encode_token(payload = {}, exp= 24.hours.from_now)
+  payload[:exp] = exp.to_i
+  JWT.encode(payload, Rails.application.secrets.secrect_key_base)
+ end 
+```
+* `exp` is expiration date, also we need to add expiration date for safety, 
+* you can always check what is Rails application secret key is inside rails c `Rails.application.secrets.secrect_key_base`
+comes from secrets.yml. This key is used for to encrypt anything by rails. 
+* now inside tje create action we create a variable name jwt 
+```ruby
+render json: {
+jwt: encode_token({id: user.id, firstName: user.first_name, lastName: user.last_name})
+}
+```
+to test in rails c:
+```ruby
+JWT.encode({id: 2332}, Rails.application.secrets.secrect_key_base)
+```
+* Now if we test on postman the reply would be jwt token only. 
+---------------
+* Now we have to let them to authorize 
+inside application controller, so we say whether there is apikey or jwt key. So first we define 
+GROUP OF ONE SPACE OR ONE 
+```ruby
+def current_user
+    byebug 
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+def authorization_header 
+request.headers['AUTHORIZATION']
+end 
+
+def token 
+ authorization_header&.split(/\s+/).last
+end 
+
+def token_type
+  authorization_header&.split(/\s+/).first&.downcase
+end
+
+def decode_token(token)
+ JWT.decode(token, Rails.application.secrets.secret_key_base)
+end 
+
+
+```
+APiKey, APIKEY, ... all same 
+& for just in case if is not found or nil doesnt allow to crash and not continue 
+* Now if we test in post man it should work here . 
+in post man we add authorization token and add below  
+```ruby
+Authorization         JWT t9u4titn45th594ntthn54tn54ht54iuht
+```
+Now if we use postman and inside byebug we can check it.
+
+In rails c while byebug running. 
+```ruby
+token
+token_type
+decode_token(token)
+```
+* Now we should see decoded params 
+* now we gonna call a method payload to get the hash result which is decoded
+`&` this is safe navigation.
+```ruby
+def payload
+  decode_token(token)&.first
+end 
+```
+it creates a special hash that the keys of current hash are accessible 
+not neccessary at all!
+```
+HashWithInDifferentAccess.new
+
+```
+inside def current_user we say if token type exist 
+if token type is jwt then use payload. so if the api_key  then go with user if jwt then use 
+payload
+
+case token_type
+ when 
+```ruby
+ def current_user
+    if token.present?
+      case token_type
+      when 'api_key', 'apikey'
+        @user ||= User.find_by(api_key: token)
+      when 'jwt'
+        @user ||= User.find_by(id: payload[:id])
+      end
+    end
+  end
+```    
+* In ruby instead of `try catch` we say `begin rescue`
+* to check validate epiration date 
+
+```ruby
+def payload
+    begin
+      payload = HashWithIndifferentAccess.new decode_token(token)&.first
+      return nil if Time.at(payload[:exp]) < Time.now
+      payload
+    rescue JWT::DecodeError => error
+      {}
+    end
+  end
+```
+
+* End of server side 
+https://github.com/CodeCoreYVR/awesome_answers_jun_2017
+---------------
+# Now move on React 
+* in awsome answr revust.js 
+```ruby
+change the to conts API_Key = 'APIKEy hgoerhfrehferf9438r34'
+```
+* we create a form to sent
+* then copy the questionnew.js and rename it to sign in page, change signinpage name only from questionnewpage to it.
+* also we need sign in form.
+so it would be like this 
+```ruby
+import React, {Component} from 'react';
+import {Question} from '../../utilities/requests';
+import SignInForm from '../SignInForm';
+
+class SignInPage extends Component {
+  constructor (props) {
+    super(props);
+  }
+
+  render () {
+    return (
+      <div className='SignInPage'>
+        <h2>Sign In</h2>
+        <SignInForm onSubmit={() => {}} />
+      </div>
+    );
+  }
+}
+
+export default SignInPage;
+```
+now we create signin form 
+```ruby
+import React from 'react';
+
+function SignInForm (props) {
+  // By taking a `onSubmit` prop, I'm effectively going
+  // to implement a "event" for when QuestionForm is submitted
+  const {onSubmit = () => {}} = props;
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const {currentTarget} = event;
+
+    const formData = new FormData(currentTarget);
+    onSubmit({
+      email: formData.get('email'),
+      password: formData.get('password')
+    });
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor='email'>Email</label> <br />
+        <input type='email' id='email' name='email' />
+      </div>
+
+      <div>
+        <label htmlFor='password'>Password</label> <br />
+        <input type='password' id='password' name='password' />
+      </div>
+
+      <div>
+        <input type='submit' value='Sign In'/>
+      </div>
+    </form>
+  );
+}
+
+export default SignInForm;
+```
+* then inside app.js import singinpage from '.pages/
+* then route it in app.js and add nav bar
+```ruby
+<link to='/sign_in'>Sing in </link>
+<Route exact path='/sing_in' componet={Singinpage} />
+```
+* Now inside the front end we should have sign in page. 
+-------------
+now we define request to token inside utilities/request
+```javascript
+const Token = {
+  post (params) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/tokens/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      }
+    ).then(res => res.json());
+  }
+}
+
+export { Question, Token };
+```
+we are going to get a json response as `jwt` from above.  
+
+-----------
+* now inside signinpage.js we modify the sign in page by adding createToke as below
+```javascript
+class SignInPage extends Component {
+  constructor (props) {
+    super(props);
+
+    this.createToken = this.createToken.bind(this);
+  }
+
+  createToken (params) {
+    Token
+      .post(params)
+      .then(res => {
+        console.log(res)
+      });
+  }
+
+  render () {
+    return (
+      <div className='SignInPage'>
+        <h2>Sign In</h2>
+        <SignInForm onSubmit={this.createToken} />
+      </div>
+    );
+  }
+}
+
+export default SignInPage;
+
+```
+* When sign in form  submited the create token is call back.  
+* Now if we sign in then we should get token back in chrom console. 
+-----------
+## Find a way to store it
+you can put anything there 
+is like a big hash to sto re
+in chrome console
+```javascript
+window.localStorage.setITem('thing', 'rainbow')
+window.localStorage
+```
+* Click on arrow in console and go to application you can see local storage keys and values
+
+now inside sign in page when we get it back extracted from response 
+then we can access to histoy and send them to home page. 
+* here it saves jwt as jwt key inside local storage 
+```javascript
+ .then({jwt} => { window.localStorage.setItem('jwt', jwt);
+  // console.log();
+  this.props.history.push(`/`);
+```
+* Now it should return to home page
+----------------------
+* Create homepage.js to have a home page and send the user after login to it
+```javascript
+import React from 'react';
+function HomePage (props) {
+  return (
+    <div className='HomePage'>
+      <h2>Welcome!</h2>
+    </div>
+  )
+}
+
+export default HomePage;
+```
+Then in `app.js` import homepage from './pages/home'
+Then route it
+```javascript
+import HomePage from './pages/HomePage';
+<Route exact path='/' component={HomePage} />
+```
+--------- 
+## Authentication
+
+in app.js check if the user login  to do that we just check jwt is in localStorage 
+check console first 
+!! it means return true or false 
+```javascript
+isSignedIn(){
+return !!window.localStorage.getItem('jwt')
+}
+```
+
+To have user name and emails in react we need jwt-decode 
+```javascript
+yarn add jwt-decode 
+```
+* Now after install we go to sign in page and imported 
+```javascript
+import jwtDecode from 'jwt-decode';
+```
+to use it we just need to call methods
+```javascript
+ // a getter, use it as if its a property
+  // (i.e. this.currentTarget)
+  get currentTarget () {
+    return jwtDecode(window.localStorage.getItem('jwt'));
+```
+* Now we have everything to do user authentication
+remember const {currentUser} = this; deconstructor this to current user then we add in app.js 
+```javascript
+ {
+              this.isSignedIn()
+              ? (
+                <span>Hello, {currentUser.firstName} {currentUser.lastName}!</span>
+              ) : (
+                <Link to='/sign_in'>Sign In</Link
+              )
+            }
+```
+
+------------ 
+if it complains about returning one more element in return then put them inside an array! 
+
+
+## Sign out 
+--------- maybe skipp this part 
+in app.js
+```javascript
+  <a href onClick={this.signOut}>Sign out</a>
+```
+now implement the call back sign out
+```javascript
+ signOut (event) {
+   event.preventDefault();
+    window.localStorage.removeItem('jwt');
+  }
+```
+modify current to just check if the token is there bfere trying to decode it
+```javascript
+ get currentUser () {
+    const jwt = window.localStorage.getItem('jwt');
+    return jwt && jwtDecode(jwt);
+  }
+```
+now it works but problem is the state is not update 
+we can use this.forceUpdate insside sign out function 
+becuase we use `this` so we have to have construcotr and bind this as 
+```javascript
+constructor (props) {
+    super(props);
+
+    this.signOut = this.signOut.bind(this);
+  }
+  signOut (event) {
+    event.preventDefault();
+    window.localStorage.removeItem('jwt');
+    this.forceUpdate();
+  }
+```
+so it force react to change the state. Good solution is listion to localstorage and whenever the local storage 
+changes then it works and is better than manualy doing we have done so far. 
+
+----------------this is easier way 
+because we have to wait to component mount so
+first make userifsignin as false, and then add mountdidload
+modigy constructor as this 
+```javascript
+constructor (props) {
+    super(props);
+
+    this.state = {
+      isSignedIn: false
+    };
+
+    this.signOut = this.signOut.bind(this);
+  }
+
+  componentDidMount () {
+    this.setState({isSignedIn: !!window.localStorage.getItem('jwt')});
+    });
+  }
+```
+so in componentdidmount we setState is signin and then 
+and in render part change this.signin to this.state.signin 
+
+now modify signout to change the state 
+
+```javascript
+signOut (event) {
+    event.preventDefault();
+    window.localStorage.removeItem('jwt');
+    this.setState({isSignedIn: false});
+  }
+```
+-----------
+### Authenticating Routing 
+if the user not authenticate then dont go to those routes we call them authroute
+create AuthRout.js
+it is a higher order component to take a component and return a component 
+```javascript
+import React from 'react';
+
+export default AuthRoute;
+
+```
+we gonna return two things. from props we retturn structor of component and we expect to be authenticated props and all the rest properties and after the we check if authentication is true then render a component and false render another componrt among `? () : () `. If we need to first to rename them to capital letters. '<Component' returns that exact component among ifs.  We gonna all of the rest props we pass. . we need to use `render= ` to pass a function that we want to pass. this function is the one we want to pass this is what we really want and should be inside. We gonna render two things  these are the props that pass to components and if is not authenticate we gonna redirect to sign in page. 
+```javascript
+import React from 'react';
+import {Route, Redirect} from 'react-router-dom';
+
+function AuthRoute (props) {
+  const {component: Component, isAuthenticated = false, ...restProps} = props;
+  return (
+    <Route {...restProps}
+      render={props => {
+        if (isAuthenticated) {
+          <Component {...props} />
+        } else {
+         return <Redirect to={{pathname: '/sign_in'}} />
+        }
+      }} />
+  );
+}
+export default AuthRoute;
+```
+`props` above are all props that Rout pass them. 
+also import rout redirect from react-route 
+
+Now we go to app.js and import authroute form ./authroute change <Route to <AuthRoute 
+```javascript
+<AuthRoute
+              exact
+              isAuthenticated={isSignedIn}
+              path='/questions'
+              component={QuestionsIndexPage} />
+```
+
+
+
+
+
+
+
+
+
+
+
+----------
+The full copy of api SERVER SIDE  controller for Rails server side ***
+```ruby
+class Api::ApplicationController < ApplicationController
+  # This will stop rails from raising an error if
+  # a post does not have an authenticity token.
+  # Authenticity tokens are generated by rails to
+  # let it identify post requests as being submitted
+  # from its own forms.
+  skip_before_action :verify_authenticity_token
+
+=begin
+fetch(
+  'http://localhost:3000/api/v1/questions',
+  {
+    headers: {
+      'Authorization' : 'd5c234ff7b9b6bb96e7a125b8f6755ae539eb7e6b0ebabfc4dffe26f021059e8'
+    }
+  }
+)
+=end
+
+  def current_user
+    if token.present?
+      case token_type
+      when 'api_key', 'apikey'
+        @user ||= User.find_by(api_key: token)
+      when 'jwt'
+        @user ||= User.find_by(id: payload[:id])
+      end
+    end
+  end
+
+  private
+  # 'Authorization' : 'ApiKey AHJdJHDA898231jhlkAJDSLKa'
+  # 'Authorization' : 'JWT    AHJdJHDA898231jhlkAJDSLKa.KAJLSDal9e9q.dJALJDAiIoqiuo_'
+  def authorization_header
+    request.headers['AUTHORIZATION']
+  end
+
+  def token
+    authorization_header&.split(/\s+/)&.last
+  end
+
+  def token_type
+    #APIKEY, apikey, ApiKey
+    authorization_header&.split(/\s+/)&.first&.downcase
+  end
+
+  def decode_token(token)
+    JWT.decode(token, Rails.application.secrets.secret_key_base)
+  end
+
+  def payload
+    # We don't want our application to crash if the JWT is invalid. We'll have
+    # to rescue the error (this is Ruby's try .. catch) and just return a empty hash.
+    begin
+      # HashWithIndifferentAccess creates a special hash where its keys
+      # can be accessed as symbols or strings.
+      # (e.g. hsh[:id], hsh["id"])
+      payload = HashWithIndifferentAccess.new decode_token(token)&.first
+
+      # Validate the expiration in the payload
+      return nil if Time.at(payload[:exp]) < Time.now
+      payload
+    rescue JWT::DecodeError => error
+      {}
+    end
+  end
+
+  def authenticate_user!
+    head :unauthorized unless current_user.present?
+  end
+end
+```
+    
+ 
+
+
+
 

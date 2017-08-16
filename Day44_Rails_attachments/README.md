@@ -430,9 +430,113 @@ inside the controller
 ```ruby
 accepts_nested_attributes_for :options, reject_if: :all_blank
 ```
+### Add dynamic options 
+when you adding or removing 
+```ruby
+gem "cocoon"
+```
+so inside application.js add require after jquery, make sure you have jquery3 and jquery_ur 
 
+```javascript
+//= require jquery3
+//= require vendor/selectize.min
+//= require jquery_ujs
+//= require cocoon
+//= require_tree .
+```
+* Strong paramsteres Gotcha in github tom and modify create funtion as below 
+```ruby
+def create
+    survey_question_params = params
+                             .require(:survey_question)
+                             .permit(:title, { options_attributes: [:body,
+                                                                    :id,
+                                                                    :_destroy]
+                                              }
+                                    )
+```
+now inside the admin/views we create a partial field like `Formtastic`
 
+# Geo Location
+https://github.com/alexreisner/geocoder
+https://github.com/apneadiving/Google-Maps-for-Rails
 
+```ruby
+gem 'geocoder'
+gem 'gmaps4rails'
+gem 'underscore-rails'
+```
+inside application js modify as 
+```ruby
+//= require jquery
+//= require bootstrap-sprockets
+//= require rails-ujs
+//= require underscore
+//= require gmaps/google
+//= require_tree .
+```
+and put the src files put in app file:
 
+Then add one comulmn to user 
+```ruby
+rails g migration add_geocoding_to_users longitude:float latitude:float address
+```
+Inside user model add below code: 
+```ruby
+geocoded_by :address 
+after_validation :geocode
+```
+now inside the rails console, 
+```ruby
+u.address = "somewhere" 
+u.save
+```
+then you have lattitude and longtitude inisde the code. 
+
+Inside the controller for admin we have 
+
+```ruby
+ class Admin::DashboardController < Admin::BaseController
+  def index
+    @products = Product.all
+    @reviews = Review.all
+    @users = User.all
+    @locations = users_json(@users)
+  end
+
+  def users_json(users)
+    Gmaps4rails.build_markers(users) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+      marker.infowindow user.first_name
+    end.to_json
+  end
+end
+```
+* now inside the view we have
+* raw means renderd as string in below code inside js a ruby 
+```ruby
+<div>
+  <div id="amazon_users_map" style="height: 400px; width: 600px"></div>
+</div>
+
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({provider: {}, internal: {id: 'amazon_users_map'}}, function() => {
+    markers = handler.addMarkers(<%= raw @locations %>)
+
+    handlers.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    
+  })
+</script>
+```
+### Adding set 
+set is a unorder hash that you can add things to that and if something was repeated it doesnt add. 
+```ruby
+s = Set.new 
+s.add("Dd")
+```
+you can add address ip address inside your users instead of real address. 
 
 
