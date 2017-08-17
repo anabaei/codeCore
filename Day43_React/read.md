@@ -1343,6 +1343,19 @@ end
  * jest.js is usefull for test react written by facebook
  * https://github.com/rwaldron/johnny-five for robotic 
  
-
+ -----------
+ * Lo dash gets more options for javasscript, https://lodash.com/docs/4.17.4
+ * Promises with alot of features existed and you can use http://bluebirdjs.com/docs/api-reference.html
+ ### Build tools 
+ * webpack join everything togater 
+ * BABEL transpilor help to convert jsx o es6. 
+ * Leachty library is for AI very interesting 
+ * NLP compromise this allow to understatn texts. 
+ * MXNET is machine learning too, you can use deep machine learning 
+ ### languages convert to js
+ * elm is functioneal lnaguges that compiles to css,html and js, there is no loop you have to do recursion, you can not have variable but runs faster than js. 
+ *  Typescript is javascript with types. Angualr2 uses typescript. tools when you start typing automatically tells you what you are going to type
+ * Closure or cotline, opal is a ruby code that transpiles to javascript
+ * opal is a ruby code that transpiles to javascript. you can add front end in ruby as well. 
 
 
