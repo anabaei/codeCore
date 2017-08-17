@@ -1372,3 +1372,107 @@ npm start
 brew update brew upgrade
 ```
 
+* inside app.js you dont see any html tags. you have to import html components through react native library 
+everytime you writet a text inside the text component and inside view component which is like div.
+* Use TouchableOpaciry component to make any component pressable. 
+* on top send button then 
+```javascript
+import { StyleSheet, Text, View
+,Button
+ } from 'react-native';
+```
+```javascript
+  <Button
+            title="Learn More"
+            onPress={()=> alert('I was passe!')} />
+```
+npm install npm@4.6.1 -g
+
+## Styles 
+https://facebook.github.io/react-native/docs/viewstyleproptypes.html
+
+flex: 1 just grow it to full the screen. 
+
+when you give dimention you can not give them px, theey are percentage and scalable by app.
+you can alwasy get size of your screens 
+
+* if you want to ckick, should use rouchable higlight, it just highlight 
+ opacity it loose opacity, touchable without feedback does nothing
+ 
+ to use touchcable first we have to import it first. 
+ then add 
+ <TouchableOpacity style={styles.button}>
+ onPress={()=>alert('start)}
+ <Text style={styles.buttonText}> Text </Text>
+ </TouchableOpacity>
+
+
+Setinterval we just set the state with current time and do it every second 
+```javascript
+handleStart () {
+    this.intervalId = setInterval(() => {
+      const {currentTime} = this.state;
+
+      this.setState({currentTime: currentTime + 1})
+    }, 1000)
+  }
+```
+but before that we have to bind it because we always use it as call press 
+
+Then inside onpress we define `onPress={this.handleStart}`
+
+once we know the state is updated we run the timer, becuase we only want to run it once it is running  
+
+```javascript
+handleStart () {
+    this.setState(
+      {startTime: new Date()},
+      () => {
+        this.intervalId = setInterval(() => {
+          const {currentTime, startTime} = this.state;
+          const elapsedMs = new Date() - startTime;
+
+          this.setState({currentTime: currentTime + 1})
+        }, 1000)
+      }
+    );
+  }
+  ```
+  then we add elapsems which is the date that start runs and initial steps. Then it would be like htis  
+```javascript 
+  this.setState({currentTime: elapsedMs})
+``` 
+
+inside styles we would have 
+```javascript
+timeText: {
+    fontSize: 26,
+    fontFamily: 'Courier New'
+  },
+```
+we dont want to start at all if we press stop so we say if there is not inervallid run it otherwise dont need 
+```javascript
+if (!this.intervalId) {
+```
+* handlestop function 
+```javascript 
+clearInterval(this.intervalId);
+this.intervalId = null;
+}
+```
+we need to bind it, then call it
+bine it 
+ this.handleStop =  this.handleStop.bind(this);
+ onPress={this.handleStop}
+ 
+ wrap all them inside another view, with an inline style. justify content helps to they stay togather 
+ 
+ ```javascript
+   <View style={styles.container}>
+        <View style={{
+          height: '18%',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+ ```
