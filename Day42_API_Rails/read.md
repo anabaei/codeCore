@@ -805,11 +805,11 @@ end
 ```
 and go to view and inside user-pa create index.html.erb 
 
-<h1><%= @user.full_name %>'s Profile</h1>
+`<h1><%= @user.full_name %>'s Profile</h1>`
 
-<div style='width: 800px;'>
+`<div style='width: 800px;'>
   <div id="map" style='width: 800px; height: 400px;'></div>
-</div>
+</div>`
 
 
 * it would be same as user show only with this difference that instead of lat long we add just `<%=raw @hash.to_json %>);`
