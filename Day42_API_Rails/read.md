@@ -2,6 +2,9 @@ https://github.com/anabaei/codeCore/tree/master/Day42_API_Rails/awesome_answers_
 
 https://github.com/anabaei/codeCore/tree/master/Day42_API_Rails/AwesomeAnswerSPA
 ## Railsl API 
+```ruby
+pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+```
 
 what is `API`? Application program interface a set of routines, protocols, and tools for building software applications. An API specifies how software components should interact. 
 * Types of APIs? 
