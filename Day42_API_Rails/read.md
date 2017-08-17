@@ -676,4 +676,166 @@ since we care about reseting we dont care about promises
 ```javascript
 fetch('http://localhost:3000/api/v1/questions',{method: 'POST', header: {'Content-Type': 'application/json'}, body: JSON.stringify({title: 'amir', body: 'tehran'}) }).then(console.info())
 ```
+----------
+# Geo Coding Tam
+https://github.com/alexreisner/geocoder
+https://github.com/kristianmandrup/gmaps-autocomplete-rails
+
+* one get address and that converted into lattitude and langtitue, 
+* IP address gives you the lat,lang
+* Browsers allow to share location. from wifi croud source database tied with wifi address 
+* from phone app you can get it from geolocation
+
+* here based on the location of user that intered it
+
+```ruby
+gem 'geocoder'
+```
+geo coder send address to google and get bakck lng&lat from it. 
+but since we dont want to many back and fourth so we save the location for each user 
+```ruby
+rails g migration add_address_fields_to_users address longtitude:float latitude:float
+```
+* Now start by integration 
+go uviews, users new and add another field address 
+```ruby
+<%= f.input :address %>
+```
+and change params in controller, 
+```ruby
+:address,
+```
+when to gecode and geocode by what so inside user model 
+
+after validation is call back 
+```ruby
+  geocoded_by :address
+  after_validation :geocode
+```
+* After adding inside user model then it would store them inside map
+
+-------
+a gem for adding pins for google map 
+
+https://github.com/apneadiving/Google-Maps-for-Rails
+```ruby
+gem 'gmaps4rails'
+```
+
+* Display a map on user show, and isndie controller add show 
+
+@user = User.find params[:id]
+
+by chaning from one to two we have a link to show page automaticallu for user 
+
+```ruby
+     <span>Hello, <%= current_user.full_name %>!</span>
+      <span>Hello, <%= link_to current_user.full_name, current_user %>!</span>
+```
+inside show page we add this  2) part 
+```html
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+```
+3)part 
+
+get google api key and maps for rails get all theree lines there and put inside layout/application.rb on header 
+```javascript
+<script src="//maps.google.com/maps/api/js?key=[your API key]"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+<script src='//cdn.rawgit.com/printercu/google-maps-utility-library-v3-read-only/master/infobox/src/infobox_packed.js' type='text/javascript'></script> <!-- only if you need custom infoboxes -->
+```
+
+https://github.com/rweng/underscore-rails
+underscore brings some functinality for our applications 
+shaffle or sample are methods which helps he, geomap for rails uses underscore. so add gem underscore and install firt 
+
+then you need to add below inside applicaiton.js one line before the last tree 
+```ruby
+//= require underscore
+//= require gmaps/google
+```
+we create a handleer and we point it.
+marker is an array of javascript object. inside the show.html.erb add below 
+```javascript
+<script>
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers([
+      {
+        "lat": <%= @user.latitude %>,
+        "lng": <%= @user.longitude %>,
+        "infowindow": "<%= @user.full_name %>"
+      }
+    ]);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+</script>
+```
+* Now it should work
+
+Location-Aware Database Queries in geocode gives nearby what ever. 
+you need to take all users lat and lang 
+take users and generate users markers and pass it to map to show nearby 
+
+from rails on map git hub  use Generating JSON
+
+then add 
+```ruby
+resources :user_maps, only: [:index]
+```
+
+then go to user maps controller and put index there
+
+then we need to generate a hash to produce all lat and long for us 
+inside user_map controller 
+```ruby
+class UserMapsController < ApplicationController
+  def index
+    users = User.all
+    @hash = Gmaps4rails.build_markers(users) do |user, marker|
+      marker.lat user.latitude
+      marker.lng user.longitude
+      marker.info user.full_name
+    end
+  end
+end
+```
+and go to view and inside user-pa create index.html.erb 
+
+<h1><%= @user.full_name %>'s Profile</h1>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+
+* it would be same as user show only with this difference that instead of lat long we add just (<%=raw @hash.to_json %>);
+
+```ruby
+<script>
+  const handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers(<%= raw @hash.to_json %>);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+  });
+</script>
+```
+in user maps controller renders only users with not null attribures 
+```ruby 
+ users = User.where.not(longitude: nil, latitude: nil)
+```
+
+
+
+
+
+
+
+
+
+
 
