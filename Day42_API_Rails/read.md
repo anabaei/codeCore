@@ -812,7 +812,7 @@ and go to view and inside user-pa create index.html.erb
 </div>
 
 
-* it would be same as user show only with this difference that instead of lat long we add just (<%=raw @hash.to_json %>);
+* it would be same as user show only with this difference that instead of lat long we add just `<%=raw @hash.to_json %>);`
 
 ```ruby
 <script>
