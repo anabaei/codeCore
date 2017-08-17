@@ -13,6 +13,31 @@
      flex-wrap: wrap;
    }
 
+   #cell {
+
+       height: 150px;
+       border: 1px solid white;
+       display: -webkit-flex; /* Safari */
+       display: flex;
+   }
+/*.bud {
+     display:none;
+ }*/
+   .bud:nth-of-type(7) ~ .bud {
+     /*display:none;*/
+     display: none;
+ }
+
+ .showall{
+   display: block;
+ }
+ .hide{
+   display: none;
+ }
+  .fa-heart {
+    color: pink;
+  }
+
 </style>
 
 <script>
@@ -37,9 +62,22 @@
 //
 //
 //
-//  });
+//  });.classList.remove('bud');
 //   console.log("DS");
 // }
+// differenct between var i of array and var i in array 😘
+// flux keep height of box fixed 😗
+//  .bud:nth-of-type(7) ~ .bud { keep first 8 elements show 😚
+
+function my(){
+ a =  document.getElementsByClassName("bud")
+ for (var i of a) {
+
+   i.className += 'showall';
+}
+ document.getElementById("showmore").className += 'hide';
+
+}
 
 </script>
 <body class="containre">
@@ -56,7 +94,7 @@
        <%= @mostlike.body %>
        </p>
      </div>
-     <div class="col-md-4">
+     <div class="col-md-4 ">
       <h3> Most Like </h3>
       <p> Infrastructure-wise everything was there: there was a mailing list,
 there was a website, there was source code control (CVS). But there
@@ -69,13 +107,8 @@ program and make it a truly collaborative project.</p>
 
   <% cnt = 0 %>
    <% @posts.each { |f|  %>
-    <% if cnt < 3 then %>
-    <% cnt +=1 %>
-    <% else %>
-    <div class="row equal">
-    <% end %>
   <div class="bud">
-    <div class="col-md-4 col-xs-12 ">
+    <div class="col-md-4 col-xs-12">
 
       <%= image_tag("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU2HkgGsdwaUOVECPqgTjrQxIafigiPHEz5yeoGLapWVPhzsxGZw" , size: "350x100" , class: "img-responsive") %>
       <%= fa_icon "heart", class: "fa-3x" %>
@@ -83,27 +116,20 @@ program and make it a truly collaborative project.</p>
       <h4>
       <%= link_to f.title, post_path(f) %>
       </h4>
-      <p> <%= f.body %> </p>
-      <p> <br><br><br> </p>
+      <p id="cell"> <%= f.body %> </p>
     </div>
   </div>
-  <% if cnt > 2 then %>
-  <% cnt = 0 %>
-    </div>
-  <% end %>
-  </div>
-
-
+<!--  -->
   <%  } %>
 
 
-
+  <div class="col-md-12"><br></div>
 
 
 
     <div class="col-md-4"></div>
     <div class="col-md-4">
-     <!-- <button onclick="my()">button</button> -->
+      <button id="showmore" onclick="my()">Show more</button>
 
     </div>
     <div class="col-md-4"></div>
