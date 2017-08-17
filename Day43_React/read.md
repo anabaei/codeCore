@@ -1358,4 +1358,17 @@ end
  * Closure or cotline, opal is a ruby code that transpiles to javascript
  * opal is a ruby code that transpiles to javascript. you can add front end in ruby as well. 
 
+# Start React native 
+
+```javascript
+npm install -g exp
+npm install -g npm@4
+npm install -g create-react-native-app
+create-react-native-app my-app
+cd my-app
+npm start 
+```
+```javascript
+brew update brew upgrade
+```
 
