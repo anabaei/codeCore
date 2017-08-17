@@ -1308,9 +1308,41 @@ fetch(
   end
 end
 ```
-    
- 
+----------------
 
+## React Native 
+ * vujs and Angular 2 are popular
+ 
+ #### React libraries 
+ * Redux is another library for reactjs. with Redux you just have 
+ * React Router
+ * React desktop
+ * Ant Design have nice animations
+ * Blueprint js has very similar actions to microsoft office, their toast are nice 
+ * Motion js is animation 
+ * http://animejs.com/documentation/#functionBasedPropVal
+ * Pixijs is used for games using canvas
+ * http://svgjs.com/ usefull for graphs  
+ * howler js is for sound
+ * http://www.chartjs.org/ usefull for react as well you can wotk with js, if you have live chart it helps 
+ * https://d3js.org/. difficult to use 
+ * moment.js helps data and time 
+ * hopscotch usefull complicatied it is tourr, it helps to navigate 
+ * codemirror is inline editor. you can have inline text editor 
+ * pickadate.js is useful for taking date
+ ### Node libraries
+ * Node is interepretor of javascript like v8 in chrome  allowing to fetch. for low level server 
+ * Web server for ruby only is Rails 
+ * Express is usfull for js is based on http library 
+ * Koa is anothr one for js
+ * Meteor is like rails for js using with mongo 
+ * next js is usefull  to write back end and front end at the same time with react js 
+ Good thing about this, it is greate for search engines becayse seo only read index.html and so this is usefull unlike react that doesnt have anything in index. Useful for creating single page application 
+ ### Testing
+ * Ava and jest.js
+ * jest.js is usefull for test react written by facebook
+ * https://github.com/rwaldron/johnny-five for robotic 
+ 
 
 
 
