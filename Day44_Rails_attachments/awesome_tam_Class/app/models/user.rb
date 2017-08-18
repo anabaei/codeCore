@@ -40,6 +40,9 @@ class User < ApplicationRecord
 
   before_create :generate_api_key
 
+  geocoded_by :address
+  after_validation :geocode
+
   def full_name
     "#{first_name} #{last_name}"
   end

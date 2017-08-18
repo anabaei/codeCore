@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713212639) do
+ActiveRecord::Schema.define(version: 20170817041648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,21 @@ ActiveRecord::Schema.define(version: 20170713212639) do
     t.index ["category_id"], name: "index_posts_on_category_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "fist_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "password"
+    t.bigint "post_id"
+    t.bigint "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_users_on_comment_id"
+    t.index ["post_id"], name: "index_users_on_post_id"
+  end
+
   add_foreign_key "comments", "posts"
   add_foreign_key "posts", "categories"
+  add_foreign_key "users", "comments"
+  add_foreign_key "users", "posts"
 end

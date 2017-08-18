@@ -13,4 +13,6 @@
 //= require jquery3
 //= require vendor/selectize.min
 //= require jquery_ujs
+//= require underscore
+//= require gmaps/google
 //= require_tree .

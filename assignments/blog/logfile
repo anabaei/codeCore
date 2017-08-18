@@ -4,3 +4,23 @@ LOG:  database system was shut down at 2017-08-15 20:06:00 PDT
 LOG:  MultiXact member wraparound protections are now enabled
 LOG:  autovacuum launcher started
 LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2017-08-16 20:34:40 PDT
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  relation "users" already exists
+STATEMENT:  CREATE TABLE "users" ("id" bigserial primary key, "fist_name" character varying, "last_name" character varying, "email" character varying, "password" character varying, "post_id" bigint, "comment_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_dc3b405a53"
+	FOREIGN KEY ("post_id")
+	  REFERENCES "posts" ("id")
+	, CONSTRAINT "fk_rails_66daf5d968"
+	FOREIGN KEY ("comment_id")
+	  REFERENCES "comments" ("id")
+	)
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down

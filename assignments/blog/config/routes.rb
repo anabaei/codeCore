@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'users/index'
+
+  get 'users/create'
+
+  get 'users/show'
+
   get 'comments/create'
 
   # get 'posts/index'
