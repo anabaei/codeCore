@@ -1489,3 +1489,291 @@ bine it
           alignItems: 'center'
         }}>
  ```
+https://github.com/reactjs/react-rails
+
+# Final Exam
+* Crud raisl json API
+* React
+* Front End Cleint
+* React Router 
+* Ajax Fetch
+* JWT or API tokens 
+* File attachements
+* React Native optional 
+* no geo coding no css 
+* React gem file to have a React as an assets in rails application
+
+# React Native II
+* to navigate we have https://reactnavigation.org/
+* stack navigation use for login but when they sign in we use tab navigation which is like nav bar
+
+```javascript
+create-react-native-app awesome-answer-inclass
+```
+cd in awesome-answer-inclass
+create folder src and inside that a folder call components and utilities 
+
+* Fetch function is almost same as  react, so copy request from swesome asnwer react and past in utilities 
+```javascript
+const DOMAIN = 'http://localhost:3000';
+const API_PATH = '/api/v1';
+
+function getJwt () {
+  return window.localStorage.getItem('jwt');
+}
+
+// To keep all methods that do requests to Questions together, we'll put
+// them inside an object named `Question`.
+const Question = {
+  // getAll: function () { ... }
+  // 👇 Property Method Shorthand. Syntax sugar for 👆
+  getAll() {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions`,
+      {
+        headers: {'Authorization': `JWT ${getJwt()}`}
+      }
+    ).then(res => res.json());
+  },
+  get (id) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/${id}`,
+      {
+        headers: {'Authorization': `JWT ${getJwt()}`}
+      }
+    ).then(res => res.json());
+  },
+  post (attributes) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `JWT ${getJwt()}`
+        },
+        body: JSON.stringify(attributes)
+      }
+    ).then(res => res.json());
+  }
+};
+
+const Token = {
+  post (params) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/tokens/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      }
+    ).then(res => res.json());
+  }
+}
+
+export { Question, Token };
+```
+* then past into utilities/request.js
+* the only thing is different is jwt token , 
+
+* Then on top of the request.js 
+```
+const JWT_TOKEN = "fdfh943y98r4ihf9u43h93hf9u34hf93hfuh49ufh9u3hf3"
+```
+
+-----------
+## ngrok 
+ngrok is kind of secure tunnel on local host, you can donwload it 
+```javascript
+brew cask install ngrok
+```
+if you type ngrok gives you what you want 
+so we want to ngrok http portnumber, so it gives use a unique url assress from local host 3000 for example
+```javascript
+ngrok http 3000
+```
+* copy forwarding linke 
+* it is a way to share your app with your client 
+----------
+* now copy it into the phone
+now inside app.js 
+make a test request as below 
+
+```javascript
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Question } from './src/utilities/requests';
+
+export default class App extends React.Component {
+  componentDidMount() {
+    Question
+      .getAll()
+      .then(questions =>  console.log(questions))
+  }
+}
+```
+First lines of request.js files 
+```javascript
+const DOMAIN = 'http://96dfb840.ngrok.io';
+const API_PATH = '/api/v1';
+const JWT_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiSm9uIiwibGFzdE5hbWUiOiJTbm93IiwiZXhwIjoxNTAzMTU5OTg2fQ.OVLKaWPc96-nzAZTVSXWW7GCaABa6R4hiAgW0JrlKUU';
+
+function getJwt () {
+  return JWT_TOKEN; //window.localStorage.getItem('jwt');
+}
+```
+* now we should be able to see the results in console. 
+---------
+* Now we gonna show it in the question.index
+* it is better to approach it by creating a folder name screens and inside it create new file name QuestionsindexScreen.js
+then grab componentfo m component 
+
+
+```javascript
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native';import { Question } from '../../utilities/requests';
+
+class QuestionsIndexScreen extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      questions: []
+    }
+  }
+
+  componentDidMount () {
+    Question
+      .getAll()
+      .then(questions => this.setState({questions}));
+  }
+
+  render () {
+    const {questions} = this.state;
+
+    return (
+      <View>
+        {
+          questions.map(
+            question => <Text key={question.id}>{question.title}</Text>
+          )
+        }
+      </View>
+    );
+  }
+}
+
+export default QuestionsIndexScreen;
+```
+*
+on top of app.js we have 
+```javascript
+import QuestionsIndexScreen from './src/components/screens/QuestionsIndexScreen';
+```
+
+notice: we dont have class name for our components 
+
+questions we are going to get from ajax is an array of objects that 
+
+* Now we should be able to see all questions in app 
+--------
+* replace view with ScrollView, then you can see all questions 
+* virtualizedlist is a tool for react but we dont use it for here instead we use flastList react which is smaller.  https://facebook.github.io/react-native/docs/flatlist.html
+### Flatlist 
+* deploy on top and instead of viewlist tag use FlastList tag. 
+* app.js 
+```javascript
+import {
+  View,
+  Text,
+  FlatList,
+```
+basic example.
+just pass an arrau of objects props, it has renderItem takes function return component.  
+
+serach keyextractor 
+```javascript
+render () {
+    const {questions} = this.state;
+
+    return (
+      <FlatList
+        data={questions}
+        keyExtractor={question => question.id}
+        renderItem={({item}) => <Text>{item.title}</Text>} />
+    );
+  }
+}
+```
+is a function and return a string, it extract a unique key and we just tell it what property of list to take. 
+first thins is data 
+keyextractor is a funciton, is going to get an item then renderItem that return a text here just 
+----------
+* also you can update your backend to send the url from 
+* Just create QuestionListItem inside screen 
+
+import React from 
+```javascript
+return (
+    <View style={{flexDirection: 'row'}}>
+      <View style={{width: 50, height: 50}}>
+        <Image style={{width: 50, height: 50}} source={{uri: 'https://i.imgur.com/e9wMaRx.jpg'}} />
+      </View>
+
+      <View style={{flex: 0}}>
+        <Text>{title}</Text>
+        <Text>{author_name}</Text>
+      </View>
+    </View>
+  );
+export default QuestionListItem;
+```
+then insidequestionsListITem import it.
+
+import QuestionListItem from '../QuestionListItem';
+
+and pass all properties ...item to that as 
+```javascript
+return (
+      <FlatList
+        data={questions}
+        keyExtractor={question => question.id}
+        renderItem={
+          ({item}) => <QuestionListItem {...item} />
+        } />
+    );
+  }
+```
+* you can add more styles like he did. Now you should be able to see the results. 
+-----------
+to have a fixed width to get Dimensions from React Native  add on tope of the page and extract is as t constant 
+```javascript
+const {height, width} = Dimensions.get('window');
+```
+and then add to styles of view like below 
+```javascript
+return (
+    <View style={{
+      flexDirection: 'row',
+      paddingTop: 5,
+      paddingBottom: 5,
+      width: width
+    }}>
+```
+to have texts inside he box we add
+```javascript
+<Text
+          style={{width: 300}}
+          ellipsizeMode='tail'
+          numberOfLines={1}>{title}</Text>
+        <Text>{author_name}</Text>
+```
+or `width: width * 0.7`  
+
