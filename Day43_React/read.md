@@ -32,9 +32,22 @@ ReactDom take things put into DOM. React does manipulation Dom for us, it means 
 ```javascript
 npm install -g create-react-app
 create-react-app react-demo
+cd react-demo
+npm install 
 ```
+Then it runs. 
 * Code inside `{}` run as js like `<%` tags
 #### Components 
+* All index.js has at least one `React.Render` at first. 
+```javascript
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+* React.Render has two parts first is component `<App />` and second is the actual dom `document.getElementById('root')` where they have to dump that component. 
+* in this example 
+```javascript
+<HEllo now={new Date().toString() } />
+```
+* We can access to now as property of props object in Hello component. everything between `{}` is pure javascript. 
 * Name of the function is name of components always and all functions based components have props as argument and return single react element and we cant return multiple and has to be one. Also we can use classes for this. 
 * We take one react element.
 * `Components` are cosmpose able thing to make or form combining parts
