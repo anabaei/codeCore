@@ -32,9 +32,22 @@ ReactDom take things put into DOM. React does manipulation Dom for us, it means 
 ```javascript
 npm install -g create-react-app
 create-react-app react-demo
+cd react-demo
+npm install 
 ```
+Then it runs. 
 * Code inside `{}` run as js like `<%` tags
 #### Components 
+* All index.js has at least one `React.Render` at first. 
+```javascript
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+* React.Render has two parts first is component `<App />` and second is the actual dom `document.getElementById('root')` where they have to dump that component. 
+* in this example 
+```javascript
+<HEllo now={new Date().toString() } />
+```
+* We can access to now as property of props object in Hello component. everything between `{}` is pure javascript. 
 * Name of the function is name of components always and all functions based components have props as argument and return single react element and we cant return multiple and has to be one. Also we can use classes for this. 
 * We take one react element.
 * `Components` are cosmpose able thing to make or form combining parts
@@ -1308,9 +1321,459 @@ fetch(
   end
 end
 ```
-    
+----------------
+
+## React Native 
+ * vujs and Angular 2 are popular
  
+ #### React libraries 
+ * Redux is another library for reactjs. with Redux you just have 
+ * React Router
+ * React desktop
+ * Ant Design have nice animations
+ * Blueprint js has very similar actions to microsoft office, their toast are nice 
+ * Motion js is animation 
+ * http://animejs.com/documentation/#functionBasedPropVal
+ * Pixijs is used for games using canvas
+ * http://svgjs.com/ usefull for graphs  
+ * howler js is for sound
+ * http://www.chartjs.org/ usefull for react as well you can wotk with js, if you have live chart it helps 
+ * https://d3js.org/. difficult to use 
+ * moment.js helps data and time 
+ * hopscotch usefull complicatied it is tourr, it helps to navigate 
+ * codemirror is inline editor. you can have inline text editor 
+ * pickadate.js is useful for taking date
+ ### Node libraries
+ * Node is interepretor of javascript like v8 in chrome  allowing to fetch. for low level server 
+ * Web server for ruby only is Rails 
+ * Express is usfull for js is based on http library 
+ * Koa is anothr one for js
+ * Meteor is like rails for js using with mongo 
+ * next js is usefull  to write back end and front end at the same time with react js 
+ Good thing about this, it is greate for search engines becayse seo only read index.html and so this is usefull unlike react that doesnt have anything in index. Useful for creating single page application 
+ ### Testing
+ * Ava and jest.js
+ * jest.js is usefull for test react written by facebook
+ * https://github.com/rwaldron/johnny-five for robotic 
+ 
+ -----------
+ * Lo dash gets more options for javasscript, https://lodash.com/docs/4.17.4
+ * Promises with alot of features existed and you can use http://bluebirdjs.com/docs/api-reference.html
+ ### Build tools 
+ * webpack join everything togater 
+ * BABEL transpilor help to convert jsx o es6. 
+ * Leachty library is for AI very interesting 
+ * NLP compromise this allow to understatn texts. 
+ * MXNET is machine learning too, you can use deep machine learning 
+ ### languages convert to js
+ * elm is functioneal lnaguges that compiles to css,html and js, there is no loop you have to do recursion, you can not have variable but runs faster than js. 
+ *  Typescript is javascript with types. Angualr2 uses typescript. tools when you start typing automatically tells you what you are going to type
+ * Closure or cotline, opal is a ruby code that transpiles to javascript
+ * opal is a ruby code that transpiles to javascript. you can add front end in ruby as well. 
+
+# Start React native 
+
+```javascript
+npm install -g exp
+npm install -g npm@4
+npm install -g create-react-native-app
+create-react-native-app my-app
+cd my-app
+npm start 
+```
+```javascript
+brew update brew upgrade
+```
+
+* inside app.js you dont see any html tags. you have to import html components through react native library 
+everytime you writet a text inside the text component and inside view component which is like div.
+* Use TouchableOpaciry component to make any component pressable. 
+* on top send button then 
+```javascript
+import { StyleSheet, Text, View
+,Button
+ } from 'react-native';
+```
+```javascript
+  <Button
+            title="Learn More"
+            onPress={()=> alert('I was passe!')} />
+```
+npm install npm@4.6.1 -g
+
+## Styles 
+https://facebook.github.io/react-native/docs/viewstyleproptypes.html
+
+flex: 1 just grow it to full the screen. 
+
+when you give dimention you can not give them px, theey are percentage and scalable by app.
+you can alwasy get size of your screens 
+
+* if you want to ckick, should use rouchable higlight, it just highlight 
+ opacity it loose opacity, touchable without feedback does nothing
+ 
+ to use touchcable first we have to import it first. 
+ then add 
+ <TouchableOpacity style={styles.button}>
+ onPress={()=>alert('start)}
+ <Text style={styles.buttonText}> Text </Text>
+ </TouchableOpacity>
 
 
+Setinterval we just set the state with current time and do it every second 
+```javascript
+handleStart () {
+    this.intervalId = setInterval(() => {
+      const {currentTime} = this.state;
 
+      this.setState({currentTime: currentTime + 1})
+    }, 1000)
+  }
+```
+but before that we have to bind it because we always use it as call press 
+
+Then inside onpress we define `onPress={this.handleStart}`
+
+once we know the state is updated we run the timer, becuase we only want to run it once it is running  
+
+```javascript
+handleStart () {
+    this.setState(
+      {startTime: new Date()},
+      () => {
+        this.intervalId = setInterval(() => {
+          const {currentTime, startTime} = this.state;
+          const elapsedMs = new Date() - startTime;
+
+          this.setState({currentTime: currentTime + 1})
+        }, 1000)
+      }
+    );
+  }
+  ```
+  then we add elapsems which is the date that start runs and initial steps. Then it would be like htis  
+```javascript 
+  this.setState({currentTime: elapsedMs})
+``` 
+
+inside styles we would have 
+```javascript
+timeText: {
+    fontSize: 26,
+    fontFamily: 'Courier New'
+  },
+```
+we dont want to start at all if we press stop so we say if there is not inervallid run it otherwise dont need 
+```javascript
+if (!this.intervalId) {
+```
+* handlestop function 
+```javascript 
+clearInterval(this.intervalId);
+this.intervalId = null;
+}
+```
+we need to bind it, then call it
+bine it 
+ this.handleStop =  this.handleStop.bind(this);
+ onPress={this.handleStop}
+ 
+ wrap all them inside another view, with an inline style. justify content helps to they stay togather 
+ 
+ ```javascript
+   <View style={styles.container}>
+        <View style={{
+          height: '18%',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+ ```
+https://github.com/reactjs/react-rails
+
+# Final Exam
+* Crud raisl json API
+* React
+* Front End Cleint
+* React Router 
+* Ajax Fetch
+* JWT or API tokens 
+* File attachements
+* React Native optional 
+* no geo coding no css 
+* React gem file to have a React as an assets in rails application
+
+# React Native II
+* to navigate we have https://reactnavigation.org/
+* stack navigation use for login but when they sign in we use tab navigation which is like nav bar
+
+```javascript
+create-react-native-app awesome-answer-inclass
+```
+cd in awesome-answer-inclass
+create folder src and inside that a folder call components and utilities 
+
+* Fetch function is almost same as  react, so copy request from swesome asnwer react and past in utilities 
+```javascript
+const DOMAIN = 'http://localhost:3000';
+const API_PATH = '/api/v1';
+
+function getJwt () {
+  return window.localStorage.getItem('jwt');
+}
+
+// To keep all methods that do requests to Questions together, we'll put
+// them inside an object named `Question`.
+const Question = {
+  // getAll: function () { ... }
+  // 👇 Property Method Shorthand. Syntax sugar for 👆
+  getAll() {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions`,
+      {
+        headers: {'Authorization': `JWT ${getJwt()}`}
+      }
+    ).then(res => res.json());
+  },
+  get (id) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/${id}`,
+      {
+        headers: {'Authorization': `JWT ${getJwt()}`}
+      }
+    ).then(res => res.json());
+  },
+  post (attributes) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/questions/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `JWT ${getJwt()}`
+        },
+        body: JSON.stringify(attributes)
+      }
+    ).then(res => res.json());
+  }
+};
+
+const Token = {
+  post (params) {
+    return fetch(
+      `${DOMAIN}${API_PATH}/tokens/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      }
+    ).then(res => res.json());
+  }
+}
+
+export { Question, Token };
+```
+* then past into utilities/request.js
+* the only thing is different is jwt token , 
+
+* Then on top of the request.js 
+```
+const JWT_TOKEN = "fdfh943y98r4ihf9u43h93hf9u34hf93hfuh49ufh9u3hf3"
+```
+
+-----------
+## ngrok 
+ngrok is kind of secure tunnel on local host, you can donwload it 
+```javascript
+brew cask install ngrok
+```
+if you type ngrok gives you what you want 
+so we want to ngrok http portnumber, so it gives use a unique url assress from local host 3000 for example
+```javascript
+ngrok http 3000
+```
+* copy forwarding linke 
+* it is a way to share your app with your client 
+----------
+* now copy it into the phone
+now inside app.js 
+make a test request as below 
+
+```javascript
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Question } from './src/utilities/requests';
+
+export default class App extends React.Component {
+  componentDidMount() {
+    Question
+      .getAll()
+      .then(questions =>  console.log(questions))
+  }
+}
+```
+First lines of request.js files 
+```javascript
+const DOMAIN = 'http://96dfb840.ngrok.io';
+const API_PATH = '/api/v1';
+const JWT_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiSm9uIiwibGFzdE5hbWUiOiJTbm93IiwiZXhwIjoxNTAzMTU5OTg2fQ.OVLKaWPc96-nzAZTVSXWW7GCaABa6R4hiAgW0JrlKUU';
+
+function getJwt () {
+  return JWT_TOKEN; //window.localStorage.getItem('jwt');
+}
+```
+* now we should be able to see the results in console. 
+---------
+* Now we gonna show it in the question.index
+* it is better to approach it by creating a folder name screens and inside it create new file name QuestionsindexScreen.js
+then grab componentfo m component 
+
+
+```javascript
+import React, {Component} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity
+} from 'react-native';import { Question } from '../../utilities/requests';
+
+class QuestionsIndexScreen extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      questions: []
+    }
+  }
+
+  componentDidMount () {
+    Question
+      .getAll()
+      .then(questions => this.setState({questions}));
+  }
+
+  render () {
+    const {questions} = this.state;
+
+    return (
+      <View>
+        {
+          questions.map(
+            question => <Text key={question.id}>{question.title}</Text>
+          )
+        }
+      </View>
+    );
+  }
+}
+
+export default QuestionsIndexScreen;
+```
+*
+on top of app.js we have 
+```javascript
+import QuestionsIndexScreen from './src/components/screens/QuestionsIndexScreen';
+```
+
+notice: we dont have class name for our components 
+
+questions we are going to get from ajax is an array of objects that 
+
+* Now we should be able to see all questions in app 
+--------
+* replace view with ScrollView, then you can see all questions 
+* virtualizedlist is a tool for react but we dont use it for here instead we use flastList react which is smaller.  https://facebook.github.io/react-native/docs/flatlist.html
+### Flatlist 
+* deploy on top and instead of viewlist tag use FlastList tag. 
+* app.js 
+```javascript
+import {
+  View,
+  Text,
+  FlatList,
+```
+basic example.
+just pass an arrau of objects props, it has renderItem takes function return component.  
+
+serach keyextractor 
+```javascript
+render () {
+    const {questions} = this.state;
+
+    return (
+      <FlatList
+        data={questions}
+        keyExtractor={question => question.id}
+        renderItem={({item}) => <Text>{item.title}</Text>} />
+    );
+  }
+}
+```
+is a function and return a string, it extract a unique key and we just tell it what property of list to take. 
+first thins is data 
+keyextractor is a funciton, is going to get an item then renderItem that return a text here just 
+----------
+* also you can update your backend to send the url from 
+* Just create QuestionListItem inside screen 
+
+import React from 
+```javascript
+return (
+    <View style={{flexDirection: 'row'}}>
+      <View style={{width: 50, height: 50}}>
+        <Image style={{width: 50, height: 50}} source={{uri: 'https://i.imgur.com/e9wMaRx.jpg'}} />
+      </View>
+
+      <View style={{flex: 0}}>
+        <Text>{title}</Text>
+        <Text>{author_name}</Text>
+      </View>
+    </View>
+  );
+export default QuestionListItem;
+```
+then insidequestionsListITem import it.
+
+import QuestionListItem from '../QuestionListItem';
+
+and pass all properties ...item to that as 
+```javascript
+return (
+      <FlatList
+        data={questions}
+        keyExtractor={question => question.id}
+        renderItem={
+          ({item}) => <QuestionListItem {...item} />
+        } />
+    );
+  }
+```
+* you can add more styles like he did. Now you should be able to see the results. 
+-----------
+to have a fixed width to get Dimensions from React Native  add on tope of the page and extract is as t constant 
+```javascript
+const {height, width} = Dimensions.get('window');
+```
+and then add to styles of view like below 
+```javascript
+return (
+    <View style={{
+      flexDirection: 'row',
+      paddingTop: 5,
+      paddingBottom: 5,
+      width: width
+    }}>
+```
+to have texts inside he box we add
+```javascript
+<Text
+          style={{width: 300}}
+          ellipsizeMode='tail'
+          numberOfLines={1}>{title}</Text>
+        <Text>{author_name}</Text>
+```
+or `width: width * 0.7`  
 
