@@ -1775,5 +1775,184 @@ to have texts inside he box we add
           numberOfLines={1}>{title}</Text>
         <Text>{author_name}</Text>
 ```
-or `width: width * 0.7`  
+or `width: width * 0.7` 
+chagnges so far as : 
+----- 
+* Add link to show page for each item 
+* add TouchableOpacity, 
+and teplace countaiern with TouchableOpacity
+and add onPress{()=> {}} with empyt function it would be like this 
+
+```javascript
+import React from 'react';
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity
+} from 'react-native';
+
+const {height, width} = Dimensions.get('window');
+
+function QuestionListItem (props) {
+  const {title, author_name} = props;
+  return (
+    <TouchableOpacity
+      onPress={() => {}}
+      style={{
+      flexDirection: 'row',
+      paddingTop: 5,
+      paddingBottom: 5 }}>
+      <View style={{marginRight: 5}}>
+        <Image style={{width: 50, height: 50, borderRadius: 5}} source={{uri: 'https://i.imgur.com/e9wMaRx.jpg'}} />
+      </View>
+
+      <View style={{flex: 0}}>
+        <Text
+          style={{fontWeight: 'bold', width: width * 0.8}}
+          ellipsizeMode='tail'
+          numberOfLines={1}>{title}</Text>
+        <Text>{author_name}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+export default QuestionListItem;
+```
+
+* To actually go there we need react navitaion 
+https://reactnavigation.org/
+on the docs, chekc if pass params then we can get id o
+we gonna use stack navigation.
+
+```javascript
+yarn add react-navigation 
+```
+we create QuestionsnavScreen.js
+
+Stackvaigator is a function and we give it a key and every key is kind of a path that can bego inside the question 
+
+```javascript
+import { StackNavigator } from 'react-navigation';
+import 
+  QuestionsIndexScreen
+ from './QuestionsIndexScreen';
+
+const QuestionsNavScreen = StackNavigator({
+  QuestionsIndex: {screen: QuestionsIndexScreen}
+});
+
+export default QuestionsNavScreen;
+```
+and we go to app.js and import this and then renderws QestionsNavScreen 
+app.js
+```javascript
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    width: width
+  },
+});
+```
+-----
+to debug we go to debug mode in simulator and open the console log. 
+
+To create a show page add questionshowscreen inside screen as 
+```javascript
+import React, {Component} from 'react';
+import {
+  View,
+  Text
+} from 'react-native'
+
+class QuestionsShowScreen from Component {
+  render () {
+    <View>
+      <Text>Hey!</Text>
+    </View>
+  }
+}
+export default QuestionShowScreen;
+```
+and inside questionnavascreen just import what we created and add screen there as 
+```javascript
+import { StackNavigator } from 'react-navigation';
+import QuestionsIndexScreen from './QuestionsIndexScreen';
+import QuestionsShowScreen from './QuestionsShowScreen';
+
+const QuestionsNavScreen = StackNavigator({
+  QuestionsIndex: {screen: QuestionsIndexScreen},
+  QuestionsShow: {screen: QuestionsShowScreen}
+});
+
+export default QuestionsNavScreen;
+```
+nav now is kind of component in 
+by saying the navigation props is pass from reactnavigation. the props is object now with method to navigate different screens
+so we just take this props and pass it to questionlist items,  now if we go to questionlistitem then we can extract navifation 
+```javascript
+function QuestionListItem (props) {
+  const {title, author_name, navigation} = props;
+```
+and then onpress we can say 
+```javascript
+ onPress={() => navigation.navigate('QuestionsShow', {id})}
+```
+which is the key is defines in Wuestionnavscreen 
+
+now in show page we can add title as static property 
+```javascript
+class QuestionsShowScreen extends Component {
+  static navigationOptions = {
+    title: 'Detail'
+  }
+```
+now if we want to have details, we need to have id and need the id 
+if we go to questionlistitm. 
+
+now inside questionshow screen 
+```javascript
+import React, {Component} from 'react';
+import {
+  View,
+  Text
+} from 'react-native'
+import {Question} from '../../utilities/requests';
+
+class QuestionsShowScreen extends Component {
+  static navigationOptions = {
+    title: 'Detail'
+  }
+
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      question: {}
+    };
+  }
+
+  componentDidMount () {
+    const {state} = this.props.navigation;
+    Question
+      .get(state.params.id)
+      .then(question => this.setState({question}))
+  }
+
+  render () {
+    const {question} = this.state;
+    return (
+      <View>
+        <Text>{question.title}</Text>
+      </View>
+    );
+  }
+}
+
+export default QuestionsShowScreen;
+```
+
 
