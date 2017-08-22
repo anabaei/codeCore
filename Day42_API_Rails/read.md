@@ -312,6 +312,10 @@ so we gonna enable cross origin request. inside gem file and setup the config fi
 origin '*' then we can say which origin we gonna use. 
 then add this inside config/applicaiton
 ```ruby
+gem 'rack-cors'
+```
+then inside config/applicaiton modifies it as 
+```ruby
 config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
