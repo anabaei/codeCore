@@ -733,5 +733,38 @@ send tweets on behalf of this user
 client.update '#awsome-answer' 
 ```
 * just you can update 
+* def update_oauth_credentiails, if a user ask authorize again and token needs to be updated then so he defined this function. 
 
+### define an attrinute in model 
+if we have an instance of question then we can have tweet_this attributes 
+inside the model define this attirbute as first line 
 
+<%= f.input :tweet_this, as: :boolean %>
+
+* attr_accessor  :tweet_this
+
+then inside the controler reqquire params add :tweet_this for questions, 
+
+then in create action, we gonna see if the questions is checked
+
+if @question.tweet_this
+  get the client as above and then update client and also slice it 
+  clinet.update"#{@question.title.slice(0..255)}"
+end 
+as below 
+```ruby
+if @question.save
+      if @question.tweet_this
+        client = Twitter::REST::Client.new do |config|
+          config.consumer_key        = ENV['TWITTER_API_KEY']
+          config.consumer_secret     = ENV['TWITTER_API_SECRET']
+          config.access_token        = current_user.oauth_token
+          config.access_token_secret = current_user.oauth_secret
+        end
+
+        client.update "#{@question.title.slice(0..255)}"
+        flash[:notice] = "Question tweeted! ¦"
+      end
+ ```
+to not to have tweet this  in edit we add if conditions to check if the user is new 
+<% if current_user.provider == 'twitter' && @question.new_record? %>
