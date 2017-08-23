@@ -1,5 +1,7 @@
 # Many to Many 
-
+```ruby
+rails new myapp --database=postgresql
+```
 `Hirb.enable`
 
 has_and_belongs_to_many 
