@@ -85,10 +85,11 @@ function my(){
   <div class="row">
      <div class="col-md-8">
          <%= image_tag("https://www.axure.com/c/attachments/forum/7-0-general-discussion/3919d1401387174-turn-placeholder-widget-into-image-maintain-interactions-screen-shot-2014-05-29-10.46.57-am.png", size: "400x20" , class: "img-responsive") %>
+
        <%= fa_icon "heart", class: "fa-3x" %>
         433 <%= %>
        <h3>
-       <%= link_to @mostlike.title, post_path(@mostlike) %>
+       
        </h3>
        <p>
        <%= @mostlike.body %>
@@ -111,6 +112,7 @@ program and make it a truly collaborative project.</p>
     <div class="col-md-4 col-xs-12">
 
       <%= image_tag("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU2HkgGsdwaUOVECPqgTjrQxIafigiPHEz5yeoGLapWVPhzsxGZw" , size: "350x100" , class: "img-responsive") %>
+
       <%= fa_icon "heart", class: "fa-3x" %>
         433 <%= %>
       <h4>

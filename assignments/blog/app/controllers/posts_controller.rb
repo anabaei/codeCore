@@ -5,10 +5,7 @@ class PostsController < ApplicationController
   @mostlike = Post.last
   end
 
-  def index1
-  @posts = Post.order("created_at desc")
-  @mostlike = Post.last
-  end
+
 
   def show
      @comment = Comment.new

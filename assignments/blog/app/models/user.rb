@@ -1,4 +1,6 @@
 class User < ApplicationRecord
-  belongs_to :post
-  belongs_to :comment
+  has_secure_password
+  has_many :post
+  has_many :comment
+  
 end

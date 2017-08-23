@@ -10,6 +10,7 @@
 Comment.destroy_all
 Post.destroy_all
 Category.destroy_all
+User.destroy_all
 
 
 
@@ -19,6 +20,20 @@ Category.destroy_all
 
   Category.create(
     name: name,
+    # email: "#{first_name.downcase}-#{last_name.downcase}@example.com",
+    # password: PASSWORD
+  )
+end
+
+5.times do
+  email = "amir@gmail.com"
+  password = "1234"
+
+  User.create(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.first_name,
+    email: email,
+    password: password
     # email: "#{first_name.downcase}-#{last_name.downcase}@example.com",
     # password: PASSWORD
   )
@@ -45,6 +60,9 @@ posts = Post.all
   )
 end
 
+users = User.all
+comments = Comment.all
 
-
+  puts Cowsay.say("Created #{comments.count} comments", :tux)
+  puts Cowsay.say("Created #{users.count} users", :tux)
   puts Cowsay.say("Created #{posts.count} posts", :tux)

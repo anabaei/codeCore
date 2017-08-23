@@ -1,0 +1,11 @@
+
+<div style="mergin-botton: 10%">
+<h1>Log in </h1>
+<%= simple_form_for :session, as: :new_session, url: sessions_path do |f| %>
+  <%= f.input :email %>
+  <%= f.input :password %>
+  <%= f.button :submit, 'Sign In' %>
+<% end %>
+
+
+</div>

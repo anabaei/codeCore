@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import Hello from './components/Hello';
+import Hello2 from './components/Hello2';
+import Greetings from './components/Greetings';
 class App extends Component {
   render() {
     return (
       <div className="App">
         <div className="App-header">
 
-          <Hello  />
-           <Hello names={['Jo', 'Dave', 'Lana', 'Dana', 'Tom']} />
-          <Hello  />
-          <Hello  />
+
+          //  Hello names={['Jo', 'Dave', 'Lana', 'Dana', 'Tom']} />
+        <Greetings />
+        <Hello2 />
 
         </div>
         <p className="App-intro">
