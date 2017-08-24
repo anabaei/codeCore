@@ -102,5 +102,128 @@ const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
 ```ruby 
 $(document).ready(function(){})
 ```
+* Next after embeding javascript inside payment.js.erb then we have to create `elemenst`
+* user const instead of var 
+https://stripe.com/docs/elements
+copy the form and inside the payament/new
+```ruby
+<form action="/charge" method="post" id="payment-form">
+  <div class="form-row">
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- a Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display form errors -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <button>Submit Payment</button>
+</form>
+```
+remember these id tags are important for strips so dont change them. 
+* now we mount the information based on doc inside javascript.js.erb `const card = elements.create('card', {style: style});
+card.mount('#card-element');` it would be like 
+```ruby
+$(document).ready(function(){
+  const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+  const elements = stripe.elements();
+
+  // this will load the credit card form information in the div with id:
+  // card-element
+  const card = elements.create('card');
+  card.mount('#card-element');
+});
+```
+then you can pick a test cards as this link 
+https://stripe.com/docs/testing
+* then go to step 3 and use the javascript and copy paste to your js
+```javascript
+Step 3: Create a token to securely transmit card information
+```
+* Only change the last line to `console.log(result)` instead of `striptokenthandler()`. so far it just send the valid info to strip and strip send toket to our rails so no payment check so far just valid cc. 
+so we should see now our `token.id`
+
+### now add another form 
+```ruby
+<%# this form submits the token to our server (payments / create) %>
+<%= form_tag tip_payments_path(@tip), id: 'server-form' do %>
+  <%= hidden_field_tag :stripe_token %>
+<% end %>
+
+```
+and assign new action inside payment controller 
+```ruby
+def new 
+   @tip = Tip.find params[:tip_id]
+end 
+```
+then inside the payment.js get the tokenid and submit it
+```javascript
+$('#stripe_token').val(result.token.id);
+        // This will submit our server form to our Rails backend
+        $('#server-form').submit();
+```
+* now here we have the single token that we can use it to charge the user 
+
+### Now we have a token and need ruby stipe gem 
+* Add 
+```ruby
+stripe `gem`
+```
+then set up api key https://stripe.com/docs/api/ruby , just one thing as we do below 
+create confic/initializer/seupt_stripe.rb and put here 
+```ruby
+Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+```
+then it set up private key for stripe.  
+this nice link gives us charge or balance mehtods. But if you creaet a customer then you can save the user info instead of only one charges. 
+## To do Charges
+check charges pass amount current token and description
+take snippest and put inside payment controller creeate as below , amount is based on cents so we multiple by 100 
+```ruby
+def create
+    @tip = Tip.find params[:tip_id]
+    Stripe::Charge.create(
+      :amount => (@tip.amount * 100),
+      :currency => "cad",
+      :source => paramsp[:stripe_token], # obtained with Stripe.js
+      :description => "Charge for #{tip.id}"
+    )
+     @tip.update(txn_id: charge.id)
+    render json: params
+  end
+```
+also we can use new formats as `=>`
+```ruby
+currency: "cad",
+```
+* now it is working, if you go to strip dashboard it displays 
+* now store that id 
+```ruby
+ @tip.update(txn_id: charge.id)
+```
+if you want to refunding you can access to that transaction id and that work for that 
+___________
+
+When you dealing with gems and APIs need to handle expceptions. 
+```
+begin 
+# normal actions 
+rescue =>e
+# we get here if an exception happens 
+flash.now[:alert] = "Error: #{e.message}"
+end
+```
+
+
+
+
+
+
+
+
 
 
