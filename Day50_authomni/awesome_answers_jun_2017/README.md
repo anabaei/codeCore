@@ -209,12 +209,12 @@ if you want to refunding you can access to that transaction id and that work for
 ___________
 
 When you dealing with gems and APIs need to handle expceptions. 
-```
+```ruby 
 begin 
-# normal actions 
+    # normal actions 
 rescue =>e
-# we get here if an exception happens 
-flash.now[:alert] = "Error: #{e.message}"
+    # we get here if an exception happens 
+    flash.now[:alert] = "Error: #{e.message}"
 end
 ```
 
