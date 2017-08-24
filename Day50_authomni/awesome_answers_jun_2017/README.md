@@ -217,7 +217,8 @@ rescue =>e
     flash.now[:alert] = "Error: #{e.message}"
 end
 ```
-
+* On testing we can get different errors 
+* if controller become bigger then create a self method class inside model. Look at `Service object` to have controller thin while you dont have model. 
 
 
 
