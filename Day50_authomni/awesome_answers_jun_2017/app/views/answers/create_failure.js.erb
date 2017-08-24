@@ -1,0 +1,5 @@
+(function () {
+  let newAnswerForm = document.querySelector('form#new_answer');
+  newAnswerForm.outerHTML =
+    '<%= j render "answers/form", question: @question, answer: @answer %>';
+})()

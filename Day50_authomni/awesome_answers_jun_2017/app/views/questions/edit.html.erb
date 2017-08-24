@@ -1,0 +1,12 @@
+<%#edit.html.erb%>
+<h1>Edit Question</h1>
+
+<%# When you pesisted active record objec to a `form_for`
+the it will use the url to the update action which is the same url
+for the show action (question_path(@question)) except that it will the
+PATCH verb instead of GET. It will achieve this by adding an hidden
+input field with the name `_method` with the value `PATCH`.
+
+In addition, all the fields will be prepopulated with data from the database. %>
+
+<%= render 'form' %>

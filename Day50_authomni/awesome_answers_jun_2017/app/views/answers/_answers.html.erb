@@ -1,0 +1,49 @@
+<ul class='answer-list'>
+<% answers.each do |answer| %>
+  <li id='<%= dom_id(answer) %>'>
+
+    <div class="voting-widget">
+      <% vote = answer.votes.find_by(user: current_user) %>
+      <% if vote.nil? %>
+        <%= link_to fa_icon('arrow-up'),
+          answer_votes_path(answer,  {is_up: true}),
+          method: :post %>
+        <div><%= answer.vote_total %></div>
+        <%= link_to fa_icon('arrow-down'),
+          answer_votes_path(answer,  {is_up: false}),
+          method: :post %>
+      <% elsif vote.is_up? %>
+        <%= link_to fa_icon('arrow-up'),
+          vote_path(vote),
+          method: :delete,
+          class: 'active' %>
+        <div><%= answer.vote_total %></div>
+        <%= link_to fa_icon('arrow-down'),
+          vote_path(vote, {is_up: false}),
+          method: :patch %>
+      <% else %>
+        <%= link_to fa_icon('arrow-up'),
+          vote_path(vote, {is_up: true}),
+          method: :patch %>
+        <div><%= answer.vote_total %></div>
+        <%= link_to fa_icon('arrow-down'),
+          vote_path(vote),
+          method: :delete,
+          class: 'active' %>
+      <% end %>
+    </div>
+
+    <div class="answer-content">
+      <p><%= answer.body %></p>
+      <p><strong>Commentor: </strong> <%= answer.user&.full_name %></p>
+      <p>
+        <strong>Created at:</strong> <%= answer.created_at.to_formatted_s(:long) %>
+        <% if user_signed_in? && can?(:destroy, answer) %>
+          <%= link_to 'Delete', question_answer_path(answer.question, answer),
+            method: :delete, remote: true, data: { confirm: 'Are you sure?'} %>
+        <% end %>
+      </p>
+    </div>
+  </li>
+<% end %>
+</ul>
