@@ -222,7 +222,10 @@ end
 
 
 
-
+* 30 second about your projects
+* 1.5 about what features 
+* 1 minutes about a technical feature, post man 
+* have a road map dont say eeeee lets go this page! lets go this page show code the way you want to just show it! show something that people are interested in. make sure that snipet code is very good. 
 
 
 
