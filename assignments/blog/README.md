@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Some notes
+* Differencte between var i of array and var i in array, which the first one is index and second one iterate the value 
+* In order to keep all columns with bootstrap same height, use flex to keep height of box fixed. It is like a container
+```CSS
+ #cell {
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+       height: 150px;
+       border: 1px solid white;
+       display: -webkit-flex; /* Safari */
+       display: flex;
+   }
+```
+* CSS select nth type of a class and the rest of that to use 
+```css
+.bud:nth-of-type(7) ~ .bud { color: black }
+```

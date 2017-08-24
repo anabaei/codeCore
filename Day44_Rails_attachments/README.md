@@ -539,4 +539,232 @@ s.add("Dd")
 ```
 you can add address ip address inside your users instead of real address. 
 
+# Rails 
 
+## Sign up with facebook
+Amn & Auth. 
+https://github.com/arunagw/omniauth-twitter
+omniauth-tweitter 
+* Add the gem and you need an account to pass user api key 
+
+## create config file
+* inside Config/initializer rails create `omniauth.rb` file 
+
+tells amniac which provided you use and which key should be used. So amniath is a middlewear for rails 
+* API_SECRET is a secret key that no one wants to share 
+```javascript 
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :twitter, "API_KEY", "API_SECRET"
+end
+```
+now go dev.twiter and go to create app to have those key 
+tiwtter doesnt like localhost, so we use lvh instead and twitter send data to this url 
+callback is importatn 
+```javascrupt
+http://lvh.me:3000/auth/twitter/callback
+```
+now you can get your keys. then go to permissions that application ask users. so we can even use the third one to allow us to send info to even freinds
+
+* you wanna make sure your app has correct privacy policy to allow twitter.  
+* config/ initializes/app_keys.rb
+* put all app keys inside that, it is hided in atom 
+
+```ruby
+[Twiitte_API_Secret] = 'dewdwer43rf3f34f3'
+```
+now create a button login with tiwtter. 
+```ruby
+ <%= link_to 'Sign In with Twitter', sign_in_with_twitter_path %>
+ ```
+ routes.rb
+ first line is handle with twitter so there is no need to create any thing 
+ second line  what callback we aim and we work to create controllers later 
+ ```ruby
+  get "/auth/twitter", as: :sign_in_with_twitter
+  get "/auth/:provider/callback", to: "callbacks#index"
+ ```
+* Right now it should work by clicking on it 
+#### handle call back
+* to handle second part we create controller and index 
+```ruby 
+
+```
+```ruby
+rails g controller callbacks --no-assets --no-helper
+```
+inside the index we can see the data tiwtter sending back, even the profile picturs 
+```ruby
+ def index
+    omniauth_data = request.env['omniauth.auth']
+    render json: omniauth_data
+  end
+```
+* Just a part from likne 4sh to 22 are usefull for use 
+
+oath_raw_data is entire data and 
+```
+rails g migration add_omniauth_fields_to_users uid provider oauth_token oauth_secret oauth_raw_data:text
+```
+modify migration file 
+one provider is facebook and id, so we find users based on provider and index 
+```ruby
+   add_column :users, :uid, :string
+    add_column :users, :provider, :string
+    add_column :users, :oauth_token, :string
+    add_column :users, :oauth_secret, :string
+    add_column :users, :oauth_raw_data, :text
+    add_index :users, [:provider, :uid]
+```
+```
+rails db:migrate
+```
+inside user model create a class method with self 
+we dont want to work with instance of this user, so we want to work with classes thats why it is self 
+```ruby
+ def self.create_from_omniauth(omniauth_data)
+    full_name = omniauth_data["info"]["name"].split
+    User.create(
+      uid: omniauth_data["uid"],
+      provider: omniauth_data["provider"],
+      email: omniauth_data["info"]["email"],
+      first_name: full_name.first,
+      last_name: full_name.last,
+      oauth_token: omniauth_data["credentials"]["token"],
+      oauth_secret: omniauth_data["credentials"]["secret"],
+      oauth_raw_data: omniauth_data,
+      password: SecureRandom.hex(32)
+    )
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+```
+add it inside index.rb controller callback 
+```ruby
+user = User.create_from_omniauth(omniauth_data)
+redirect_to  rooth_path, notice: "thank you for sign in"
+```
+now it actually created a new user as well,  jsut serialize the raw data 
+```
+serialize :oauth_raw_data 
+```
+add above to model, to store the object as just a text  and everytime we want to work with it convert it to object becuase working as text is awefull
+
+to skipp validation add  inside model user 
+```
+unless :from_omniath 
+```
+add to model 
+``
+def from_omniath
+ uid.preset? & provider.present?
+end 
+```
+inside console 
+```
+u.oauth_raw_data
+```
+```
+then if we say 
+```ruby
+u.oauth_raw_data["info"]
+```
+* we would access to have raw data, so we allways have all data about user can make it 
+
+--------
+
+search by omniath is taking ominiath data and find it, so deifne a nwe model function 
+```
+def self.find_by_omniauth(omniauth_data)
+end 
+```
+then inside index user controller we can have 
+```ruby
+user = User.find_by_omniauth(omniauth_data)
+user ||= User.create_from_omniath(omniauth_data)
+session[:user_id] = user.id
+```
+----
+sferik/twitter 
+* We can follow and set up whatever they want to do by fonlowing thse 
+
+```ruby
+gem 'twitter'
+```
+https://github.com/sferik/twitter
+
+* now inside create new question controller  we have 
+```ruby
+def create
+    @question = Question.new question_params
+    @question.user = current_user
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = ENV['TWITTER_API_KEY']
+      config.consumer_secret     = ENV['TWITTER_API_SECRET']
+      config.access_token        = current_user.oauth_token
+      config.access_token_secret = current_user.oauth_secret
+    end
+    byebug
+    ...
+```
+* then we have client object, so based on TIWTTER doc
+```
+ls client
+```
+then to have
+```ruby 
+clinet.followers
+```
+```
+clinet.followers.first.name 
+```
+all followers 
+clinet.followers.map(&:name)
+client.home_timeline.first
+
+ls tweet
+first tweet of my first timeline 
+
+tweet.text
+send tweets on behalf of this user 
+```
+client.update '#awsome-answer' 
+```
+* just you can update 
+* def update_oauth_credentiails, if a user ask authorize again and token needs to be updated then so he defined this function. 
+
+### define an attrinute in model 
+if we have an instance of question then we can have tweet_this attributes 
+inside the model define this attirbute as first line 
+
+<%= f.input :tweet_this, as: :boolean %>
+
+* attr_accessor  :tweet_this
+
+then inside the controler reqquire params add :tweet_this for questions, 
+
+then in create action, we gonna see if the questions is checked
+
+if @question.tweet_this
+  get the client as above and then update client and also slice it 
+  clinet.update"#{@question.title.slice(0..255)}"
+end 
+as below 
+```ruby
+if @question.save
+      if @question.tweet_this
+        client = Twitter::REST::Client.new do |config|
+          config.consumer_key        = ENV['TWITTER_API_KEY']
+          config.consumer_secret     = ENV['TWITTER_API_SECRET']
+          config.access_token        = current_user.oauth_token
+          config.access_token_secret = current_user.oauth_secret
+        end
+
+        client.update "#{@question.title.slice(0..255)}"
+        flash[:notice] = "Question tweeted! ¦"
+      end
+ ```
+to not to have tweet this  in edit we add if conditions to check if the user is new 
+<% if current_user.provider == 'twitter' && @question.new_record? %>
