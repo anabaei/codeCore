@@ -1,0 +1,15 @@
+<h1>New Survey Question</h1>
+
+<%= simple_form_for [:admin, @survey_question] do |f| %>
+  <%= f.input :title %>
+
+  <h2>Options</h2>
+  <%= f.simple_fields_for :options do |opt| %>
+    <%= render 'option_fields', f: opt %>
+  <% end %>
+  <div class="links">
+    <%= link_to_add_association 'add option', f, :options  %>
+  </div>
+
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

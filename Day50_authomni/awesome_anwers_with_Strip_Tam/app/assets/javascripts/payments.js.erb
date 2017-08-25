@@ -1,0 +1,32 @@
+$(document).ready(function(){
+  const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+  const elements = stripe.elements();
+
+  // this will load the credit card form information in the div with id:
+  // card-element
+  const card = elements.create('card');
+  card.mount('#card-element');
+
+  const form = document.getElementById('payment-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    stripe.createToken(card).then(function(result) {
+      if (result.error) {
+        // Inform the user if there was an error
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+      } else {
+        // Send the token to your server
+        // stripeTokenHandler(result.token);
+        // alert(result.token);
+
+        // this will set the value of the hidden field inside the form that we ant to send to the server to the value of the token we got from stripe
+        $('#stripe_token').val(result.token.id);
+        // This will submit our server form to our Rails backend
+        $('#server-form').submit();
+      }
+    });
+  });
+
+});

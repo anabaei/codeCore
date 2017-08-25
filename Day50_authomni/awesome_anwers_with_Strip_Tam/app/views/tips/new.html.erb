@@ -1,0 +1,6 @@
+<h1>Send a Tip</h1>
+
+<%= simple_form_for [@answer, @tip] do |f| %>
+  <%= f.input :amount, as: :string %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
