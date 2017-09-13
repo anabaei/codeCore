@@ -324,6 +324,10 @@ config.middleware.insert_before 0, Rack::Cors do
         ]
       end
 ```
+* Then add this into application controller 
+```ruby
+protect_from_forgery with: :null_session
+```
 right now it allows doing cross origin request.
 now encapsulate everything inside a function.
 
