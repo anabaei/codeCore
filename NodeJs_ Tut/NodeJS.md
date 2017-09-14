@@ -1,7 +1,7 @@
 # Node Start
 
-#### yarn init
-#### yarn add ejs express nodemon
+## yarn init
+## yarn add ejs express nodemon
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.6",
