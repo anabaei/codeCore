@@ -2,6 +2,7 @@
 
 https://www.postgresql.org/docs/9.1/static/sql-altertable.html
 
+```sql
 // POSTGRESQL 
 
 CREATE table amir1(
