@@ -2,6 +2,7 @@
 
 https://www.postgresql.org/docs/9.1/static/sql-altertable.html
 
+```sql
 // POSTGRESQL 
 
 CREATE table amir1(
@@ -18,9 +19,10 @@ CREATE table amir1(
   BOOLEAN
   DATETIME
 
-  SERIAL : GENERATE ID AUTOMATICALLY 
-  "" IT NEEDEDS	COLUMN NAME OR TABLE NAME 
-  '' USES FOR STRINGS ONLY 
+  SERIAL : GENERATE ID AUTOMATICALLY
+  ```
+ IT NEEDEDS	COLUMN NAME OR TABLE NAME 
+ USES FOR STRINGS ONLY 
 
   IF TABLE NAME IS CAPITAL WE SHOULD USE "" OR MAKE IT SMALL LETTER 
 
@@ -28,11 +30,8 @@ CAPITALAZIE SELECT FROM WHERE ETC ... CONVENTION
 
 NAME OF TABLES ARE PLURAL AND LOWER CASES
 
-
+```sql
   SELECT * FROM AMIR1 where flase; // returns just column names 
-
-
-
   alter table amir1 add  column users varchar(255);
   alter table amir1 rename  users to locations;
   Insert into amir1 (make, model) values ('GERMANY','BMW');
@@ -45,8 +44,9 @@ NAME OF TABLES ARE PLURAL AND LOWER CASES
 
   select * from students where age is not NULL;
   select * from students where first_name ILIKE 'Jo%';
+```
   Ilike case insensitive;
-
+```sql
   select * from country where name like 'a%' or name like 'b%';
 
   select * from students where registration_date between current_date -25 And current_date -20;
