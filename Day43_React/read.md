@@ -1406,10 +1406,10 @@ https://facebook.github.io/react-native/docs/viewstyleproptypes.html
 
 flex: 1 just grow it to full the screen. 
 
-when you give dimention you can not give them px, theey are percentage and scalable by app.
+when you give dimention you can not give them px, they are percentage and scalable by app.
 you can alwasy get size of your screens 
 
-* if you want to ckick, should use rouchable higlight, it just highlight 
+* if you want to click, should use rouchable higlight, it just highlight 
  opacity it loose opacity, touchable without feedback does nothing
  
  to use touchcable first we have to import it first. 
