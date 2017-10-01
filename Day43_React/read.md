@@ -793,12 +793,13 @@ gem 'jwt'
 ```ruby
  result = JWT.encode({id: 12}, Rails.application.secrets.secret_key_base)
 ```
+returns
 ```ruby
 hbGciOiJIUzI1NiJ9.eyJpZCI6MTJ9.ffgoLAKpM7F6KxpvDcXEwaaWlt0mjFW3
 ```
 * And to check way back we can have 
 ```ruby
-JWT.decode res, nil, false
+JWT.decode result, nil, false
 ```
 which returns 
 ```ruby
