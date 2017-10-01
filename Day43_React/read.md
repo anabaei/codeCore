@@ -769,7 +769,7 @@ resources :tokens, only: [:create]
 def create
   user = User.find_by(email: params[:email])
   if user&.authenticate(params[:password])
-    rejder json:user 
+    render json:user 
   else
    //  head :unauthorized if we write unauthorized it tells hacker to try agaun
      head :not_found
@@ -789,6 +789,22 @@ Then we should see the users in postman.
 ```ruby
 gem 'jwt'
 ```
+* To check in console we can have 
+```ruby
+ result = JWT.encode({id: 12}, Rails.application.secrets.secret_key_base)
+```
+```ruby
+hbGciOiJIUzI1NiJ9.eyJpZCI6MTJ9.ffgoLAKpM7F6KxpvDcXEwaaWlt0mjFW3
+```
+* And to check way back we can have 
+```ruby
+JWT.decode res, nil, false
+```
+which returns 
+```ruby
+[{"id"=>12}, {"typ"=>"JWT", "alg"=>"HS256"}]
+```
+---------------
 * now inside token controller
 ```ruby
  private 
