@@ -1254,15 +1254,6 @@ Now we go to app.js and import authroute form ./authroute change <Route to <Auth
 ```
 
 
-
-
-
-
-
-
-
-
-
 ----------
 The full copy of api SERVER SIDE  controller for Rails server side ***
 ```ruby
@@ -1530,6 +1521,10 @@ create-react-native-app awesome-answer-inclass
 cd in awesome-answer-inclass
 create folder src and inside that a folder call components and utilities 
 
+* you have to install decode jwt as 
+```javascript
+npm install jwt-decode
+```
 * Fetch function is almost same as  react, so copy request from swesome asnwer react and past in utilities 
 ```javascript
 const DOMAIN = 'http://localhost:3000';
