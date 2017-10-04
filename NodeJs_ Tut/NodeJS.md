@@ -35,6 +35,48 @@ npm install express
 ```
 - Then it creates a file name node_modules folder which includes all packages dependents on them. Also it update packages 
 for older versions you can have `npm install --save express `
+- Create App.js and load express inside it as function
+- Express was written before classes in js, so we need `app` to have an instance of express web app server to access all functions
+- One of the built in functions is get.
+- app.get it reads, the first argument is a url address and get method needs a callback. which users ask. 
+request is already built and is what client asking server and respond is what we are going to implenet. Also send is a simple function that send everything to the browser.
+```javascript
+const Express= require('express')
+const app = Express()
+app.get('/', (request, response) => { response.send(`Hello, World!`) })
+const PORT = 3000
+app.listen(
+PORT, ()=>console.log('server is running')
+)
+```
+so this is all we needed, a path and what we have to send back. Right now nothing is happening so we need to create a server as well
+so the first argument is the port, and the second argument runs when server is running and is optional. just our call back tell us that is running. Then it runs inside local  
+
+- Now it should run after typing `node.js`
+- Autoreloading for node.js. --dev means it installs only for developing 
+```javascript
+npm install --save-dev nodemon
+```
+- because you install it locally so you have to mention to use it in package.js therefore in package js change the start
+"nodemon app.js" 
+- to run a script in package.js we need to call it as npm run ...
+```javascript 
+npm run start
+```
+### Debuggin Node
+- Node comunicate directly with node
+```javascript
+node --inspect app.js
+```
+- Right now chrome give you a link on top left, then inside source you can add break point inside the courses, and on right it shows all functions and you can go and type request. 
+
+### Middleware
+- Middleware are functions that take  requests and do steps and operations until it gets to the pint rendering into the page.
+- Mathed Routes
+- CORS allow make rewueste from browers to server, CSRF make sure that the form is comming from an app not from somewhere else for securty and then authentication and finaly main. 
+- We want to set up this for everytime we call 
+- have a data as js object to work with them so a part of middleware have to convert texts into js objects 
+- Express is a bunch of call backs. 
 
 
 
