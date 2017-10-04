@@ -132,6 +132,14 @@ app.set('view engine', 'ejs')
 ```javascript
 app.get('/hello-world', (request, response) => { response.render(`index`)})
 ```
+##### Partials 
+- create a folder inside views, and two files inside it header.ejs and footer.ejs
+- Inside index.ejs. EJS gives use a function called include that allows us to render anther `EJS` file inside another one
+```javascript
+<%- include('./partials/header') %>
+<%- include('./partials/footer') %>
+```
+
 
 
 
