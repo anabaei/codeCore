@@ -64,6 +64,7 @@ npm install --save-dev nodemon
 npm run start
 ```
 ### Debuggin Node
+![alt text](https://user-images.githubusercontent.com/7471619/31191505-2b3fbcf8-a8f3-11e7-9668-dc238a9ef77d.png)
 - Node comunicate directly with node
 ```javascript
 node --inspect app.js
@@ -71,6 +72,7 @@ node --inspect app.js
 - Right now chrome give you a link on top left, then inside source you can add break point inside the courses, and on right it shows all functions and you can go and type request. 
 
 ### Middleware
+![alt text](https://user-images.githubusercontent.com/7471619/31191426-ec3d1aaa-a8f2-11e7-991a-46dc32413132.png)
 - Middleware are functions that take  requests and do steps and operations until it gets to the pint rendering into the page.
 - Mathed Routes
 - CORS allow make rewueste from browers to server, CSRF make sure that the form is comming from an app not from somewhere else for securty and then authentication and finaly main. 
@@ -78,8 +80,8 @@ node --inspect app.js
 - have a data as js object to work with them so a part of middleware have to convert texts into js objects 
 - Express is a bunch of call backs. 
 
-![alt text](https://user-images.githubusercontent.com/7471619/31191426-ec3d1aaa-a8f2-11e7-991a-46dc32413132.png)
-![alt text](https://user-images.githubusercontent.com/7471619/31191505-2b3fbcf8-a8f3-11e7-9668-dc238a9ef77d.png)
+
+
 
 
 ## yarn init
