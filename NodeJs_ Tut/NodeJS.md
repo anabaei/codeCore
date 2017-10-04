@@ -144,7 +144,7 @@ app.get('/hello-world', (request, response) => { response.render(`index`)})
 ```javascript
 <form action='/' method='GET'>
 <textarea name='content'></textara>
-<input value='submit' type='submit />
+<input value='submit' type='submit' />
 </form>
 ```
 - Now if you submit the url chagned to get parameters. 
