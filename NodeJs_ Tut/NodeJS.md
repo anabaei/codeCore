@@ -78,6 +78,8 @@ node --inspect app.js
 - have a data as js object to work with them so a part of middleware have to convert texts into js objects 
 - Express is a bunch of call backs. 
 
+https://user-images.githubusercontent.com/7471619/31191426-ec3d1aaa-a8f2-11e7-991a-46dc32413132.png
+
 
 
 ## yarn init
