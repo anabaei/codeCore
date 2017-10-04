@@ -117,6 +117,12 @@ now we add below to app.js
 app.use(morgan('dev'))
 ```
 
+### EJS use javascrit to produce html effective javascript  http://ejs.co
+- EJS can generate html and even other js. 
+now you can have js to generate html
+```javascript
+
+```
 
 
 
