@@ -9,7 +9,32 @@
 * `npmjs.com` you can find all packages 
 ```javascript
 npm install -g faker
+npm install -g chalk 
+npm link faker 
+npm link chalk
 ```
+- In node console Then to use the package we need to use require it as below, since it is use globaly we have to link it first 
+```javascript
+const faker = require('faker')
+faker.internet.jobTitle()
+const c = require('chalk')
+console.log(c.pink.bold('hello'))
+```
+- To start building app
+```
+npm init 
+```
+- During installation just add entry point as app.js
+- Notice: you can have heroku git remote first then run npm init then it would include that heroku inside package.js
+- Package.js  
+- So far we just downloaded node.js, then we want to move to express as most popular js framework 
+- A server is just a relationship. Server is like server at restourants A client is browser and server can be cloud or computer and the client asking from servers and servers never ask clients first they just respond to their clients and each server responsible for many clients. In REST API servers responds to http requests but sometimes a server is client if sever is asked that she doesnt have it she can go ask another server like facebook. Browser is always client. 
+
+```javascript
+npm install express
+```
+- Then it creates a file name node_modules folder which includes all packages dependents on them. Also it update packages 
+for older versions you can have `npm install --save express `
 
 
 
