@@ -1,4 +1,17 @@
-# Node Start
+## Node Start
+
+* We use node with a framework called express.
+* Node js is brought javascrip and uses same engine as chrome, so we can use everything use chrome. It is not server but can be used as server. 
+
+### Packages
+* We gonna use other people codes that other people wrote like gems in Ruby includes libraries. Library is a piece of code as public it has API to tell what functions are available. 
+* -g means global so it means install it global in your computer not for a specific app
+* `npmjs.com` you can find all packages 
+```javascript
+npm install -g faker
+```
+
+
 
 ## yarn init
 ## yarn add ejs express nodemon
