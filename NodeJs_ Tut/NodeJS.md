@@ -139,8 +139,44 @@ app.get('/hello-world', (request, response) => { response.render(`index`)})
 <%- include('./partials/header') %>
 <%- include('./partials/footer') %>
 ```
+#### Form
+- In views folder create about.ejs
+```javascript
+<form action='/' method='GET'>
+<textarea name='content'></textara>
+<input value='submit' type='submit />
+</form>
+```
+- Now if you submit the url chagned to get parameters. 
+- Middleware is actullay a body parser, gets stuff from views and handle them.
+##### body-parser
+- it is mostly uses for forms 
+```javascript
+npm install body-parser
 
+```
+inside app.js
+extended is just confiuration object and it only works with post 
+```javascript
+require bodyParser = require('body-parser')
+app.user(bodyParser.urlencoded({extended: false}))
+```
+<%= vs <%- the first one scape html charactors
 
+Then we get all our form data as the object of `request.body` if you set up body-parser as above
+response render can take second argument where this object is available in index
+```javascript
+app.post('/', (request, response) => { const {body} = request; response.render('index', body) })
+('index', {content: null})
+```
+Then inside the index.ejs we have if (content) 
+```ejs
+<% if (content) { %>
+  <h2>You were thinking:</h2>
+  <!--  that tag with the = escapes all the html characters inside -->
+  <p><%= content %></p>
+<% } %>
+```
 
 
 
