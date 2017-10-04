@@ -121,8 +121,18 @@ app.use(morgan('dev'))
 - EJS can generate html and even other js. 
 now you can have js to generate html
 ```javascript
-
+npm install ejs 
 ```
+- Then we just tell exress engine app to use ejs templating language to render views. 
+```javascript
+app.set('view engine', 'ejs')
+```
+- Node by default looking at views folder to rendering pages, so create index.ejs inside views 
+- Response renders from views directory as the content of the response to the client
+```javascript
+app.get('/hello-world', (request, response) => { response.render(`index`)})
+```
+
 
 
 
