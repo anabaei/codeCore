@@ -79,6 +79,44 @@ node --inspect app.js
 - We want to set up this for everytime we call 
 - have a data as js object to work with them so a part of middleware have to convert texts into js objects 
 - Express is a bunch of call backs. 
+##### Creating a logging middleware
+before the get request we put 'use' verb accepts anything and if dont put first params there it works with any path as below, when write next means this middleare is done and move on next middle ware and 
+```javascript
+app.use((request, response, next) => {
+// put codes here
+next()
+})
+```
+- At the end of file adding next helps when midddle ware finished by doing some codes to move on 
+- To costomize it we can display dates for example.
+```javascript
+const message = `Request at ${new Date()}`
+console.log(message);
+```
+- Lets find the http request objects~!
+- we can display also the ip where it comes from by putting debugger inside the middelware and inspect resuest we see there are mehtod or ip properties.
+
+
+Destructive means having the properties of an object without wirign it, they are same 
+creating variables with the same name of the object properties
+```javascript
+const method = request.method
+const path = request.method
+const {method, path} = request
+```
+- Middleware are used to save everything we want, one is `morgan` package 
+- yarn is package manager and npm is kind of slow but yarn is new 
+```javascript
+npm install morgan 
+yarn run start
+```
+now we add below to app.js
+- `app.use(morgan('combined'))` or dev which returns a function for us, then we add this middleware.
+- Now you can check the rest of available functions in github and just below code give us alo information
+```javascript
+app.use(morgan('dev'))
+```
+
 
 
 
