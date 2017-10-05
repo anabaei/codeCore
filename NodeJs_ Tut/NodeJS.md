@@ -178,6 +178,21 @@ Then inside the index.ejs we have if (content)
 <% } %>
 ```
 
+---------
+* download a picture from a link (L helps to go redirect ifthere)
+curl -LO url
+
+#### Express static middleware
+* Always node go to public first to find the url if not exist there then it just check routes.  
+* So creae Public folder first and inside that define for example images folder, 
+```javascript
+const path = require('path')
+console.log(__dirname)
+app.use(Express.static(path.join(__dirname, 'public')))
+```
+
+
+
 
 
 
