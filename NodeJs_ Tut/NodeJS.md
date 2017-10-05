@@ -190,6 +190,18 @@ const path = require('path')
 console.log(__dirname)
 app.use(Express.static(path.join(__dirname, 'public')))
 ```
+#### Flex 
+* In bootstrap to use flex we need a wrapper div class to use align  we can wrap it first with `d-flex` 
+```css
+class= "d-flex flex-column"
+```
+then inside that we can have 
+```css
+"align-self-end"
+```
+To use partially bootstrap we can use bootstrap-sass and use import for each partial of that.
+
+
 
 
 
