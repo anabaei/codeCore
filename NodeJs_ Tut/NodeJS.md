@@ -191,6 +191,8 @@ console.log(__dirname)
 app.use(Express.static(path.join(__dirname, 'public')))
 ```
 #### Flex 
+* bg or lg in nav bar bootstrap means when colapse 
+* ml-auto is gonna fill out all space from left with a margin.it works in inside flex containers always
 * In bootstrap to use flex we need a wrapper div class to use align  we can wrap it first with `d-flex` 
 ```css
 class= "d-flex flex-column"
@@ -201,11 +203,112 @@ then inside that we can have
 ```
 To use partially bootstrap we can use bootstrap-sass and use import for each partial of that.
 
+##### Routes directory
 
+create an instance of routes 
+```javascript
+const Express = require('express')
+const router = Express.Router()
+```
+then instead of app use `router.get` or `router.post`
+then inside app.js 
+* we can require the files. welcome is not a router object, so we have to export `module.exports = router` so when we `require` it somewhere else, then we would access to a router object
+```javascript
+const welcome = require('./welcome')
+app.user('/', welcome)
+```
+##### Database Postgres 
+* this command creating a database name fororol_dev and echo just showing it
+```unix
+$ createdb --echo fotorol_dev
+```
+* so gonna add this command to package.js
+```javascript
+"db:create": "createdb --echo fotorol_dev"
+"db:drop":"dropdb --echo --if-exist fotorol_dev"
+```
+To run this
+```javascript
+npm run db:drop
+npm dun db:create
+```
+##### KNEX.JS http://knexjs.org/
+pg is library that postgre knows, knex knows oracl sql so with pg we just install it for postgre
+is javascript library whihc outputs sql queries
+```javascript
+npm install pg knex
+```
+for exmaple
+```
+knex.select('title', 'name').from('bookstable')
+translate it to:
+select "title", "name" from "bookstable"
+```
+```javascript
+knex('users') means select * from users
+```
+Insert we can add an object for that.
+* To run it we need to first configure the database 
+* So we need a directory to hold all data we call it db and inside that we have connection.js and migration.js
+* Setting up the connection
+```javascript
+const kx=  require('knex')({
+client: 'pg',
+connection: {
+  database: 'fotorol_dev'
+  }
+})
 
+module.exports = kn
+```
+* Even we can require it inside the console and use it. 
 
+```
+node --inspect
+```
+* click on the icon, then we have our node repo 
+```javascript
+const kx = require('knex')
+kx.select().from('posts')
+```
+migartion is shapeing new database,
 
+create connection,
+then use schema property of knix,
+table increament creates id
+we create a table named posts, and use a callback to define attributes of table
+```javascript
+const kx = require('./connection')
+kx.schema,createTable('posts', table => {
 
+table.increments('id'),
+table.string('username'),
+table.string('photo_path'),
+table.timestamps(false, true)
+}).then(()=> process.exit()).catch(()=> process.exit())
+```
+we need .then() after it to know what to do if not it terminate it. Also node needs to quite only if was told.
+so we need to pass a callback to then to know to quit 
+process is running as an application object 
+if we type above inside console and use toString() it converts to string the commands. 
+* catch is only run when query fails the error message
+
+* Now inside chrome debugger format we can see all fields inside database
+```javascript
+kx('posts').columnInfo().then(console.log)
+```
+
+by running  `node db/migration.js` we can create tables inside the database 
+"db:migrate":"node db/migration.js"
+* inside chrome console 
+```javascript
+kx.insert({content: 'lllok at '}).into('posts').toString
+kx.insert({content: 'lllok at '}).into('posts').then(console.log)
+kx.insert({content: 'lllok at '}).into('posts').returning('*').toString
+kx.select().from('posts').then(console.log)
+```
+* returning just return what are returning
+*then we can have above command inside the node without toString fn or then console.log to see the results
 
 
 
