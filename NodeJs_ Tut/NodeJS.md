@@ -310,6 +310,50 @@ kx.select().from('posts').then(console.log)
 * returning just return what are returning
 *then we can have above command inside the node without toString fn or then console.log to see the results
 
+-----------
+#### Express Parse encoded formats
+when express parse a urlencoded form, which is a type that browser send at first, it converted name=amir&lastname=nabaei&.... to a hash format with keys and values. 
+* Therefor we have to use multer middleware module.
+```javascript
+npm install multer
+```
+* Then inside the project, we give a property and a path utilitlity
+
+```javascript
+const path = require('path')
+const multer = require('multer')
+const upload = multer({dest: path.join(__dirname, 'public', 'uploads')})
+```
+we say number of inputs for multer whihc here is singl
+also we need to say the name of input which multer just looking for that input name file 
+uploadingle
+so our post request has two middleware first it uses multer then send request
+```javascript
+router.post('/', upload.single('photonameinput'), (request, respond) => {
+
+const {body} = request
+}
+```
+* Inside form we should specify to the brower that the type if mulitper
+```javascript
+<form action="/" class = "" name= "photo"  enctype="multipart/form-data" metod="POST" />
+```
+* To cosutomize where to save the file
+```javascript
+const upload = multer({dest: path.join(__dirname, '..', 'public', 'uploads')})
+```
+* 
+```javascript
+router.post('/', upload.single('photo'), (request, response) => {
+  const {content} = request.body;
+  kx
+    .insert({content: content})
+    .into('posts')
+    .then(() => response.redirect('/'))
+})
+```
+
+
 
 
 ## yarn init
