@@ -499,11 +499,51 @@ git add public.css
 git commit --amend  // can update your last commit and even you can change them actually it created a new commit and added previouse one into it becuase git commit are immutable
 
 #### REST
-
 * It gives us a pattern how client and server talk to each other, we gonna map html requests with CRUD operation
 `PUT/PATCH` --> Update and `delete` not supported in forms but post and get are supported with forms. 
 
 * Increase the speed with REST:  just need to cach requestes somewhere even in the browsers so if same request came RESTful send the same respond already cached and is tousands times faster than fetching new data. 
+* At forms we say where to post the forms by defining action, and method tell us what verb it is used
+```javascript
+<form 
+action="/posts"
+method="post"
+```
+* Always show what to get it from resuest objects as below, which is a show
+```javascript
+router.get(':id', (request, response) => {
+respond.send(request.params)
+const {id} = request.params
+kx.select(*).from().where({id})  // syntax sugar {id: id}
+})
+```
+* In view forms 
+```
+<a href= "post/<% post.id %>"> 
+```
+kx return us array so if we can have kx.first instead 
+
+#### Repl
+
+```javascript
+const repl = require('repl')
+const kx = require('./db/connection')
+cons {log} = console
+```
+```javascript
+const context = repl.start('').context
+context.log = log
+context.kx = kx
+```
+now inside the node console, if we say node repl.js
+then we would have it. 
+```javascript
+node --inspect repl.js
+```
+then we dont need to require them immediately 
+
+
+
 
 
 
