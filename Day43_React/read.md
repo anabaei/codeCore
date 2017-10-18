@@ -78,6 +78,9 @@ function Hello (props) {
 ```javascript 
 Amir jon!
 ```
+```javascript
+npm run build
+```
 -------------
 * Create a new folder inside src and there .
 ```
