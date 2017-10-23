@@ -101,10 +101,30 @@ for (let doggo of document.querySelectorAll('.team .doggo')) {
 
 ##### C R E A T I N G  N O D E S
 
+```javascript
+const drillBitDarel = document.createElement('div')
+drillBitDarel.innerHTML = '<h1>Drill Bit Darel</h1>';
+```
+* Adding nodes to the DOM
+```javascript
+Document.querySelector('.roster').appendChild(drillBitDarel);
+```
+🔥 🔥 🔥 🔥 🔥
+* use the `.prepend` method to on a parent node to add a node as the first child of that parent node
+```javascript
+const teamKhakiRoster = document.querySelector('.team.khaki > .roster')
+teamKhakiRoster.prepend(toxicTim);
+```
+* Use `.cloneNode()` to make a copy of a node without its descendents. Use `.cloneNode(true)` to make a copy of node including all of its descendents.
+```javascript
+const toxicTimClone = toxicTim.cloneNode(true);
+teamKhakiRoster.prepend(toxicTim);
+```
+    
+ 
 
 
-toxicTim.hasAttribute('id') // returns true
-
+  
 
 One to Many Associations:
 
