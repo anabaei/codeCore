@@ -1,3 +1,111 @@
+
+
+### S E L E C T I N G  N O D E S
+
+ `document.getElementById`
+☝️ a method that returns the first node in the document
+ with a given id. It's fastest all the different selector methods.
+ ```javascript
+ let toxicTim = document.getElementById('toxic-tim');
+ ```
+ ##### <Any-Node>.querySelector
+querySelector is a method available on nodes that returns the first node  from its descendents that matches a given CSS query.
+You can use any CSS selector you've learned.
+```javascript
+let teamAquamarineHeading = document.querySelector('.team.aquamarine').querySelector('h1');
+let lastDoggoOfTeamSalmon = document.querySelector('.team.salmon .doggo:last-child');
+let allTeams = document.querySelectorAll('.team');
+document.querySelectorAll('.team.khaki .doggo:not(:first-child)'); // select all but not the first child
+```
+* queryselectorAll returns all as an array of results
+* Use the `.matches` method to test whether or not a node matches a CSS query.
+```javascript
+toxicTim.matches('div') // true
+```
+##### M A N I P U L A T I N G  N O D E S
+
+```javascript
+toxicTim.style.backgroundImage = 'url(images/paws.jpg)';
+toxicTim.style['border-top-right-radius'] = '15px';
+toxicTim.style.backgroundImage = 'url(images/paws.jpg)';
+```
+* The .style property only returns the inline style of a node (those assigned  with the html attribute `style`.) To get all styles (from stylesheets and browser defaults) of a node, use the function `getComputedStyle`.
+```javascript
+let toxicTimStyle = getComputedStyle(toxicTim) // will return a big object containing *ALL* calculated
+// styles for toxicTim.
+toxicTimStyle.borderWidth; // returns "0px"
+toxicTimStyle.borderRadius; // returns "0px 15px 0px 0px"
+```
+* Use the `.innerHTML` property to get all the HTML content of node as a string.
+ ```javascript
+ toxicTim.innerHTML; // returns "<h1>Toxic Tim</h1>"
+// Write to it to replace the HTML contents of a node.
+toxicTim.innerHTML = 'PAWS';
+```
+* To replace a content of an html use `outerHTML`
+```javascript
+toxicTim.outerHTML = 'new content';
+```
+All standard attributes of html nodes can be accessible, to acceess all attributes including your own custom attr instead you can use `getAttribute` as belows 
+```javascript
+toxicItem.id // returns id
+toxicTim.getAttribute('id') // returns toxic tim's id
+toxicItem.value // returns text
+
+toxicTim.classList // returns a list of toxic tim's classes as an array 
+toxicTim.setAttribute('id', 'moneybags-michael') // replaces toxic tim's id with moneybags-michael
+```
+ * To add a class use the method of `classList` `add`:
+```javascript
+toxicTim.classList.add('labourer');
+toxicTim.classList.add('cancer', 'tumor');
+```
+To remove a class use the `remove` method:
+```javascript
+toxicTim.classList.remove('cancer', 'tumor');
+toxicTim.classList.toggle('fighter') // removes fighter class
+toxicTim.classList.toggle('fighter') // adds the fighter class
+```
+* Use the method `.hasAttribute` to check whether or not a node
+```javascript
+toxicTim.hasAttribute('id') // returns true
+toxicTim.hasAttribute('href') // returns false
+toxicTim.removeAttribute('id') // removes the id attribute
+```
+* Use the `.remove` method to remove a node from the DOM.
+```javascript
+toxicTim.remove();
+```
+
+
+#### Exercise
+1. Change the color of all teams to fuchsia
+```javascript
+for (let node of document.querySelectorAll('.team')) {
+  node.style.backgroundColor = 'fuchsia';
+}
+```
+
+```javascript
+document.querySelectorAll('.team').forEach(node => {
+  node.style.backgroundColor = 'fuchsia';
+})
+```
+
+2. Rename all doggos to Rob The Slob
+```javascript
+for (let doggo of document.querySelectorAll('.team .doggo')) {
+  doggo.innerHTML = '<h1>Rob The Slob</h1>';
+}
+```
+
+##### C R E A T I N G  N O D E S
+
+
+
+toxicTim.hasAttribute('id') // returns true
+
+
 One to Many Associations:
 
 one to one  example:-- user per a profile,
