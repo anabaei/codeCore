@@ -98,6 +98,10 @@ for (let doggo of document.querySelectorAll('.team .doggo')) {
   doggo.innerHTML = '<h1>Rob The Slob</h1>';
 }
 ```
+```javascript
+a = document.querySelector("#logo > a")
+a.setAttribute('href', "https://www.google.ca/")
+```
 
 ##### C R E A T I N G  N O D E S
 
