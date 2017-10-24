@@ -40,7 +40,8 @@ function name1(params.name) // function name1("Tam")
 ```
 
 
-
+---------
+---------
 * We use node with a framework called express.
 * Node js is brought javascrip and uses same engine as chrome, so we can use everything use chrome. It is not server but can be used as server. 
 
