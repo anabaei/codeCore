@@ -1,6 +1,18 @@
 ## Node Server
 [References](https://nodejs.org/api/synopsis.html)
-#### Simple example of node server 
+#### TCPserver 
+```javascript
+const net = require('net');
+const server = net.createServer( (socket) => {
+  socket.on('data', (data) => {
+    console.log(`data received from client: ${data}`);
+    socket.write('Thank you!');
+  });
+});
+server.listen(5000, '127.0.0.1');
+console.log('The server is running and listening on port 5000');
+```
+#### HTTPserver 
 ```javascript
 const http = require('http');
 
@@ -30,6 +42,7 @@ function htmlDocument()
            </html>`;
  }
 ```
+
 ### Read URL Params
 * To access urls just need to require the url module and define an object of it then we access to all methods in that module as
 ```javascript
