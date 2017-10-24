@@ -8,14 +8,27 @@ const hostname = '127.0.0.1';
 const port = 3000;
 
 const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
+  res.writeHead(200, { 'Content-Type': 'text/html' }); // HTTP Header
+  res.write(htmlDocument());
+  res.end();
 });
 
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+function htmlDocument()
+ {
+   return `<!DOCTYPE html>
+          <html>
+          <head>
+            <title>My first web server</title>
+          </head>
+          <body>
+            <h1>Hello !</h1>
+          </body>
+           </html>`;
+ }
 ```
 
 
