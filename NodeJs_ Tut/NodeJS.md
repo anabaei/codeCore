@@ -82,7 +82,7 @@ const params = url.parse(request.url, true).query;
 // http://localhost:4000/?name=Tam&city=Burnaby then we can have
 function name1(params.name) // function name1("Tam")
 ```
-![alt test](https://logz.io/wp-content/uploads/2016/04/heroku-logo.png)
+![alt test](https://cdn-images-1.medium.com/max/1600/1*9wOLuKSjCIAqSX_K8O0PKQ.png)
 #### Deploy to Heroku
 * Key: name app.js to server.js then vola!
 
