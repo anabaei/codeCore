@@ -1,6 +1,6 @@
 ## Node Server
-* [References](https://nodejs.org/api/synopsis.html)
-* Simple example of node server 
+[References](https://nodejs.org/api/synopsis.html)
+#### Simple example of node server 
 ```javascript
 const http = require('http');
 
