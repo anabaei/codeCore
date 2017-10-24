@@ -140,8 +140,15 @@ function test(params1, params2, function() => {
   console.log("hi")
 });
 ```
-
-  
+#### Function Expression 💋
+* A function created inside an expression or inside another syntax construct
+```javascript
+sum(1,2) // returns error because unlike functions, expressions are available just after they defined 
+let sum = function(a, b) {
+      return a + b;
+}; // or a shorter version with arrow function 
+let sum = (a, b) => a + b;
+```
 
 One to Many Associations:
 
