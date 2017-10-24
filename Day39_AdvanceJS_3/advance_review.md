@@ -124,7 +124,7 @@ teamKhakiRoster.prepend(toxicTim);
 const toxicTimClone = toxicTim.cloneNode(true);
 teamKhakiRoster.prepend(toxicTim);
 ```
-    
+🥊
 #### Parse Float output 
  ```javascript
  var res = 2 * 4;
