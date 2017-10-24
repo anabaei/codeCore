@@ -1,4 +1,23 @@
-## Node Start
+## Node Server
+* [References](https://nodejs.org/api/synopsis.html)
+* Simple example of node server 
+```javascript
+const http = require('http');
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+```
+
 
 * We use node with a framework called express.
 * Node js is brought javascrip and uses same engine as chrome, so we can use everything use chrome. It is not server but can be used as server. 
