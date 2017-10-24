@@ -12,6 +12,21 @@ const server = net.createServer( (socket) => {
 server.listen(5000, '127.0.0.1');
 console.log('The server is running and listening on port 5000');
 ```
+* Now to connect to above server on port 5000 we need a client as below
+```javascript
+const net = require('net');
+
+const client = new net.Socket();
+
+client.on('data', (data) => {
+  console.log(`Data received from server: ${data}`);
+  process.exit();
+});
+
+client.connect(5000, '127.0.0.1', () => {
+  client.write('Hello World!');
+});
+```
 #### HTTPserver 
 ```javascript
 const http = require('http');
