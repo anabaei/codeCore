@@ -30,7 +30,7 @@ function htmlDocument()
            </html>`;
  }
 ```
-#### URL Params
+### Read URL Params
 * To access urls just need to require the url module and define an object of it then we access to all methods in that module as
 ```javascript
 const url  = require('url');
@@ -38,6 +38,7 @@ const params = url.parse(request.url, true).query;
 // http://localhost:4000/?name=Tam&city=Burnaby then we can have
 function name1(params.name) // function name1("Tam")
 ```
+
 
 
 * We use node with a framework called express.
