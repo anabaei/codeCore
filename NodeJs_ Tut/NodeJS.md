@@ -83,8 +83,9 @@ const params = url.parse(request.url, true).query;
 function name1(params.name) // function name1("Tam")
 ```
 ![alt test](https://cdn-images-1.medium.com/max/1600/1*9wOLuKSjCIAqSX_K8O0PKQ.png)
-#### Deploy to Heroku
+#### Deploy to Heroku with minimum settings
 * Key: name app.js to server.js then vola!
+* first create heroku remote then npm init and npm install --save express and finallu define a server.js and not app.js
 
 
 ---------
