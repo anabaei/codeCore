@@ -129,6 +129,17 @@ teamKhakiRoster.prepend(toxicTim);
  var res = 2 * 4;
  res = (parseFloat(res).toPrecision(2)); //Output would be `8.0`
 ```
+#### Call Back 🗣
+```javascript
+function test(params1, prams2, func)
+{
+// do stuff
+ func();
+}
+function test(params1, params2, function() => {
+  console.log("hi")
+});
+```
 
   
 
