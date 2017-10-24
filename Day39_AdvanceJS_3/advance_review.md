@@ -125,12 +125,12 @@ const toxicTimClone = toxicTim.cloneNode(true);
 teamKhakiRoster.prepend(toxicTim);
 ```
     
- #### Parse Float output 
+#### Parse Float output 
  ```javascript
  var res = 2 * 4;
- res = (parseFloat(res).toPrecision(2));
+ res = (parseFloat(res).toPrecision(2)); //Output would be `8.0`
 ```
-* Output would be `8.0`
+
   
 
 One to Many Associations:
