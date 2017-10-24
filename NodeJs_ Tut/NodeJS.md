@@ -1,3 +1,18 @@
+## Node
+* Simple node in/out
+```javascript
+const readline = require('readline'); // built-in module
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question('What\'s your name?', (name) => {
+  console.log(name);
+  process.exit(); // this will end our program
+});
+```
+
 ## Node Server
 [References](https://nodejs.org/api/synopsis.html)
 #### TCPserver 
