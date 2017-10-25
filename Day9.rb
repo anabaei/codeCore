@@ -1,5 +1,0 @@
-# Day 9
-# HTMl - HYPER TEXT MARKUP LANGUAGE
-# CSS - CASCADING STYLE SHEETS
-# JS
-#surfacemag.com
