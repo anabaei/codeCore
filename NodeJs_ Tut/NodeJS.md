@@ -85,9 +85,13 @@ function name1(params.name) // function name1("Tam")
 ![alt test](https://cdn-images-1.medium.com/max/1600/1*9wOLuKSjCIAqSX_K8O0PKQ.png)
 #### Deploy to Heroku with minimum settings
 * Key: name app.js to server.js then vola!
-* first create heroku remote then npm init and npm install --save express and finallu define a server.js and not app.js
-
-
+* first create heroku remote then `npm init` and `npm install --save express` and finally define a `server.js` and not app.js
+* to have a different name rather than server.js like app.js just create `Procfile` file and add below line to it [link](https://gist.github.com/evenchange4/3773179)
+```javascript
+web: node app.js
+```
+* now heroku knows what file it should be run
+* To test whether heroku works or not just create a [test.js](https://github.com/heroku/node-js-getting-started/blob/master/test.js) file and run it before pushing to heroku
 ---------
 ---------
 * We use node with a framework called express.
