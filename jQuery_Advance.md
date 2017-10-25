@@ -1,8 +1,8 @@
 Events:
 
-// call back is a call when an event is trigged 
-// addEventlistenor
-// then name of the event, and the call back 
+call back is a call when an event is trigged 
+addEventlistenor
+then name of the event, and the call back 
 
 // Total structure of addeventlistener
 nodeselected , addeventlisternr , name one event and the function
@@ -97,7 +97,7 @@ setTimeout(b, 10000);
 // then put it puts in inside the stack, and it runs. Then 
 // after nothing found in stack and queue then it waits to settime be done here one second then it puts it inside stack.
 
-
+```javascript
 function a(){
 
 }
@@ -131,16 +131,16 @@ empyt stack
 
 put b inside stack
 empy stack
+```
+ 
+we add invert to invert the color 
+ by adding the node to addeventlister then everything that 
+ everything that has toggo class , listenors are only on doggo class
 
-////// 
-/// we add invert to invert the color 
-/// by adding the node to addeventlister then everything that 
-// everything that has toggo class , listenors are only on doggo class
-
-
-// const = currentTarget = event.currentTarget
-//   cont taget = event.Target
-//  as short cut   const{currentTarget, target} = event
+```javascript
+ const = currentTarget = event.currentTarget
+ cont taget = event.Target
+ as short cut   const{currentTarget, target} = event
 
 document.querySelectorAll('.doggo').forEach(node => {
 	node.addEventListener('dblclick', event => {
@@ -148,12 +148,11 @@ document.querySelectorAll('.doggo').forEach(node => {
 		event.target.style.filter ='invert()'
 	})
 }) 
-
-// it checks whether the string exists or not, if can not fint it returns -1
-// currentTarget.style.filter.indexOf('anything') === -1
-
+```
+ it checks whether the string exists or not, if can not fint it returns -1
+ currentTarget.style.filter.indexOf('anything') === -1
+```javascript
 classList it returns all the classes in a list 
-
 <style>
 .invert{
 	filter: invert();
@@ -162,59 +161,58 @@ classList it returns all the classes in a list
 	transform: rotateZ(20deg);
 }
 
-// it checks all the classes and change to invert
+it checks all the classes and change to invert
 target.classList.toggle(invert);
 
 
-// document.querySelectorAll('.doggo').forEach(node => {
-//   node.addEventListener('dblclick', event => {
-//     const {currentTarget, target} = event;
-//     // const currentTarget = event.currentTarget;
-//     // const target = event.target;
-//     console.log('target:', target);
-//     console.log('currentTarget:', currentTarget);
-//     // BAD!
+ document.querySelectorAll('.doggo').forEach(node => {
+node.addEventListener('dblclick', event => {
+     const {currentTarget, target} = event;
+ const currentTarget = event.currentTarget;
+ const target = event.target;
+    console.log('target:', target);
+    console.log('currentTarget:', currentTarget);
+ BAD!
     
-//     if (currentTarget.style.filter.indexOf('invert') !== -1) {
-//       currentTarget.style.filter = '';
-//     } else {
-//       currentTarget.style.filter = 'invert()';
-//     }
+   if (currentTarget.style.filter.indexOf('invert') !== -1) {
+      currentTarget.style.filter = '';
+    } else {
+     currentTarget.style.filter = 'invert()';
+     }
     
 
-//     // GOOD!
-//     currentTarget.classList.toggle('invert');
-//   });
+     // GOOD!
+    currentTarget.classList.toggle('invert');
+   });
 
-//   node.addEventListener('mousedown', event => {
-//     const {currentTarget} = event;
-//     // ð Destructuring Assignment is syntax sugar for ð
-//     // const currentTarget = event.currentTarget;
+   node.addEventListener('mousedown', event => {
+     const {currentTarget} = event;
+     // ð Destructuring Assignment is syntax sugar for ð
+// const currentTarget = event.currentTarget;
+     currentTarget.classList.add('slight-rotation');
+   })
 
-//     currentTarget.classList.add('slight-rotation');
-//   })
+   node.addEventListener('mouseup', function () {
+     this.classList.remove('slight-rotation');
+   })
+ });
+ we have to define node at first so 
 
-//   node.addEventListener('mouseup', function () {
-//     this.classList.remove('slight-rotation');
-//   })
-// });
-// we have to define node at first so 
-
-/// target is the one that clicked on it, current target is the one that pass it as node listenor
+ target is the one that clicked on it, current target is the one that pass it as node listenor
 node.addEventlistener('mousedown', event => {
    const {currentTarget} = event;
-   // const currentTarget = event.currentTarget;
+    const currentTarget = event.currentTarget;
    currentTarget.classList.add('sligh-rotation');
 });
 
-// this one remvoes the sligh-rotation class
+ this one remvoes the sligh-rotation class
 node.addEventlistener('mouseup', function(){
 	this.classList.remove('sligh-rotation');
 });
+```
 
-
-
-/// exercise:
+```javascript
+ exercise:
 document.querySelectorAll('.doggo').forEach(node => {
   node.addEventListener('mouseenter', event => {
     const {currentTarget, target} = event;
@@ -228,10 +226,10 @@ document.querySelectorAll('.doggo').forEach(node => {
   })
 
 });
-
-///// Steve solution
-// EXERCISE: Crouching Mouse Hidden Doggo
-
+```
+ Steve solution
+ EXERCISE: Crouching Mouse Hidden Doggo
+```javascript
 for (let doggo of document.querySelectorAll('.doggo')) {
   doggo.addEventListener('mouseenter', event => {
     const {currentTarget} = event;
@@ -243,33 +241,31 @@ for (let doggo of document.querySelectorAll('.doggo')) {
     currentTarget.classList.remove('monochrome');
   })
 }
+```
 
-//////////
-
-//preventDefault // it stop the event to do anything 
+* preventDefault  it stop the event to do anything 
+```javascript
 document.querySelector('#application-form').addEventListener('submit', event => {
   const {currentTarget} = event;
-  // prevent the submit from causing a web request as submitted forms
-  // normally do
+   prevent the submit from causing a web request as submitted forms
+   normally do
   event.preventDefault();
   new Audio('sounds/dog-bark-1.wav').play();
 })
 
-//Keyboard Events
-// ascii codes
+Keyboard Events
+ ascii codes
 string.fromCharCode(68) --> returns d 
-
-
-// hist shift cntrol and n this code change the url 
+```
+```javascript
+ hist shift cntrol and n this code change the url 
 document.addEventListener('keydown', event => {
   const {ctrlKey, shiftKey, key} = event;
   if (ctrlKey && shiftKey && key.toLowerCase() === 'n')
   	window.location.href = "somewher"
 })
+```
 
-/// 
-/////////////////////////////
-let data = fd.entries();
 
 
 
