@@ -228,18 +228,32 @@ app.get('/hello-world', (request, response) => { response.render(`index`)})
 #### Form
 - In views folder create about.ejs
 ```javascript
-<form action='/' method='GET'>
-<textarea name='content'></textara>
-<input value='submit' type='submit' />
-</form>
+<form action="/create" method="post" class="box">
+	 <input name="username" placeholder="username" >
+	 <br><br>
+	  <textarea name="message" placeholder="write message here .." rows = 7 class="form-control"  maxlength="255" ></textarea>
+	  <br>
+	 <input type=submit class="btn btn-default" onclick="check()">
+ </form>
+``` 
+* Now in app.js we define it as :
+```javascript
+app.post('/create', (req, res) => {
+     console.log('🔨 Created a post!');
+   res.render('index', {yak: "amir"});
+ });
 ```
-- Now if you submit the url chagned to get parameters. 
+* and in index we define the `yak` var as 
+```javascript
+ <%= JSON.stringify(yak)%>
+```
+* Notice: `Using JSON.stringfy helps to convert objects into strings, usually it uses to send data to server`
+
 - Middleware is actullay a body parser, gets stuff from views and handle them.
 ##### body-parser
 - it is mostly uses for forms 
 ```javascript
 npm install body-parser
-
 ```
 inside app.js
 extended is just confiuration object and it only works with post 
