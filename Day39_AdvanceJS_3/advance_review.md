@@ -149,6 +149,11 @@ let sum = function(a, b) {
 }; // or a shorter version with arrow function 
 let sum = (a, b) => a + b;
 ```
+#### !!
+* !! means two !, below are equals
+```javascript
+!!var1 same as var1 !== "undefined && var1 !== false && var1 !== null
+```
 
 One to Many Associations:
 
