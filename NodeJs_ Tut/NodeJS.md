@@ -225,6 +225,7 @@ app.get('/hello-world', (request, response) => { response.render(`index`)})
 <%- include('./partials/header') %>
 <%- include('./partials/footer') %>
 ```
+
 #### Form
 - In views folder create about.ejs
 ```javascript
@@ -240,12 +241,16 @@ app.get('/hello-world', (request, response) => { response.render(`index`)})
 ```javascript
 app.post('/create', (req, res) => {
      console.log('🔨 Created a post!');
-   res.render('index', {yak: "amir"});
+   // inside req.body there are forms attributes req.body = {"username":"anabaei","message":"its me!"} 
+   // also we can send two or more variables to index page 
+   res.render('index', {result: req.body, var2: "amir"});
  });
 ```
-* and in index we define the `yak` var as 
+* and in index we define the `resule` var as 
 ```javascript
- <%= JSON.stringify(yak)%>
+ <%= JSON.stringify(result)%> 
+ <%= JSON.stringify(result.username)%> // output "anabaei"
+ %= JSON.stringify(var2)%> . // out put its me!
 ```
 * Notice: `Using JSON.stringfy helps to convert objects into strings, usually it uses to send data to server`
 
