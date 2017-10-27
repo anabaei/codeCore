@@ -315,7 +315,7 @@ app.use(Express.static(path.join(__dirname, 'public')))
 Follow this [link for node.js](https://github.com/anabaei/codeCore/tree/master/NodeJs_%20Tut/quiz1)
 ##  PostgreSQL 
 
-### DB (depricated!)
+### DB 
 ```javascript
 db.query(`
   INSERT INTO posts (username, body)
@@ -330,6 +330,7 @@ db.query(`
   });
 ```
 * db.js
+* dont forget to install pg-promise 
 ```javascript
 const pgp = require('pg-promise')();
 const db = pgp({
@@ -361,6 +362,24 @@ db.query(`
   })
 ```
 * Then run the `node db.js` and `node migration.js` and db ready to use!
+* Then after creating a post you can see it as below route 
+```javascript
+app.get('/create', function (req,res) {
+  db.query(
+      `SELECT * FROM posts ORDER BY CHAR_LENGTH(body) DESC`
+    )
+      .then(posts => {
+        res.render('index', {posts: posts});
+      })
+ });
+```
+* To see posts inside index view you can have 
+```javascript
+<% for (let post of posts) { %>
+		        <h3><%= post.username %></h3>
+		  <% } %>
+```
+
 -----------
 -----------
 
