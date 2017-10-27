@@ -368,16 +368,18 @@ db.query(`
 * this command creating a database name fororol_dev and echo just showing it
 ```unix
 $ createdb --echo fotorol_dev
+$ dropdb  --if-exists --echo fotorol_dev
 ```
-* so gonna add this command to package.js
+* You can download new version from [here](https://www.codementor.io/devops/tutorial/getting-started-postgresql-server-mac-osx)
+* Then define these command into scripts package.js 
 ```javascript
-"db:create": "createdb --echo fotorol_dev"
-"db:drop":"dropdb --echo --if-exist fotorol_dev"
+ "db:create": "createdb --echo fotorol_dev",
+ "db:drop": "dropdb  --if-exists --echo fotorol_dev",
 ```
 To run this
 ```javascript
-npm run db:drop
-npm dun db:create
+yarn db:create
+yarn db:drop
 ```
 ##### KNEX.JS http://knexjs.org/
 pg is library that postgre knows, knex knows oracl sql so with pg we just install it for postgre
@@ -385,7 +387,7 @@ is javascript library whihc outputs sql queries
 ```javascript
 npm install pg knex
 ```
-for exmaple
+* Usage is:
 ```
 knex.select('title', 'name').from('bookstable')
 translate it to:
@@ -405,28 +407,19 @@ connection: {
   database: 'fotorol_dev'
   }
 })
-
-module.exports = kn
+module.exports = kx
 ```
-* Even we can require it inside the console and use it. 
-
-```
-node --inspect
-```
+* Even we can require it inside the console and use it
 * click on the icon, then we have our node repo 
 ```javascript
 const kx = require('knex')
 kx.select().from('posts')
 ```
-migartion is shapeing new database,
-
-create connection,
-then use schema property of knix,
-table increament creates id
-we create a table named posts, and use a callback to define attributes of table
+* Create connection then use schema property of knix, table increament creates id
+* We create a table named posts, and use a callback to define attributes of table
 ```javascript
 const kx = require('./connection')
-kx.schema,createTable('posts', table => {
+kx.schema.createTable('posts', table => {
 
 table.increments('id'),
 table.string('username'),
@@ -435,18 +428,15 @@ table.timestamps(false, true)
 }).then(()=> process.exit()).catch(()=> process.exit())
 ```
 we need .then() after it to know what to do if not it terminate it. Also node needs to quite only if was told.
-so we need to pass a callback to then to know to quit 
-process is running as an application object 
+so we need to pass a callback to then to know to quit process is running as an application object 
 if we type above inside console and use toString() it converts to string the commands. 
 * catch is only run when query fails the error message
-
 * Now inside chrome debugger format we can see all fields inside database
 ```javascript
 kx('posts').columnInfo().then(console.log)
 ```
+* Then run `node db/migration.js` to create tables inside the database 
 
-by running  `node db/migration.js` we can create tables inside the database 
-"db:migrate":"node db/migration.js"
 * inside chrome console 
 ```javascript
 kx.insert({content: 'lllok at '}).into('posts').toString
@@ -523,7 +513,9 @@ const upload = multer({dest: path.join(__dirname, '..', 'public', 'uploads')})
 router.post('/', upload.single('photo'), (request, response) => {
   const {content} = request.body;
   kx
-    .insert({content: content})
+    .
+    
+    ({content: content})
     .into('posts')
     .then(() => response.redirect('/'))
 })
