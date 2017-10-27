@@ -312,6 +312,7 @@ const path = require('path')
 console.log(__dirname)
 app.use(Express.static(path.join(__dirname, 'public')))
 ```
+Follow this [link for node.js](https://github.com/anabaei/codeCore/tree/master/NodeJs_%20Tut/quiz1)
 #### Flex 
 * bg or lg in nav bar bootstrap means when colapse 
 * ml-auto is gonna fill out all space from left with a margin.it works in inside flex containers always
