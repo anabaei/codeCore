@@ -313,6 +313,55 @@ console.log(__dirname)
 app.use(Express.static(path.join(__dirname, 'public')))
 ```
 Follow this [link for node.js](https://github.com/anabaei/codeCore/tree/master/NodeJs_%20Tut/quiz1)
+####  PostgreSQL
+
+
+```javascript
+db.query(`
+  INSERT INTO posts (username, body)
+  VALUES ($<username>, $<body>)
+`, {
+  username: req.body.username,
+  body: req.body.message
+})
+  .then(() => {
+    console.log('🔨 Created a post!');
+    // process.exit();
+  });
+```
+* db.js
+```javascript
+const pgp = require('pg-promise')();
+const db = pgp({
+  host: 'localhost',
+  database: 'exp_dev'
+});
+module.exports = db;
+```
+* Migration.js db to create database
+```javascript
+const db = require('./index');
+db.query(`
+  CREATE TABLE posts (
+    id SERIAL,
+    username VARCHAR(32),
+    body VARCHAR(255)
+  )
+`)
+  .then(() => {
+    console.log('🛠 Created table posts!');
+    // process is a global object provided by node (only)
+    // that gives access to the running program. We can use it
+    // to exit the program amongst other things.
+    process.exit();
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit();
+  })
+```
+* Then run the `node db.js` and `node migration.js` and db ready to use!
+
 #### Flex 
 * bg or lg in nav bar bootstrap means when colapse 
 * ml-auto is gonna fill out all space from left with a margin.it works in inside flex containers always
