@@ -246,13 +246,30 @@ app.post('/create', (req, res) => {
    res.render('index', {result: req.body, var2: "amir"});
  });
 ```
-* and in index we define the `resule` var as 
+* and in index we define the `result` var as 
 ```javascript
  <%= JSON.stringify(result)%> 
  <%= JSON.stringify(result.username)%> // output "anabaei"
  %= JSON.stringify(var2)%> . // out put its me!
 ```
 * Notice: `Using JSON.stringfy helps to convert objects into strings, usually it uses to send data to server`
+
+### Setting up Cookies 
+* At first we should `npm install cookie-parser` form [link](https://www.npmjs.com/package/cookie-parser)
+* To set up a cookie we can add in above js `/create' request to set up with user's input
+```javascript
+res.cookie('mycookie', req.body);  //or this way res.locals.mycookie = mycookie;
+res.cookie('mycookie', "123456");
+res.redirect('/newpage')
+```
+* In new page req still we access to all cookies as objects, to check them jut define newpage as 
+```javascript
+app.get('/newpage', function (req,res) {
+   console.log(req.cookies) // returns a list of objects with all cookies name
+   res.render('index');
+});
+```
+
 
 - Middleware is actullay a body parser, gets stuff from views and handle them.
 ##### body-parser
