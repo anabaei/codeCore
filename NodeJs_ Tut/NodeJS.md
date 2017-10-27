@@ -313,9 +313,9 @@ console.log(__dirname)
 app.use(Express.static(path.join(__dirname, 'public')))
 ```
 Follow this [link for node.js](https://github.com/anabaei/codeCore/tree/master/NodeJs_%20Tut/quiz1)
-####  PostgreSQL
+##  PostgreSQL 
 
-
+### DB (depricated!)
 ```javascript
 db.query(`
   INSERT INTO posts (username, body)
@@ -361,35 +361,10 @@ db.query(`
   })
 ```
 * Then run the `node db.js` and `node migration.js` and db ready to use!
+-----------
+-----------
 
-#### Flex 
-* bg or lg in nav bar bootstrap means when colapse 
-* ml-auto is gonna fill out all space from left with a margin.it works in inside flex containers always
-* In bootstrap to use flex we need a wrapper div class to use align  we can wrap it first with `d-flex` 
-```css
-class= "d-flex flex-column"
-```
-then inside that we can have 
-```css
-"align-self-end"
-```
-To use partially bootstrap we can use bootstrap-sass and use import for each partial of that.
-
-##### Routes directory
-
-create an instance of routes 
-```javascript
-const Express = require('express')
-const router = Express.Router()
-```
-then instead of app use `router.get` or `router.post`
-then inside app.js 
-* we can require the files. welcome is not a router object, so we have to export `module.exports = router` so when we `require` it somewhere else, then we would access to a router object
-```javascript
-const welcome = require('./welcome')
-app.user('/', welcome)
-```
-##### Database Postgres 
+## DB New!
 * this command creating a database name fororol_dev and echo just showing it
 ```unix
 $ createdb --echo fotorol_dev
@@ -483,6 +458,35 @@ kx.select().from('posts').then(console.log)
 *then we can have above command inside the node without toString fn or then console.log to see the results
 
 -----------
+
+#### Flex 
+* bg or lg in nav bar bootstrap means when colapse 
+* ml-auto is gonna fill out all space from left with a margin.it works in inside flex containers always
+* In bootstrap to use flex we need a wrapper div class to use align  we can wrap it first with `d-flex` 
+```css
+class= "d-flex flex-column"
+```
+then inside that we can have 
+```css
+"align-self-end"
+```
+To use partially bootstrap we can use bootstrap-sass and use import for each partial of that.
+
+##### Routes directory
+
+create an instance of routes 
+```javascript
+const Express = require('express')
+const router = Express.Router()
+```
+then instead of app use `router.get` or `router.post`
+then inside app.js 
+* we can require the files. welcome is not a router object, so we have to export `module.exports = router` so when we `require` it somewhere else, then we would access to a router object
+```javascript
+const welcome = require('./welcome')
+app.user('/', welcome)
+```
+---------
 #### Express Parse encoded formats
 when express parse a urlencoded form, which is a type that browser send at first, it converted name=amir&lastname=nabaei&.... to a hash format with keys and values. 
 * Therefor we have to use multer middleware module.
