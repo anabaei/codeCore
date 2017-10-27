@@ -225,7 +225,7 @@ app.get('/hello-world', (request, response) => { response.render(`index`)})
 <%- include('./partials/header') %>
 <%- include('./partials/footer') %>
 ```
-
+* Steve [link](https://github.com/CodeCoreYVR/fotorol-sept-2017)
 #### Form
 - In views folder create about.ejs
 ```javascript
