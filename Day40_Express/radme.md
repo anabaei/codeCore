@@ -2,6 +2,8 @@
  # Express Steps
  https://github.com/CodeCoreYVR/AwesomeAnswersExpressJun2017
  
+ * Express using squilizer is like Rails brining moduls and folders and need to set up DB to postgresql
+ * This [link](https://groundberry.github.io/development/2016/11/04/build-your-node-app-with-express-and-sequelize.html) 
 ```javascript
   npm install -g express-generator
 ```
