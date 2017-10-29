@@ -154,6 +154,11 @@ let sum = (a, b) => a + b;
 ```javascript
 !!var1 same as var1 !== 'undefined' && var1 !== false && var1 !== null
 ```
+### Promises
+
+* To get the resolved value from a promise, use the `.then` method. When the status of the promise is changed to `resolved`, a callback passed to `then` will be called with the promise value as its argument.
+
+* A question version from [this](https://github.com/CodeCoreYVR/class-notes-sept-2017/blob/master/js-promises/question.js)
 
 One to Many Associations:
 
