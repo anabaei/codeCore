@@ -2,7 +2,7 @@
 https://github.com/CodeCoreYVR/react-demo-june-2017
 
 # React 
-
+* set .env variables [link](https://medium.com/@tacomanator/environments-with-create-react-app-7b645312c09d)
 * It is  just a view that takes data and displays it. 
 * Just start : now we use bare minimum and then we create a framework
 ```javascript
