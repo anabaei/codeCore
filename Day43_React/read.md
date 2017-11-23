@@ -1355,7 +1355,7 @@ class Signinfacebook extends Component {
   render() {
   return (
     <FacebookLogin
-   appId="125717664213132"
+   appId="125717XXXXXXXXXXX664213132"
    autoLoad={true}
    fields="name,email,picture"
    callback={responseFacebook} />
@@ -1421,7 +1421,7 @@ class Signinsta extends Component {
   return (
     <div>
       <InstagramLogin
-         clientId="af90b990467a4331914f4461bd31a72d"
+         clientId="aXXXXXXXXXX0b9XXXXXXXXXXXX"
          buttonText="Login"
          onSuccess={responseInstagram}
          onFailure={responseInstagram}
