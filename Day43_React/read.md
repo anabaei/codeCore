@@ -1367,20 +1367,20 @@ export default Signinfacebook;
 
 ### google ![alt text](http://media.idownloadblog.com/wp-content/uploads/2017/01/google-logo.jpg)
 * In order to obtain google clientId use this tutorial [help](https://developers.google.com/identity/sign-in/web/devconsole-project)
+* To npm [install](https://www.npmjs.com/package/react-google-login) 
 ```javascript
-
+npm install react-google-login
+```
+```javascript
 import React, { Component } from 'react';
 import GoogleLogin from 'react-google-login';
 const responseGoogle = (response) => {
   console.log(response);
 }
-
 class Signgmail extends Component {
-
     constructor() {
       super();
     }
-
   render() {
   return (
     <div>
@@ -1392,13 +1392,11 @@ class Signgmail extends Component {
       />
   </div>
   );
-
   }
 }
-
 export default Signgmail;
 ```
-
+* For more tips in google APIs use [this videos](https://www.youtube.com/watch?v=DYAwYxVs2TI&list=PLOU2XLYxmsILOIxBRPPhgYbuSslr50KVq&index=2)
 ---------
 
 ## React Native 
