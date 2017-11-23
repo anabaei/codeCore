@@ -1432,6 +1432,9 @@ class Signinsta extends Component {
 }
 export default Signinsta;
 ```
+### Cycle request in Omniauth
+* Front end needs access to verification code to send to server and server get access token from Twitter. To gain verificaiton code it is front end duty get it directly form Twitter after asking request token from server.
+![alt text](https://user-images.githubusercontent.com/7471619/33190097-050a6474-d05e-11e7-979b-0ff06a22b282.png)
 
 ## React Native 
  * vujs and Angular 2 are popular
