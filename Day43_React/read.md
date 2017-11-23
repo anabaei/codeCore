@@ -1400,8 +1400,38 @@ export default Signgmail;
 ---------
 
 ### Instageram ![alt text](https://media.giphy.com/media/3o7bu7wtT19WfBAt0Y/source.gif)
+* To manage your insta developer account check this [link](http://help.dimsemenov.com/kb/wordpress-royalslider-faq/wp-how-to-get-instagram-client-id-and-client-secret-key)
+* You can find npm from this [link](https://www.npmjs.com/package/react-instagram-login)
+```javascript
+npm install react-instagram-login
+```
+```javascript
+import React, { Component } from 'react';
+import InstagramLogin from 'react-instagram-login';
 
+const responseInstagram = (response) => {
+  console.log(response);
+}
 
+class Signinsta extends Component {
+    constructor() {
+      super();
+    }
+  render() {
+  return (
+    <div>
+      <InstagramLogin
+         clientId="af90b990467a4331914f4461bd31a72d"
+         buttonText="Login"
+         onSuccess={responseInstagram}
+         onFailure={responseInstagram}
+  />
+  </div>
+  );
+  }
+}
+export default Signinsta;
+```
 
 ## React Native 
  * vujs and Angular 2 are popular
