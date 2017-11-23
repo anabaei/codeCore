@@ -1333,7 +1333,7 @@ fetch(
 end
 ```
 ----------------
-### Facebook (Amniuath)[https://github.com/keppelen/react-facebook-login] 
+### Facebook [Amniuath](https://github.com/keppelen/react-facebook-login) 
 ![alt text](http://www.iconarchive.com/download/i49146/yootheme/social-bookmark/social-facebook-box-blue.ico)
 
 ```shell
