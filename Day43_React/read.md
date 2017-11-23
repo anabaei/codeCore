@@ -1365,7 +1365,7 @@ class Signinfacebook extends Component {
 export default Signinfacebook;
 ```
 
-### google ![alt text](http://media.idownloadblog.com/wp-content/uploads/2017/01/google-logo.jpg)
+### Google ![alt text](http://media.idownloadblog.com/wp-content/uploads/2017/01/google-logo.jpg)
 * In order to obtain google clientId use this tutorial [help](https://developers.google.com/identity/sign-in/web/devconsole-project)
 * To npm [install](https://www.npmjs.com/package/react-google-login) 
 ```javascript
