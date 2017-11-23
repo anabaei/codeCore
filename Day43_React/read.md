@@ -1365,6 +1365,40 @@ class Signinfacebook extends Component {
 export default Signinfacebook;
 ```
 
+### google ![alt text](http://media.idownloadblog.com/wp-content/uploads/2017/01/google-logo.jpg)
+* In order to obtain google clientId use this tutorial [help](https://developers.google.com/identity/sign-in/web/devconsole-project)
+```javascript
+
+import React, { Component } from 'react';
+import GoogleLogin from 'react-google-login';
+const responseGoogle = (response) => {
+  console.log(response);
+}
+
+class Signgmail extends Component {
+
+    constructor() {
+      super();
+    }
+
+  render() {
+  return (
+    <div>
+      <GoogleLogin
+        clientId="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX2.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+      />
+  </div>
+  );
+
+  }
+}
+
+export default Signgmail;
+```
+
 ---------
 
 ## React Native 
