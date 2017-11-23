@@ -1333,6 +1333,34 @@ fetch(
 end
 ```
 ----------------
+### Facebook Amniuath 
+![alt text](https://cdn.worldvectorlogo.com/logos/facebook-3.svg)
+```javascript
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import FacebookLogin from 'react-facebook-login';
+
+const responseFacebook = (response) => {
+  console.log(response);
+}
+class Signinfacebook extends Component {
+    constructor() {
+      super();
+    }
+  render() {
+  return (
+    <FacebookLogin
+   appId="125717664213132"
+   autoLoad={true}
+   fields="name,email,picture"
+   callback={responseFacebook} />
+  );
+  }
+}
+export default Signinfacebook;
+```
+
+---------
 
 ## React Native 
  * vujs and Angular 2 are popular
