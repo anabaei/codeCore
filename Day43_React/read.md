@@ -1333,8 +1333,13 @@ fetch(
 end
 ```
 ----------------
-### Facebook Amniuath 
+### Facebook (Amniuath)[https://github.com/keppelen/react-facebook-login] 
 ![alt text](http://www.iconarchive.com/download/i49146/yootheme/social-bookmark/social-facebook-box-blue.ico)
+
+```shell
+npm install react react-dom react-facebook-login --save --force
+```
+
 ```javascript
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
