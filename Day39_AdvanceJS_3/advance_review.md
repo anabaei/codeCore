@@ -154,6 +154,29 @@ let sum = (a, b) => a + b;
 ```javascript
 !!var1 same as var1 !== 'undefined' && var1 !== false && var1 !== null
 ```
+#### Map vs forEach
+* For each
+```javascript
+let arr = [1, 2, 3, 4, 5];
+```
+```javascript
+arr.forEach((num, index) => {
+    return arr[index] = num * 2;
+});
+```
+* Output
+```javascript
+arr = [2, 4, 6, 8, 10]
+```
+* forEach() affects and changes our original Array, whereas map() returns an entirely new Array — thus leaving the original array unchanged and map is 70% faster than foreach and chainable using filter reduce etc ...
+* Map
+```javacript
+let arr = [1, 2, 3, 4, 5];
+let arr2 = arr.map(num => num * 2).filter(num => num > 5);
+arr2 = [6, 8, 10]
+```
+
+
 ### Promises
 
 * To get the resolved value from a promise, use the `.then` method. When the status of the promise is changed to `resolved`, a callback passed to `then` will be called with the promise value as its argument.
