@@ -2,6 +2,76 @@
  # Express Steps
  https://github.com/CodeCoreYVR/AwesomeAnswersExpressJun2017
  
+ #### Setting up Express 
+ * nodejs is server side render javascript. 
+ ```
+ npm init
+ ```
+ Then we have our package.json. npm is package manaer for node and yarn is facebook alternative for package manager. 
+ * Then create app.js file as below 
+
+```javascript
+const Express= require('express')
+const app = Express()
+app.get('/', (request, response) => { response.send(`Hello, World!`) })
+const PORT = 3000
+app.listen(
+PORT, ()=>console.log('server is running')
+)
+ ```
+ * `app.get('/', function(req, res){} )` means when express receieve a get request with `/` it would execute a funciton and the function has req and res which here we just send a message hellow world. Then it should listen to a port with the formula as
+ ```javascript
+ listen(port: number, hostname: string, callback func) 
+ ```
+ * To run it just call `node app.js` which execute the file 
+ #### Debugging options
+ ```
+ npm install chalk // for colorful messages 
+ npm install debug // to have debug mode 
+ npm install nodemon // to run at the same time 
+ npm install morgan  // to create a middleware 
+ ```
+ Then add this to app.js as `var chalk = require('chalk');` and `var debug = require('debug')('app');` and `var morgan = require('morgan'); app.use(morgan('combined')); // to use a middleware show connection` 
+ 
+ ```javascript
+ console.log('server is running'+ chalk.white(' 3000'))
+ console.log(`server is running ${ chalk.white(' 3000') }`) // ES6 Style helps using template strings notice using ` here 
+ ```
+ * run `DEBUG=* nodemon app.js` or `DEBUG=app nodemon app.js`
+ * morgan has different settings
+ 
+ #### Serving views 
+ * Create views folder and index.html and use a built in package name `path` to join addresses as below. `__dirname` means current location 
+ ```javascript
+ app.get('/', function(req,res) {
+  res.sendFile(path.join(__dirname + `/views/index.html`));
+ }
+ ```
+ * To add `bootstrap` just replace bootstrap cdns inside index from [here](https://getbootstrap.com/docs/3.3/getting-started/)
+ * Create a public public directory and put all css and js then use below to have all static resource in app.js
+ ```javascript
+ app.use(express.static(path.join(__dirname, '/public/')));
+ ```
+ * so far to run app we have `DEBUG=app nodemon app.js` to chanage it to `npm start` we change it in package.json under `scripts` there is a built in test so `npm test` would run that also we define 
+ ```javascript
+ "start": "DEBUG=app nodemon app.js"
+ ```
+ * [ESLlint](https://eslint.org/) is static code analyisit. We install it globally
+ ```javascript
+ npm install -g eslint 
+ eslint --init 
+ select use a popular style guide, airbnb, javascript  // it installs required packages
+ // to run it localy 
+  ./node_modules/.bin/eslint app.js
+ ```
+ * check airbnb/javascript. There is details of explanation of everything in javascript and ES6 we use.
+ * Notice it is better to locally download packages because when we deploy to heroku or something we dont want them to globaly download it for this app. So we just install eslint locally. 
+ * define as `"lint": "eslint app.js"` inside `Scripts` which can help us to run locally packages from our node_module/bin directory just need to use 
+ ```javascript
+ npm run lint  // it is same as  ./node_modules/.bin/eslint app.js notice npm start is same as npm run start(it is built in node to remove run for start and test )
+ ```
+ 
+ 
  * Express using squilizer is like Rails brining moduls and folders and need to set up DB to postgresql
  * This [link](https://groundberry.github.io/development/2016/11/04/build-your-node-app-with-express-and-sequelize.html) 
 ```javascript
