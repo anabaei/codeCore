@@ -70,8 +70,23 @@ PORT, ()=>console.log('server is running')
  ```javascript
  npm run lint  // it is same as  ./node_modules/.bin/eslint app.js notice npm start is same as npm run start(it is built in node to remove run for start and test )
  ```
+ #### Tools to generate HTML pages
+ * Two of extreme template engines aer `pug` and `EJS`. EJS create HTML and drop some tags on it like angular or react 
+ * Install ejs by `npm install ejs`
+ ```javascript
+ app.set('views','./relevant address of index') // app.set allows us to set something on our application instance
+ app.set('view engine', 'ejs'); // tell express what is our view engine we want to use it automatically finds views folder and take index
+ // to call that view and passing two variables title and list 
+ app.get('/', (req, res) => {
+  res.render('index', { list: ['a', 'b'], title: 'List of mine '} );
+})
+ ```
+ To read parameters in index.ejs we need to put them inside `<%= %>'
  
- 
+ ### Routing 
+  
+  
+ ------
  * Express using squilizer is like Rails brining moduls and folders and need to set up DB to postgresql
  * This [link](https://groundberry.github.io/development/2016/11/04/build-your-node-app-with-express-and-sequelize.html) 
 ```javascript
